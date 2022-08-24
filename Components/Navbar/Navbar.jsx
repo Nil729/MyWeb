@@ -6,7 +6,7 @@ import NavItem from "./NavItem";
 
 const MENU_LIST = [
   { text: "Home", href: "/home" }, // Si en el href posses una ruta ex: /api/hello --> si que fnciona 
-  { text: "Projects", href: "/projects" },
+  { text: "Projects", href: "/projects/Page_webmanager" },
   { text: "About Us", href: "/about" },
   { text: "Contact", href: "/contact" },
 ];

@@ -1,0 +1,129 @@
+.list_appItems{
+  padding: 0px 5px 15px 0px;
+  width: 100%;
+  border-radius: 15px;
+  background-color: rgba(44, 54, 83, 0.87);
+
+}
+
+//----------------------- Style components -------------------------------
+
+.items_applist{
+  padding: 1%;
+  display: flex;
+}   
+
+$primary: #791199;
+$secondary: #ef8138;
+$white: #fff;
+$gray: #9c9282;
+$balck: rgb(37, 0, 26);
+
+.form_app_group {
+  position: relative;
+  display: flex;
+  padding: 15px 10px 0px 10px;
+  margin-top: 10px;
+}
+
+.form_app_field {
+  display: flex;
+  width: 100%;
+  font-family: inherit;
+  border: 0;
+  border-bottom: 2px solid $gray;
+  outline: 0;
+  font-size: 1.3rem;
+  color: $white;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+      color: transparent;
+  }
+
+  &:placeholder-shown ~ .form_app_label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+  }
+}
+
+.form_app_label {
+  position: absolute;
+  top: 0;
+  max-width: 100%;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: $gray;
+}
+
+.form_app_field:focus {
+  ~ .form_app_label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: $balck;
+    font-weight: 700;    
+  }
+  padding-bottom: 6px;  
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, $primary,$secondary);
+  border-image-slice: 1;
+}
+/* reset input */
+.form_app_field{
+  &:required,&:invalid { box-shadow:none; }
+}
+
+#button_playapp{
+
+  width: 10rem;
+  padding-top: 2%;
+  background-color: rgba(62, 80, 141, 0);
+  font-size: 16px;
+  border:none;  
+}
+.ico_play{
+  width:70%;
+}
+
+
+.buttons_group{
+  float: left;
+  display: flex;
+  width: 22rem;
+  padding-top: 3%;
+}
+#button_deleteApp{
+  display: block;
+  background-color: rgba(62, 80, 141, 0);
+  border:none;  
+}
+
+.ico_delete{
+  width:70%;
+}
+.ico_delete:active {
+  transform:scale(0.8,0.8);
+}
+
+#button_updateDataApp{
+  display: block;
+  background-color: rgba(62, 80, 141, 0);
+  border:none;  
+}
+
+
+.ico_update{
+  width:50%;
+}
+
+.ico_update:active {
+  transform:scale(0.8,0.8);
+}
