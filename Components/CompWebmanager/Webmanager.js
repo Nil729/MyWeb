@@ -13,7 +13,7 @@ import './style_webmanager.module.css'
 export function Webmanager () {
   const [todos, setTodos] = useState([]);
   const todoTaskRef = useRef();
-
+  
   //GET a API
   const getData = async () => {
     try {
@@ -31,7 +31,7 @@ export function Webmanager () {
   useEffect( () => { 
     const setdata = async () => {
       var fdata = await getData()
-      console.log(fdata)
+
       const nwobj = fdata.map((element) => {
         return {id: element[0], task: element[1]}
       })
@@ -110,7 +110,7 @@ export function Webmanager () {
               <div id='containerTodoList'>
                 <TodoList todos={todos} toggleTodo= {toggleTodo}/>
               </div>
-              <button id='button_deleteRutin'><image className='img_litter' src={litter} onClick={handletoClearAll} /></button>
+              <button id='button_deleteRutin'><img className='img_litter' src={litter} onClick={handletoClearAll} /></button>
           </div>
         </div>
         <ViewRoutin routin ={todos}/>

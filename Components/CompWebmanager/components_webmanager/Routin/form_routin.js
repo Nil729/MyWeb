@@ -4,7 +4,6 @@ import apiClient from '../../../CompWebmanager/http-coomon';
 import { ListTask } from "./list_task";
 import {v4 as uuidv4 } from "uuid";
 
-
 export function FormRoutin({data_task}){
     //Estilizar a quest div
     //<ul> </ul>
