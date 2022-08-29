@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useReducer} from 'react';
 import "./style_inputs.module.scss";
+import apiClient from '../../../CompWebmanager/http-coomon';
 import { ListTask } from "./list_task";
 import {v4 as uuidv4 } from "uuid";
 
@@ -19,7 +20,7 @@ export function FormRoutin({data_task}){
     
     async function getDataApp() {
         try {
-          const resallapps = await apiClient.get(`/user/webmanager/task/${id}`);
+          const resallapps = await apiClient.get(`/user/webmanager/task/${id}`); 
           const app = resallapps.data
           if(app[0].id_app === null) return;
           return setApp(app);

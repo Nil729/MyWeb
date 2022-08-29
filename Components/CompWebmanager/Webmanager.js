@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect} from 'react';
-//import apiClient  from './http-coomon';
-//import icon from 'E:/Projectes/webmanager/Client/public/litter.png'
+import apiClient  from './http-coomon';
 import litter from 'e:/Projectes/webmanager/Client/src/img/litter.png';
-import "./style_webmanager.module.css";
 import {v4 as uuidv4 } from "uuid"
 import {TodoList} from './components_webmanager/TodoList';
 import {ViewRoutin} from './components_webmanager/Routin/ViewRoutin';
+import './style_webmanager.module.css'
 //import { Route } from 'react-router-dom';
 
 //import { useReducer } from 'react';
@@ -32,7 +31,7 @@ export function Webmanager () {
   useEffect( () => { 
     const setdata = async () => {
       var fdata = await getData()
-
+      console.log(fdata)
       const nwobj = fdata.map((element) => {
         return {id: element[0], task: element[1]}
       })
