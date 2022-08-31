@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect} from 'react';
+//import './App.css';
 import apiClient  from './http-coomon';
 import litter from 'e:/Projectes/webmanager/Client/src/img/litter.png';
-import {v4 as uuidv4 } from "uuid"
+import {v4 as uuidv4 } from "uuid";
 import {TodoList} from './components_webmanager/TodoList';
 import {ViewRoutin} from './components_webmanager/Routin/ViewRoutin';
-import './style_webmanager.module.css'
+
 //import { Route } from 'react-router-dom';
 
 //import { useReducer } from 'react';
@@ -97,7 +98,6 @@ export function Webmanager () {
   return (
     <>
       <link rel="icon" href="./Client/public/litter.png"></link>
-      <h1 id='title'>bona tarda</h1>
       <div className='content' >
         <div className='container_CRUD top'>
           <div className='todoRoutine'>
