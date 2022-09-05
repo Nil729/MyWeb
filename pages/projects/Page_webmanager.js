@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../../styles/Home.module.css';
-import Navbar from '../../Components/Navbar/Navbar';
+import Navbar from '../../Components/component_navbar/Navbar';
 import {Webmanager} from '../../Components/CompWebmanager/Webmanager';
 
 export default function Page_render_webmanager() {

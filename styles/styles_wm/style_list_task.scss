@@ -35,12 +35,12 @@ $balck: rgb(37, 0, 26);
   outline: 0;
   font-size: 1.3rem;
   color: $white;
-  padding: 7px 0;
+  padding: 0px 0;
   background: transparent;
   transition: border-color 0.2s;
 
   &::placeholder {
-      color: transparent;
+    color: transparent;
   }
 
   &:placeholder-shown ~ .form_app_label {
@@ -83,7 +83,7 @@ $balck: rgb(37, 0, 26);
 
 #button_playapp{
 
-  width: 10rem;
+  width: 5rem;
   padding-top: 2%;
   background-color: rgba(62, 80, 141, 0);
   font-size: 16px;
@@ -97,28 +97,33 @@ $balck: rgb(37, 0, 26);
 .buttons_group{
   float: left;
   display: flex;
-  width: 22rem;
+  width: 10rem;
   padding-top: 3%;
 }
 #button_deleteApp{
+  width: 3rem;
+  padding-left: 10px;
   display: block;
   background-color: rgba(62, 80, 141, 0);
   border:none;  
 }
 
 .ico_delete{
-  width:70%;
+  width: 2px;
 }
+
 .ico_delete:active {
   transform:scale(0.8,0.8);
 }
 
 #button_updateDataApp{
+  width: 2.5rem;
+  padding-right: 5px;
+  padding-left: 5px;
   display: block;
   background-color: rgba(62, 80, 141, 0);
   border:none;  
 }
-
 
 .ico_update{
   width:50%;

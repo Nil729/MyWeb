@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import ico_Play from'E:/Projectes/webmanager/Client/src/img/play.png'
 import ico_delete from'E:/Projectes/webmanager/Client/src/img/deletevermell.png'
 import ico_Update from'E:/Projectes/webmanager/Client/src/img/diskette.png'
@@ -49,7 +50,7 @@ export function AppItems({app, toggleAppdel, toggleAppupdate, toggleplayapp}){
         <> 
             <div className='items_applist'>
 
-                <button id='button_playapp' onClick={playApp}><img className='ico_play' src={ico_Play} alt="playAPP" /></button>
+                <button id='button_playapp' onClick={playApp}><Image className='ico_play' src={ico_Play} alt="playAPP" /></button>
 
                 <div className="form_app_group field">
                     <input className="form_app_field"  type="text" placeholder="App  name"ref= {data_appNameRef} defaultValue={name_app} name="name" id='name' required />
@@ -65,8 +66,8 @@ export function AppItems({app, toggleAppdel, toggleAppupdate, toggleplayapp}){
                 </div>
                 <div className="buttons_group">
 
-                    <button id='button_updateDataApp' onClick={updateApp}><img className='ico_update' src={ico_Update} alt="updateData" /></button>
-                    <button  id='button_deleteApp' onClick={deleteApp} ><img className='ico_delete' src={ico_delete}  alt="deleteApp"   /></button>
+                    <button id='button_updateDataApp' onClick={updateApp}><Image className='ico_update' src={ico_Update} alt="updateData" /></button>
+                    <button  id='button_deleteApp' onClick={deleteApp} ><Image className='ico_delete' src={ico_delete}  alt="deleteApp"   /></button>
                     
                 </div>
             </div>

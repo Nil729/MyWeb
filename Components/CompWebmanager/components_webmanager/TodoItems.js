@@ -1,5 +1,4 @@
 import React from "react";
-import './Components_style.module.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 export function TodoItem({todo, toggleTodo}){
     

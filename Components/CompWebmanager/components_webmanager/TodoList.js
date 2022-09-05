@@ -1,6 +1,5 @@
 import React from "react";
 import { TodoItem } from "./TodoItems";
-import './Components_style.module.scss'
 
 export function TodoList ({todos, toggleTodo}) { // "{todos}" Vindrien a ser les porpietats
     //llista totes les array [todos]

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect} from 'react';
 //import './App.css';
+import Image from 'next/image'
 import apiClient  from './http-coomon';
 import litter from 'e:/Projectes/webmanager/Client/src/img/litter.png';
 import {v4 as uuidv4 } from "uuid";
@@ -27,7 +28,7 @@ export function Webmanager () {
   };
   
  // PER FER AIXÓ S'HA DE SER EL PUTU AMO (: (: (: (: (: (: 
- // Recomvarteix el objecte utilizant i linserta a la array todos
+ // Recomvarteix el objecte utilizant i linserta a la array todos.
  //Utilizem el useEffect cuan volem inserir algo a mitg del proces (NO HO SE DEL TOT SEGUR  PRO HO UTILIZO PER NOMES FER LA FUNCIÓ UN COP (:)
   useEffect( () => { 
     const setdata = async () => {
@@ -110,7 +111,7 @@ export function Webmanager () {
               <div id='containerTodoList'>
                 <TodoList todos={todos} toggleTodo= {toggleTodo}/>
               </div>
-              <button id='button_deleteRutin'><img className='img_litter' src={litter} onClick={handletoClearAll} /></button>
+              <button id='button_deleteRutin'><Image className='img_litter' src={litter} onClick={handletoClearAll} /></button>
           </div>
         </div>
         <ViewRoutin routin ={todos}/>

@@ -1,5 +1,5 @@
 import {AppItems} from './AppItems'
-import './style_list_task.module.scss'
+
 export function ListTask({apps, toggleAppdel, toggleAppupdate, toggleplayapp}){
     return (
         
