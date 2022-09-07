@@ -3,14 +3,11 @@
   text-align:left;
   color: azure;
 }
-
 @media screen and (min-width: 1025px) {
   .content {
     display: flex;
   }
 }
-
-
 .container_CRUD{
   position: relative;
   width: 70%;
@@ -74,6 +71,7 @@
 #containerTodoList{
   padding-top: 0.6em;
 }
+
 #button_deleteRutin{
   max-width:12%;
   min-width:5rem;

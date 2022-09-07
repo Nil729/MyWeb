@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect} from 'react';
 //import './App.css';
+
 import Image from 'next/image'
 import apiClient  from './http-coomon';
 import litter from 'e:/Projectes/webmanager/Client/src/img/litter.png';

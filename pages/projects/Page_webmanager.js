@@ -7,8 +7,10 @@ import {Webmanager} from '../../Components/CompWebmanager/Webmanager';
 export default function Page_render_webmanager() {
     return (
       <div className={styles.container}>
-
-        <Navbar/>
+        
+        <div>
+          <Navbar/>
+        </div>
         
         <main className={styles.main}>
           <Webmanager/>
