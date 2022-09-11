@@ -1,129 +1,133 @@
 /* Formateamos el label que servirá de contenedor */
 
 .switch {
-    position: relative;
-    display: inline-block;
-    max-width: 90%;
-    min-width: 90%;
-    height: 34px;
-  }
-   
-  /* Ocultamos el checkbox html */
-  .switch input {
-    display:none;
-  }
-   
-  /* Formateamos la caja del interruptor sobre la cual se deslizará la perilla de control o slider */
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #b9b3b3;
-    text-align: center;
-    transition: .4s;
-  }
-   
-  /* Pintamos la perilla de control o slider usando el selector before */
+  position: relative;
+  display: inline-block;
+  max-width: 90%;
+  min-width: 90%;
+  height: 34px;
+}
   
-   
-  /* Cambiamos el color de fondo cuando el checkbox esta activado */
-  input:checked + .slider {
-    background-color: #54d1a1e5;
-  }
-  /* Deslizamos el slider a la derecha cuando el checkbox esta activado <input id='button_deleteRutin' type="button" value='icon' onClick={handletoClearAll}/> */ 
+/* Ocultamos el checkbox html */
+.switch input {
+  display:none;
+}
   
-   
-  /* Aplicamos efecto de bordes redondeados en slider y en el fondo del slider *///E:/Projectes/webmanager/Client/public/litter.png
+/* Formateamos la caja del interruptor sobre la cual se deslizará la perilla de control o slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #b9b3b3;
+  text-align: center;
+  transition: .4s;
+}
   
-  .slider.round {
-    border-radius: 5px;
-  }
+/* Pintamos la perilla de control o slider usando el selector before */
+
   
+/* Cambiamos el color de fondo cuando el checkbox esta activado */
+input:checked + .slider {
+  background-color: #54d1a1e5;
+}
+/* Deslizamos el slider a la derecha cuando el checkbox esta activado <input id='button_deleteRutin' type="button" value='icon' onClick={handletoClearAll}/> */ 
+
   
-  //----------------------------- form routin -----------------------------------------
-  @media screen and (min-width: 1025px) {
-    .form_Routine{
-      margin-right: 10%;
-    }
-  }
-  
+/* Aplicamos efecto de bordes redondeados en slider y en el fondo del slider *///E:/Projectes/webmanager/Client/public/litter.png
+
+.slider.round {
+  border-radius: 5px;
+  padding-top: 6px;
+  color: black;
+}
+
+
+//----------------------------- form routin -----------------------------------------
+@media screen and (min-width: 1025px) {
   .form_Routine{
-    display: flex;
-    float:left;
-    min-width: 40rem;
-    max-width: 80rem;
-    height: 100%;
-    background-color: #a09d9d1f;
-    border-radius: 15px;
-    /*s'ha de fer que els bloks es moguin cap a vaix a la dreta*/
-  } 
-  
-  .viwRoutin{
-    width:100%;
-    text-align: center;
+    margin-right: 10%;
   }
-  
-  #title_task{
-    padding: 4% 0% 0 4% ;
-    color: rgb(240, 240, 240);
-    font-size: 20px;
-  }
-  
-  #button_play_all{
-    margin-left:4%;
-    border-radius: 20px;
-    padding: 0% 1.2% 0% 1.2%;
-    font-weight: bold;
-    color: #000000ab;
-    background-color: #ece9d5c9;
-    border-color: #ffffff;
-    box-shadow: 1px 0px 2px 2px rgb(253, 253, 253);
-  }
-  
-  .viwRoutin{
-    margin:  15px;
-    width: 100%;
-  }
-  
-  .container_inputsApp{
-    margin: center;
-    padding: 0% 0% 7% 16%;
-    width: 100%;
-  }
-  #btton_add_app{
-    border-radius:20px;
-    outline: none;
-    width:20%; 
-    margin: 0% 0% 5% 0%;
-    border-color: #5734f3;
-    background-color: rgb(212, 212, 255);
-  }
-  
-  /*
-  .slider.round {
-    border-radius: 5px;
-  }
-  .flexfolw{
-    display: flex;
-    flex-flow: row wrap; 
-  }
-  .container_Routine{
-    margin: 30px 30px;
-    background-color: #a09d9d9a;
-    border-radius: 15px;
-    padding: center;
-    /*s'ha de fer que els bloks es moguin cap a vaix a la dreta*/
-  /*
-  } 
-  
-  .viwRoutin{
-    margin: auto 15px;
-  
-  
-  .flexfolw{
-    flex-flow: row wrap;
-  }
-  */
+}
+
+.form_Routine{
+  display: flex;
+  float:left;
+  min-width: 45rem;
+  max-width: 80rem;
+  height: 100%;
+  background-color: #a09d9d1f;
+  border-radius: 15px;
+  /*s'ha de fer que els bloks es moguin cap a vaix a la dreta*/
+} 
+
+.viwRoutin{
+  width:100%;
+  text-align: center;
+}
+
+#title_task{
+  padding: 4% 0% 0 4% ;
+  color: rgb(240, 240, 240);
+  font-size: 25px;
+}
+
+#button_play_all{
+  margin-left:4%;
+  border-radius: 20px;
+  padding: 0% 1.2% 0% 1.2%;
+  font-weight: bold;
+  color: #000000ab;
+  background-color: #ece9d5c9;
+  border-color: #ffffff;
+  box-shadow: 1px 0px 2px 2px rgb(253, 253, 253);
+}
+
+.viwRoutin{
+  margin:  15px;
+  width: 100%;
+}
+
+.container_inputsApp{
+  margin: center;
+  padding: 0% 0% 7% 16%;
+  width: 100%;
+}
+#btton_add_app{
+  border-radius:20px;
+  outline: none;
+  color: black;
+  height: 5%;
+  width:20%; 
+  margin: 0% 0% 5% 0%;
+  border-color: #5734f3;
+  background-color: rgb(212, 212, 255);
+}
+
+/*
+.slider.round {
+  border-radius: 5px;
+}
+.flexfolw{
+  display: flex;
+  flex-flow: row wrap; 
+}
+.container_Routine{
+  margin: 30px 30px;
+  background-color: #a09d9d9a;
+  border-radius: 15px;
+  padding: center;
+  /*s'ha de fer que els bloks es moguin cap a vaix a la dreta*/
+/*
+} 
+
+.viwRoutin{
+  margin: auto 15px;
+
+
+.flexfolw{
+  flex-flow: row wrap;
+}
+*/

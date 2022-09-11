@@ -22,9 +22,7 @@ app.listen(PORT, () => {
 });
 
 // Global variables
-const __filename = fileURLToPath(import.meta.url); 
-const __dirname = path.dirname(__filename);
-console.log('ruta',__dirname + '/Client/public')
+
 //app.use(cookieParser());
 //app.use(flash());
 
@@ -34,7 +32,6 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors())
 app.use(express.urlencoded({ extended: false }));
-app.set('views', path.join(__dirname, './Client/public/')); 
 app.engine('html', engines.ejs);
 //app.use(express.static(path.join(__dirname + './Client/public')));
 

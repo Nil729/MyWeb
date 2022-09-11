@@ -61,7 +61,7 @@ export const postTask= async (req, res)=> {
         });
         
     } catch (err) {console.log('Error: ', err.message);}
-    res.render('index.html');
+    //res.render('index.html');
 
     // AAAAAAAAAAAAAAAAAAAAAA? provar de fer amb rutes que cada un dels components tinguin rutes així poder renderizarles i actualizar els components.
     //res.render('users/singup')
@@ -78,7 +78,7 @@ export const deleteTask= async (req, res)=> {  // fero per la ruta de la tasca :
         con.query(sqlDelete, deltask, (err, result)=> {
             if (err) throw err;
         })
-        res.render('index.html');
+        //res.render('index.html');
 
     } catch (err){ console.log('Error: ', err.message);}
 }
@@ -128,7 +128,7 @@ export const postApp= async (req, res)=> {
           if (err) throw err;
         });
     } catch (err) {console.log('Error: ', err.message);}
-    res.render('index.html');
+    //res.render('index.html');
 };
 
 export const updateApp= async (req, res)=>{
@@ -143,7 +143,7 @@ export const updateApp= async (req, res)=>{
             if (err) throw err;
         });
     } catch (err) {console.log('Error: ', err.message);}
-    res.render('index.html');
+    //res.render('index.html');
 };
 
 export const deleteApp= async(req,res)=> {
@@ -154,5 +154,5 @@ export const deleteApp= async(req,res)=> {
             if (err) throw err;
         })
     }catch (err){ console.log('Error: ', err.message);}
-    res.render('index.html');
+    //res.render('index.html');
 };
