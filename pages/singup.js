@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import styles from '../../styles/Home.module.css'
 import SingupForm from "../Components/Component_signup/Singup_form.js"
 
 export default function LoginPage() {

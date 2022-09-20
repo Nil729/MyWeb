@@ -13,7 +13,7 @@ export default function Page_render_webmanager() {
         </div>
         
         <main className={styles.main}>
-          <Webmfanager/>
+          <Webmanager/>
         </main>
   
         <footer className={styles.footer}>

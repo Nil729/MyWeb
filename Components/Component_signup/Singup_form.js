@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function SingupForm(){
-
+    
     return (
         <> 
             <div>

@@ -1,0 +1,15 @@
+|-Nextjs-root
+  |-Components
+    |-Header.js
+    |-Footer.js
+    |-MoreExamples.js
+  |-styles
+   |-globals.css
+   |-header.module.css
+   |-footer.module.css
+  |-Services
+    |-api              #Axios config to connect to my api
+  |-Context
+   |-AuthContext.js    #Global context to my app for auth purposes
+  |-pages
+   |-index.js
