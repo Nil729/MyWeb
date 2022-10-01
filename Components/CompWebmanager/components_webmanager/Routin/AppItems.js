@@ -42,7 +42,6 @@ export function AppItems({app, toggleAppdel, toggleAppupdate, toggleplayapp}){
     };
     const playApp = () =>{
         toggleplayapp(id_app, url_app, time_min)
-        
     }
 
     

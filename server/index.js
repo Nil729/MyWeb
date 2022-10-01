@@ -10,6 +10,7 @@ import cors from 'cors';
 import engines from 'consolidate';
 import path from 'path'
 import webmanagerRoutes from './routes/webmanager.routes.js';
+import userRoutes from './routes/session.routes.js';
 import {fileURLToPath} from 'url';
 //Setings
 
@@ -33,6 +34,7 @@ app.use(express.json());
 app.use(cors())
 app.use(express.urlencoded({ extended: false }));
 app.engine('html', engines.ejs);
+
 //app.use(express.static(path.join(__dirname + './Client/public')));
 
 
@@ -40,6 +42,9 @@ app.engine('html', engines.ejs);
 
 // Main Routes
 app.use('/user/webmanager', webmanagerRoutes);
+app.use('/user', userRoutes);
+
+
 
 
 // Static files
