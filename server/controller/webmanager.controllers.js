@@ -37,6 +37,7 @@ ADD CONSTRAINT `id_task`
 */
 
 export const getWebmanager = async (req, res) =>{
+    
     try {
         con.query('select t.id_task, t.name_task from users as u left join tasks as t on u.id_user = t.user_id WHERE u.id_user= 2 ;', (err,nameApps)=> {
 

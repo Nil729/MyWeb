@@ -1,7 +1,9 @@
 import con from "../config/db.config.js"
 
 
-export const login = async () => {
+export const login = (req, res) => {
+  return res.json('login')
+  /*
   let userForm = req.body;
   let dataUserFormLogin= [userForm.username, userForm.userpsw];
   try {
@@ -10,6 +12,7 @@ export const login = async () => {
         if (err) throw err;
       });
   } catch (err) {console.log('Error: ', err.message);};
+  */
 };
 
 

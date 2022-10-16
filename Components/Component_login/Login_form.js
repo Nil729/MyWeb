@@ -1,4 +1,6 @@
 import { useState } from "react";
+import apiClient  from '../../Services/http-coomon';
+
 
 export default function LoginForm(){
 
@@ -13,10 +15,13 @@ export default function LoginForm(){
             [e.target.name]: e.target.value, // e.target.value = nil e.target.name = user_name (name input)
         })
     };
-    const handleSubmit = (e) =>{
+    const handleSubmit = async (e) =>{
         e.preventDefault();  // Catch a default e value
-        console.log(credentials)
+        const resposne = await apiClient.get('/user/login', resposne);// s'ha de canviar a questa ruta per post a tooots.
+        console.log(resposne);
     }
+
+
     return (
         <> 
             <div>

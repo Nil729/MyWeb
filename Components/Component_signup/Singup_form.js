@@ -19,7 +19,7 @@ export default function SingupForm(){
         console.log(singupFom_data)
 
         try {
-            await apiClient.post('/user/signup', singupFom_data);
+            await apiClient.get('/user/signup', singupFom_data);
         } catch(err){console.error(err)}
     };
 
