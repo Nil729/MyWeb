@@ -1,8 +1,34 @@
-import con from "../config/db.config.js"
+import jwt from "jsonwebtoken";
+import {serialize} from "cookie";
+import { token } from "morgan";
+import con from "../config/db.config.js";
+import { getMaxAge } from "next/dist/server/image-optimizer.js";
 
 
 export const login = (req, res) => {
-  return res.json('login')
+  const {username, password} = req.body;
+  if (username == 'admin' && password == 'admin'){
+    jwt.sign({  
+      exp: Math.floor(Date.now() / 1000) + (60 * 60), // Token sera valid per 1h
+      //Crear una consulta a la db que ens dongui certes credencials
+      email: '',
+      username: '',
+
+    }, 'secret') // crear una .env que hi hagui a queta clau secreta
+    const serialized = serialize('myToken', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV == 'production',
+      sameSite: 'none',
+      maxAge: 1000 * 60 * 60,
+      path: '/'
+    });
+  
+  
+    res.setHeader('Set-Cookie', serialized)
+    return res.json('login succerfull');
+  }
+
+
   /*
   let userForm = req.body;
   let dataUserFormLogin= [userForm.username, userForm.userpsw];

@@ -17,7 +17,7 @@ export default function LoginForm(){
     };
     const handleSubmit = async (e) =>{
         e.preventDefault();  // Catch a default e value
-        const resposne = await apiClient.get('/user/login', resposne);// s'ha de canviar a questa ruta per post a tooots.
+        const resposne = await apiClient.post('/user/login', credentials);// s'ha de canviar a questa ruta per post a tooots.
         console.log(resposne);
     }
 
