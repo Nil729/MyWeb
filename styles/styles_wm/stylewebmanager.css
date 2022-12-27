@@ -32,19 +32,24 @@
   color: white;
 }
 .input_newRoutine{
-  color: black;
+  color: rgb(255, 254, 254);
+  font-size: 1.2em;
   width: 90%;
-  height: 25px;
+  height: 26px;
   margin: .5rem;
 }
 .button_add{
+  border: none;
+  box-shadow: 1px 0px 2px 2px rgb(253, 253, 253);
   color: black;
   font-weight: bold;
   background-color: beige;
   border-radius: 4px;
-  height: 30px;
-  width: 40px;
-  float: right;
+  margin-top: 10px ;
+  margin-left: 40% ;
+  height: 20px;
+  width: 60px;
+  border-radius: 20px;
 }
 .button_add:active{
   background-color:rgba(245, 245, 220, 0.589);
