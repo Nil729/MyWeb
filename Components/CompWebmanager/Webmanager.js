@@ -83,7 +83,6 @@ export function Webmanager () {
   const handletoClearAll = () =>{
     const newTodos = todos.filter((todo) => !todo.selected);
     const delTodo = todos.filter((todo) => todo.selected);
-
     try {
       (async () => {
         console.log(delTodo[0].id);

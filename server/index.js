@@ -1,6 +1,9 @@
 import express from "express";
 import morgan from 'morgan';
 import cors from 'cors';
+import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
+import methodOverride from "method-override"; 
 
 //import apiClient  from 'E:/Projectes/webmanager/Client/src/http-coomon';
 //import bodyParser from 'body-parser'
@@ -12,6 +15,7 @@ import path from 'path'
 import webmanagerRoutes from './routes/webmanager.routes.js';
 import userRoutes from './routes/session.routes.js';
 import {fileURLToPath} from 'url';
+
 //Setings
 
 const PORT = process.env.PORT || 3001;
@@ -28,11 +32,15 @@ app.listen(PORT, () => {
 //app.use(flash());
 
 // Midelwares
-
+const corsOptions = {};
+app.use(cors({corsOptions}));
+app.use(methodOverride('_method'));
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(cors())
-app.use(express.urlencoded({ extended: false }));
+app.use(cors());
+app.use(express.urlencoded({extended: false}));
+app.use(cookieParser());
+
 app.engine('html', engines.ejs);
 
 //app.use(express.static(path.join(__dirname + './Client/public')));

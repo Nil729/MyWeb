@@ -122,6 +122,7 @@ export const getApp = async (req, res)=>{
 
 export const postApp= async (req, res)=> {
     let app = req.body;
+    
     let dataApp= [app.name_app, app.url_app, app.time_hor, app.time_min, app.time_sec, app.task_id ];
     try {
         const sqlPostData = 'INSERT INTO `db_web`.`apps` (`name_app`, `url_app`, `time_hor`, `time_min`, `time_sec`, `task_id`) VALUES (?, ?, ?, ?, ?, ?)' 

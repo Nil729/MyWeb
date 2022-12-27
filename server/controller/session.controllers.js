@@ -1,16 +1,19 @@
 import jwt from "jsonwebtoken";
 import {serialize} from "cookie";
-import { token } from "morgan";
+
+
 import con from "../config/db.config.js";
 import { getMaxAge } from "next/dist/server/image-optimizer.js";
+
 
 
 export const login = (req, res) => {
   const {username, password} = req.body;
   if (username == 'admin' && password == 'admin'){
+
     jwt.sign({  
       exp: Math.floor(Date.now() / 1000) + (60 * 60), // Token sera valid per 1h
-      //Crear una consulta a la db que ens dongui certes credencials
+      // Haure de Crear una consulta a la db que ens dongui certes credencials
       email: '',
       username: '',
 
@@ -22,11 +25,13 @@ export const login = (req, res) => {
       maxAge: 1000 * 60 * 60,
       path: '/'
     });
-  
-  
-    res.setHeader('Set-Cookie', serialized)
+
+    res.cookie("x-access-token", token);
+    //res.redirect('http://localhost:3002/home');
     return res.json('login succerfull');
   }
+
+  res.status(401).json({erro:'login failed'});
 
 
   /*
@@ -41,7 +46,6 @@ export const login = (req, res) => {
   */
 };
 
-
 export const singup = async (req,res) => {
   let userSingupForm = req.body;
   const dataUserForm= [userSingupForm.userName, userSingupForm.userFullName, userSingupForm.userEmail, userSingupForm.userPSW];
@@ -51,5 +55,5 @@ export const singup = async (req,res) => {
         if (err) throw err;
       });
 
-  } catch (err) {console.log('Error: ', err.message);};
+  } catch (err) {console.log('Error: ', err.message)};
 };

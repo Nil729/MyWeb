@@ -1,12 +1,12 @@
 import { useState } from "react";
-import apiClient  from '../../Services/http-coomon';
 
+import axios from 'axios';
 
 export default function LoginForm(){
 
     const [credentials, setCredentials] = useState({
-        username: '',
-        password: ''
+        username: 'admin',
+        password: 'admin'
     });
 
     const handlechanges = (e) => {
@@ -17,10 +17,10 @@ export default function LoginForm(){
     };
     const handleSubmit = async (e) =>{
         e.preventDefault();  // Catch a default e value
-        const resposne = await apiClient.post('/user/login', credentials);// s'ha de canviar a questa ruta per post a tooots.
+        console.log(credentials)
+        const resposne = await axios.post('/api/auth/login', credentials);// s'ha de canviar a questa ruta per post a tooots.
         console.log(resposne);
     }
-
 
     return (
         <> 
