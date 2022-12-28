@@ -1,11 +1,11 @@
 import { useState } from "react";
-
+import {useRouter} from "next/router";
 import axios from 'axios';
 
 export default function LoginForm(){
-
+    const router = useRouter()
     const [credentials, setCredentials] = useState({
-        username: 'admin',
+        username: 'admin', 
         password: 'admin'
     });
 
@@ -19,6 +19,7 @@ export default function LoginForm(){
         e.preventDefault();  // Catch a default e value
         console.log(credentials)
         const resposne = await axios.post('/api/auth/login', credentials);// s'ha de canviar a questa ruta per post a tooots.
+        router.push('/home');
         console.log(resposne);
     }
 

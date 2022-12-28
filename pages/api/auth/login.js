@@ -7,7 +7,7 @@ export default function login(req, res){
 
   const {username, password} = req.body;
 
-  if (username == 'admin' && password == 'admin'){
+  if (username == 'admin' && password == 'admin'){ // a questa validació s'ha de fer a la db
 
     const token = jwt.sign({  
       exp: Math.floor(Date.now() / 1000) + (60 * 60) , // Token sera valid per 1h
@@ -23,9 +23,13 @@ export default function login(req, res){
       maxAge: 1000 * 60 * 60,
       path: '/'
     })
+    try {
+      res.setHeader('Set-Cookie', serialized);
+    } catch (err) {console.log('Error: ', err.message);};
 
-    res.setHeader('Set-Cookie', serialized)
-    return res.json('login succerfull')
+
+    
+    return res.status(200).json({message: 'login succerfull'});
   }
 
   res.status(401).json({erro:'login failed'});

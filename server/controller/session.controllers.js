@@ -1,11 +1,12 @@
 import jwt from "jsonwebtoken";
 import {serialize} from "cookie";
 
+// A quest fitxer no es necessari, ja que de moment utilitzem el de ./api/auth/login.js
 
 import con from "../config/db.config.js";
 import { getMaxAge } from "next/dist/server/image-optimizer.js";
-
-
+import Router from "next/router.js";
+import router from "../routes/session.routes.js";
 
 export const login = (req, res) => {
   const {username, password} = req.body;
@@ -25,8 +26,10 @@ export const login = (req, res) => {
       maxAge: 1000 * 60 * 60,
       path: '/'
     });
-
-    res.cookie("x-access-token", token);
+    
+    
+    res.cookie("x-access-token", serialized);
+    
     //res.redirect('http://localhost:3002/home');
     return res.json('login succerfull');
   }
