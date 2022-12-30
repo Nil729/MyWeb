@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect} from 'react';
 
 import Image from 'next/image'
 import apiClient  from '../../Services/http-coomon';
-import litter from 'e:/Projectes/webmanager/Client/src/img/litter.png';
+import litter from './../../public/img_wm/litter.png';
 import {v4 as uuidv4 } from "uuid";
 import {TodoList} from './components_webmanager/TodoList';
 import {ViewRoutin} from './components_webmanager/Routin/ViewRoutin';
