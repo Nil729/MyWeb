@@ -30,7 +30,6 @@ export const login = (req, res) => {
     
     res.cookie("x-access-token", serialized);
     
-    //res.redirect('http://localhost:3002/home');
     return res.json('login succerfull');
   }
 
