@@ -2,7 +2,7 @@
 import mysql from "mysql2"
 
 const db = mysql.createConnection({
-  host: "localhost",
+  host: "172.18.0.2", // MYSQL container IP
   user: "root",
   port: 3306,
   password: "12345678",
