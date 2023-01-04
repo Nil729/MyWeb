@@ -1,7 +1,7 @@
 import Image from 'next/image'
-import ico_Play from'E:/Projectes/webmanager/Client/src/img/play.png'
-import ico_delete from'E:/Projectes/webmanager/Client/src/img/deletevermell.png'
-import ico_Update from'E:/Projectes/webmanager/Client/src/img/diskette.png'
+import ico_Play from'./../../../../public/img_wm/play.png'
+import ico_delete from'./../../../../public/img_wm/deletevermell.png'
+import ico_Update from'./../../../../public/img_wm/diskette.png'
 import React, {useRef} from 'react';
 //import apiClient  from 'E:/Projectes/webmanager/Client/src/http-coomon';
 
