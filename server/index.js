@@ -13,7 +13,7 @@ import methodOverride from "method-override";
 import engines from 'consolidate';
 import path from 'path'
 import webmanagerRoutes from './routes/webmanager.routes.js';
-import userRoutes from './routes/session.routes.js';
+// import userRoutes from './routes/session.routes.js';
 import {fileURLToPath} from 'url';
 
 //Setings
@@ -50,7 +50,7 @@ app.engine('html', engines.ejs);
 
 // Main Routes
 app.use('/user/webmanager', webmanagerRoutes);
-app.use('/user', userRoutes);
+// app.use('/user', userRoutes);
 
 
 

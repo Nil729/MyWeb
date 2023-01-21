@@ -2,11 +2,12 @@ import { useState } from "react";
 import {useRouter} from "next/router";
 import axios from 'axios';
 
+
 export default function LoginForm(){
     const router = useRouter()
-    const [credentials, setCredentials] = useState({
-        username: 'admin', 
-        password: 'admin'
+    const [credentials, setCredentials] = useState({ // Make a credentials object with username and password
+        username: '', 
+        password: ''
     });
 
     const handlechanges = (e) => {
@@ -22,6 +23,17 @@ export default function LoginForm(){
         router.push('/home');
         console.log(resposne);
     }
+    // handle singup
+
+    const handleSingup = async (e) =>{
+        router.push('/singup');
+    }
+
+  
+    
+
+
+    // handle logout
 
     return (
         <> 
@@ -35,6 +47,8 @@ export default function LoginForm(){
                     />
                     <button>login</button>
                 </form>
+
+                <button onClick={handleSingup} type="button">singup</button>
             </div>
         </>
     );
