@@ -5,9 +5,10 @@ import NavItem from "./NavItem";
 
 const MENU_LIST = [
   { text: "Home", href: "/home" }, // Si en el href posses una ruta ex: /api/hello --> si que fnciona 
-  { text: "Projects", href: "/projects/Page_webmanager" },
+  { text: "WebManager", href: "/projects/Page_webmanager" },
+  { text: "NetDoc", href: "/projects/pageNetDoc" },
   { text: "About Us", href: "/about" },
-  { text: "Contact", href: "/contact" },
+  { text: "Contact", href: "/contact" }
 ];
 const Navbar = () => {
   const [navActive, setNavActive] = useState(null);

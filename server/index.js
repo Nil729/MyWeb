@@ -53,8 +53,6 @@ app.use('/user/webmanager', webmanagerRoutes);
 app.use('/user', userRoutes);
 
 
-
-
 // Static files
 
 

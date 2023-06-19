@@ -2,9 +2,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../../styles/Home.module.css';
 import Navbar from '../../Components/component_navbar/Navbar';
-import {Webmanager} from '../../Components/CompWebmanager/Webmanager';
+import Netdoc from '../../Components/ComponentNetDoc/NetDoc';
 
-export default function Page_render_webmanager() {
+export default function pageNetDoc() {
   return (
     <div className={styles.container}>
       
@@ -13,7 +13,7 @@ export default function Page_render_webmanager() {
       </div>
       
       <main className={styles.main}>
-        <Webmanager/>
+        <Netdoc/>
       </main>
 
       <footer className={styles.footer}>
