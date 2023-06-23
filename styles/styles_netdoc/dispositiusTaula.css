@@ -1,0 +1,20 @@
+.device-management {
+    display: flex;
+    justify-content: space-between;
+}
+
+.device-grid {
+    flex: 1;
+    /* width: 50%; */
+    padding: 20px;
+}
+
+.device-grid table {
+    border-collapse: collapse;
+}
+
+.device-grid th,
+.device-grid td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}

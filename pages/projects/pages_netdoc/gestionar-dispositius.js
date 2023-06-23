@@ -8,7 +8,8 @@ import axios from 'axios';
 import Image from 'next/image';
 import styles from '../../../styles/Home.module.css';
 import Navbar from '../../../Components/component_navbar/Navbar';
-import DispositiusForm from '../../../Components/ComponentNetDoc/DispositiuForm';
+import DispositiusForm from '../../../Components/ComponentNetDoc/componentsDispositius/DispositiuForm';
+
 
 
 export default function GestionarDispositius() {
