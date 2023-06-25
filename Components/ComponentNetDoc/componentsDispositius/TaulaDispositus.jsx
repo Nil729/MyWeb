@@ -1,22 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 
-const TaulaDispositus = ({dispositius, onEdit}) => {
+const TaulaDispositus = ({dispositius, onEdit, onDelete}) => {
 
   const [selectedRow, setSelectedRow] = useState(null);
-  const [editMode, setEditMode] = useState(false);
 
   const handleRowClick = (index) => {
     setSelectedRow(index);
   };
 
-  const handleEdit = (index) => {
+  const handledeviceEdit = (index) => {
     setSelectedRow(index);
-    setEditMode(true);
     if (onEdit) {
       onEdit(index);
     }
   };
+
+  const handledeviceDelete = (index) => {
+    setSelectedRow(index);
+    if (onDelete) {
+      onDelete(index);
+    }
+  };
+  
 
   return (
     <div className="device-grid">
@@ -49,7 +55,9 @@ const TaulaDispositus = ({dispositius, onEdit}) => {
               <td>{dispositiu.vlan}</td>
               <td>{dispositiu.portEntrada}</td>
               <td>
-                <button onClick={() => handleEdit(index)}>Editar</button>
+                <button onClick={() => handledeviceEdit(index)}>Editar</button>
+
+                <button onClick={() => handledeviceDelete(index)}>Eliminar</button>
 
               </td>
             </tr>

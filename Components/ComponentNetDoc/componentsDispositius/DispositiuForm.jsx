@@ -6,8 +6,6 @@ import TaulaDispositus from './TaulaDispositus';
 
 const DeviceManagementForm = () => {
 
-  const [editMode, setEditMode] = useState(false);
-
   const [deviceType, setDeviceType] = useState('final');
 
   const [dispositius, setDispositius] = useState([    
@@ -16,7 +14,7 @@ const DeviceManagementForm = () => {
     { nom: 'Dispositiu 3', ip: '192.168.1.3', mac: '11:22:33:44:55:66', port: 2, ubicacio: 'Aula 3', vlan: 3, portEntrada: 1 },
   ]);
 
-  const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedRowForm, setselectedRowForm] = useState(null);
 
   const [formValues, setFormValues] = useState({
     deviceName: '',
@@ -78,27 +76,37 @@ const DeviceManagementForm = () => {
       //   // Aquí pots gestionar els errors de l'enviament
       // });
       // Reseteja el formulari
-      formValues.rest;
+      //formValues.rest;
 
   };
 
-  const handleDelete = () => {
-    // Aquí pots gestionar l'eliminació del dispositiu
-    if (selectedRow !== null) {
+  const handleDelete = (index) => {
+    if (index >= 0 && index < dispositius.length) {
       const updatedDispositius = [...dispositius];
-      updatedDispositius.splice(selectedRow, 1);
+      updatedDispositius.splice(index, 1);
       setDispositius(updatedDispositius);
-      setSelectedRow(null);
     }
+    // gurada els canvis
+    setselectedRowForm(null);
+    setFormValues({
+      deviceName: '',
+      ip: '',
+      mac: '',
+      ethernetPorts: '',
+      location: '',
+      vlan: '',
+      ethernetPort: '',
+    });
+    
   };
+
 
 
   const handleEditRow = (index) => {
-    console.log('Edit row:', index);
     if (index >= 0 && index < dispositius.length) {
+      console.log('index', index);
       const selectedDevice = dispositius[index];
       // Actualitza l'estat del dispositiu seleccionat
-      console.log(selectedDevice.nom);
       // Actualitzar les dades del formulari amb les dades de la fila seleccionada
       setFormValues({
         deviceName: selectedDevice.nom,
@@ -109,14 +117,16 @@ const DeviceManagementForm = () => {
         vlan: selectedDevice.vlan,
         ethernetPort: selectedDevice.portEntrada,
       });
+
+      setselectedRowForm(index);
     }
   };
 
   const handleSaveRow = () => {
 
-    if (selectedRow !== null) {
+    if (selectedRowForm !== null) {
       const updatedDispositius = [...dispositius];
-      updatedDispositius[selectedRow] = {
+      updatedDispositius[selectedRowForm] = {
         nom: formValues.deviceName,
         ip: formValues.ip,
         mac: formValues.mac,
@@ -126,7 +136,7 @@ const DeviceManagementForm = () => {
         portEntrada: formValues.ethernetPort,
       };
       setDispositius(updatedDispositius);
-      setSelectedRow(null);
+      setselectedRowForm(null);
       setFormValues({
         deviceName: '',
         ip: '',
@@ -136,6 +146,7 @@ const DeviceManagementForm = () => {
         vlan: '',
         ethernetPort: '',
       });
+
     }
   };
 
@@ -195,15 +206,14 @@ const DeviceManagementForm = () => {
           <input type="text" name="ethernetPort" value={formValues.ethernetPort} onChange={handleChange} required />
         </div>
         <div className="form-buttons">
+          <button type="reset">Neteja</button>
 
           <button type="button" onClick={handleSubmit}>Afegeix</button>
 
           <button type="button" onClick={handleSaveRow}>Gurada</button>
-
-          <button type="button" onClick={handleDelete}>Eliminar</button>
         </div>
       </form>
-      <TaulaDispositus dispositius= {dispositius} onEdit={handleEditRow}  />
+      <TaulaDispositus dispositius={dispositius} onEdit={handleEditRow} onDelete={handleDelete}/>
     </div>
   );
 };

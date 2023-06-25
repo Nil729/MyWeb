@@ -1,0 +1,45 @@
+.title-form {
+  margin-top: 0;
+  text-align: center;
+}
+.network-form form {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #fff; /* Canvia #fff pel color del marc desitjat */
+  border-radius: 4px;
+  /* Canvia #fff pel color de fons desitjat */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center; /* Centra verticalment els elements */
+  gap: 10px; /* Espai entre els elements */
+  justify-content: space-between; /* Col·loca els elements a les extremitats horitzontals */
+}
+
+.network-form .form-group {
+  margin-bottom: 15px;
+  flex-basis: calc(30% - 5px); /* Fes que cada camp tingui un 30% de l'ample disponible, descomptant l'espai entre ells */
+}
+
+.network-form label {
+  width: 140px;
+}
+
+.network-form button {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+.network-form button:hover {
+  background-color: #0056b3;
+}
+
+.network-form button {
+  justify-content: flex-end; /* Alinea el contingut a la dreta */
+  margin: 10px; /* Espai superior per separar dels camps */
+  flex-basis: 100%; /* Fes que el grup de botons ocupi tot l'ample disponible */
+}

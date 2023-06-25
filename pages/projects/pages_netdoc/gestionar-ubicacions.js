@@ -6,13 +6,39 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
+
+import Image from 'next/image';
+import styles from '../../../styles/Home.module.css';
+import Navbar from '../../../Components/component_navbar/Navbar';
+import UbicacioForm from '../../../Components/ComponentNetDoc/componetnsUbicacio/UbicacioForm';
+
+
 export default function GestionarUbicacions() {
 
     return (
 
+        <div className={styles.container}>
+      
         <div>
-            <h1>Gestionar ubuicacions</h1>
-            <p>Aquí pots gestionar els teus ubuicacions.</p>
+          <Navbar/>
         </div>
+        
+        <main className={styles.main}>
+          <UbicacioForm/>
+        </main>
+  
+        <footer className={styles.footer}>
+          <a
+            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Powered by{' '}
+            <span className={styles.logo}>
+              <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+            </span>
+          </a>
+        </footer>
+      </div>
     );
 };
