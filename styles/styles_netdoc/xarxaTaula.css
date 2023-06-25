@@ -1,11 +1,11 @@
-.network-table-container {
+.ubicacio-table-container {
     display: flex;
     justify-content: center;
     background-color: #000;
     padding: 20px;
 }
 
-.network-table {
+.ubicacio-table {
     width: 100%;
     margin-top: 20px; /* Add spacing from the form */
     display: flex;
@@ -13,31 +13,31 @@
 }
 
 
-.network-table th,
-.network-table td {
+.ubicacio-table th,
+.ubicacio-table td {
     padding: 10px;
     text-align: left;
     border: 1px solid #5e5e5e;
     color: #ffffff;
 }
 
-.network-table th {
+.ubicacio-table th {
     background-color: #202020;
     font-weight: bold;
 }
 
-.network-table tr:hover {
+.ubicacio-table tr:hover {
     background-color: #4b4b4b;
 }
 
-.network-table .action-buttons {
+.ubicacio-table .action-buttons {
     
     display: flex;
     gap: 5px;
 }
 
-.network-table .edit-button,
-.network-table .delete-button {
+.ubicacio-table .edit-button,
+.ubicacio-table .delete-button {
     padding: 5px 10px;
     background-color: #007bff;
     color: #fff;
@@ -46,8 +46,8 @@
     cursor: pointer;
 }
 
-.network-table .edit-button:hover,
-.network-table .delete-button:hover {
+.ubicacio-table .edit-button:hover,
+.ubicacio-table .delete-button:hover {
     background-color: #0056b3;
 }
 

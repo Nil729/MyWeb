@@ -4,19 +4,18 @@ import TaulaUbicacions from './TaulaUbicacions';
 
 
 const NetworkForm = () => {
-    const [networkData, setNetworkData] = useState([]);
+    const [ubicacioData, setUbicacioData] = useState([]);
 
-    const [selectedRowXarxaForm, setselectedRowXarxaForm] = useState(null);
+    const [selectedRowUbicacioForm, setselectedRowUbiacioForm] = useState(null);
 
-    const [formvaluesXarxa, setformvaluesXarxa] = useState({
-        networkId: '',
-        networkName: '',
-        description: '',
+    const [formvaluesUbicacio, setformvaluesUbicacio] = useState({
+        ubicacioName: '',
+        descriptionUbicacio: '',
     });
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setformvaluesXarxa((prevValues) => ({
+        setformvaluesUbicacio((prevValues) => ({
             ...prevValues,
             [name]: value,
         }));
@@ -25,69 +24,62 @@ const NetworkForm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        const novaXarxa = {
-            networkId: formvaluesXarxa.networkId,
-            networkName: formvaluesXarxa.networkName,
-            description: formvaluesXarxa.description,
+        const novaUbicacio = {
+            ubicacioName: formvaluesUbicacio.ubicacioName,
+            descriptionUbicacio: formvaluesUbicacio.descriptionUbicacio,
         };
 
-        setNetworkData((prevNetworks) => [...prevNetworks, novaXarxa]);
+        setUbicacioData((prevubicacio) => [...prevubicacio, novaUbicacio]);
 
-        setformvaluesXarxa({
-            networkId: '',
-            networkName: '',
-            description: '',
+        setformvaluesUbicacio({
+            ubicacioName: '',
+            descriptionUbicacio: '',
         });
     };
 
 
-    const handleEditRow = (index) => {
+    const handleEditRowUbicacio = (index) => {
         console.log('index', index);
-        if (index >= 0 && iTaulaXarxandex < networkData.length) {
+
             
-            // Omplir els camps del formulari amb les dades de la fila seleccionada
-            const formvaluesXarxa = networkData[index];
-            setformvaluesXarxa({
-                networkId: formvaluesXarxa.networkId,
-                networkName: formvaluesXarxa.networkName,
-                description: formvaluesXarxa.description,
-            });
+        // Omplir els camps del formulari amb les dades de la fila seleccionada
+        const formvaluesUbicacio = ubicacioData[index];
+        setformvaluesUbicacio({
+            ubicacioName: formvaluesUbicacio.ubicacioName,
+            descriptionUbicacio: formvaluesUbicacio.descriptionUbicacio,
+        });
 
 
-            setselectedRowXarxaForm(index);
-        }
+        setselectedRowUbiacioForm(index);
     };
 
     // Guardar els canvis
     const handleSaveRow = () => {
-        if (selectedRowXarxaForm !== null) {
-            const updatedNetworks = [...networkData];
-            updatedNetworks[selectedRowXarxaForm] = {
-                networkId: formvaluesXarxa.networkId,
-                networkName: formvaluesXarxa.networkName,
-                description: formvaluesXarxa.description,
+        if (selectedRowUbicacioForm !== null) {
+            const updatedubicacio = [...ubicacioData];
+            updatedubicacio[selectedRowUbicacioForm] = {
+                ubicacioName: formvaluesUbicacio.ubicacioName,
+                descriptionUbicacio: formvaluesUbicacio.descriptionUbicacio,
             };
-            setNetworkData(updatedNetworks);
-            setselectedRowXarxaForm(null);
-            setformvaluesXarxa({
-                networkId: '',
-                networkName: '',
-                description: '',
+            setUbicacioData(updatedubicacio);
+            setselectedRowUbiacioForm(null);
+            setformvaluesUbicacio({
+                ubicacioName: '',
+                descriptionUbicacio: '',
             });
         }
     };
     
-    const handleDeleteRowXarxa = (index) => {
+    const handleDeleteRowUbicacio = (index) => {
         // Eliminar la fila seleccionada
-        const updatedNetworks = [...networkData];
-        updatedNetworks.splice(index, 1);
-        setNetworkData(updatedNetworks);
+        const updatedubicacio = [...ubicacioData];
+        updatedubicacio.splice(index, 1);
+        setUbicacioData(updatedubicacio);
         // gurada els canvis
-        setselectedRowXarxaForm(null);
-        setformvaluesXarxa({
-            networkId: '',
-            networkName: '',
-            description: '',
+        setselectedRowUbiacioForm(null);
+        setformvaluesUbicacio({
+            ubicacioName: '',
+            descriptionUbicacio: '',
         });
 
     };
@@ -96,37 +88,26 @@ const NetworkForm = () => {
     return (
         <div className="network-form-container">
             <div className="network-form">
-                <h2 className='title-form'>Formulari de Xarxa</h2>
+                <h2 className='title-form'>Formulari de ubicacions</h2>
                 <form onSubmit={handleSubmit}>
 
                     <div className="form-group">
-                        <label htmlFor="networkId">ID de la Xarxa:</label>
+                        <label htmlFor="ubicacioName">Nom de la Xarxa:</label>
                         <input
                             type="text"
-                            id="networkId"
-                            name="networkId"
-                            value={formvaluesXarxa.networkId}
+                            id="ubicacioName"
+                            name="ubicacioName"
+                            value={formvaluesUbicacio.ubicacioName}
                             onChange={handleChange}
                             required
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="networkName">Nom de la Xarxa:</label>
-                        <input
-                            type="text"
-                            id="networkName"
-                            name="networkName"
-                            value={formvaluesXarxa.networkName}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="description">Descripció:</label>
+                        <label htmlFor="descriptionUbicacio">Descripció:</label>
                         <textarea
-                            id="description"
-                            name="description"
-                            value={formvaluesXarxa.description}
+                            id="descriptionUbicacio"
+                            name="descriptionUbicacio"
+                            value={formvaluesUbicacio.descriptionUbicacio}
                             onChange={handleChange}
                         ></textarea>
                     </div>
@@ -137,7 +118,7 @@ const NetworkForm = () => {
                     </div>
                 </form>
             </div>
-            <TaulaUbicacions networks={networkData} onEditXarxa={handleEditRow} onDeleteXarxa= {handleDeleteRowXarxa} />
+            <TaulaUbicacions ubicacio={ubicacioData} onEditUbicacio={handleEditRowUbicacio} onDeleteUbicacio= {handleDeleteRowUbicacio} />
         </div>
     );
 };

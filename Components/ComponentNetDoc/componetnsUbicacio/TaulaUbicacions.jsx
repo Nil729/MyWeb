@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
 
-
-const NetworkTable = ({ networks, onEditXarxa, onDeleteXarxa }) => {
+const UbicacionsTable = ({ ubicacio, onEditUbicacio, onDeleteUbicacio }) => {
 
   const [selectedRow, setSelectedRow] = useState(null);
 
 
-  const handleEditRowXarxa = (index) => {
+  const handleEditRowUbicacio = (index) => {
     setSelectedRow(index);
-    if (onEditXarxa) { // Si existeix la propietat onEditXarxa, crida a la funció
-      onEditXarxa(index);
+    if (onEditUbicacio) { // Si existeix la propietat onEditUbicacio, crida a la funció
+      onEditUbicacio(index);
     }
   };
 
 
-  const handleDeleteRowXarxa = (index) => {
+  const handleDeleteRowUbicacio = (index) => {
     setSelectedRow(index);
-    if (onDeleteXarxa) { // Si existeix la propietat onEditXarxa, crida a la funció
-      onDeleteXarxa(index);
+    if (onDeleteUbicacio) { // Si existeix la propietat onEditUbicacio, crida a la funció
+      onDeleteUbicacio(index);
     }
   };
 
@@ -25,24 +24,22 @@ const NetworkTable = ({ networks, onEditXarxa, onDeleteXarxa }) => {
 
 
   return (
-    <div className="network-table">
+    <div className="ubicacio-table">
       <table>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Nom de la Xarxa</th>
             <th>Descripció</th>
           </tr>
         </thead>
         <tbody>
-          {networks.map((network, index) => (
+          {ubicacio.map((ubicacio, index) => (
 
             <tr key={index}>
-              <td>{network.networkId}</td>
-              <td>{network.networkName}</td>
-              <td>{network.description}</td>
-              <td><button type='button' className='editButonXarxa' onClick={() => handleEditRowXarxa(index)}>Edita</button></td>
-              <td><button type='button' className='delButonXarxa' onClick={() => handleDeleteRowXarxa(index)}>Eliminar</button></td>
+              <td>{ubicacio.ubicacioName}</td>
+              <td>{ubicacio.descriptionUbicacio}</td>
+              <td><button type='button' className='editButonXarxa' onClick={() => handleEditRowUbicacio(index)}>Edita</button></td>
+              <td><button type='button' className='delButonXarxa' onClick={() => handleDeleteRowUbicacio(index)}>Eliminar</button></td>
             </tr>
             
           ))}
@@ -52,4 +49,4 @@ const NetworkTable = ({ networks, onEditXarxa, onDeleteXarxa }) => {
   );
 };
 
-export default NetworkTable;
+export default UbicacionsTable;
