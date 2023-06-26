@@ -48,5 +48,4 @@ const UbicacionsTable = ({ ubicacio, onEditUbicacio, onDeleteUbicacio }) => {
     </div>
   );
 };
-
 export default UbicacionsTable;

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import TaulaUbicacions from './TaulaUbicacions';
 
 
-const NetworkForm = () => {
+const UbicacioForm = () => {
     const [ubicacioData, setUbicacioData] = useState([]);
 
     const [selectedRowUbicacioForm, setselectedRowUbiacioForm] = useState(null);
@@ -124,4 +124,4 @@ const NetworkForm = () => {
 };
 
 
-export default NetworkForm;
+export default UbicacioForm;
