@@ -10,6 +10,11 @@ const ConnexionsForm = () => {
 
     const [formvaluesConnexions, setformvaluesConnexions] = useState({
         InfraName: '',
+        portInfra: '',
+        portStatus: '',
+        finalDeviceName: '',
+        pachpanelName: '',
+        xarxaName: '',
         descriptionConnexions: '',
     });
 
@@ -26,6 +31,11 @@ const ConnexionsForm = () => {
 
         const novaConnexions = {
             InfraName: formvaluesConnexions.InfraName,
+            portInfra: formvaluesConnexions.portInfra,
+            portStatus: formvaluesConnexions.portStatus,
+            finalDeviceName: formvaluesConnexions.finalDeviceName,
+            pachpanelName: formvaluesConnexions.pachpanelName,
+            xarxaName: formvaluesConnexions.xarxaName,
             descriptionConnexions: formvaluesConnexions.descriptionConnexions,
         };
 
@@ -33,17 +43,27 @@ const ConnexionsForm = () => {
 
         setformvaluesConnexions({
             InfraName: '',
+            portInfra: '',
+            portStatus: '',
+            finalDeviceName: '',
+            pachpanelName: '',
+            xarxaName: '',
             descriptionConnexions: '',
         });
     };
 
 
     const handleEditRowConnexions = (index) => {
-
+        console.log('Edita la fila: ', index);
         // Omplir els camps del formulari amb les dades de la fila seleccionada
         const formvaluesConnexions = connexionsData[index];
         setformvaluesConnexions({
             InfraName: formvaluesConnexions.InfraName,
+            portInfra: formvaluesConnexions.portInfra,
+            portStatus: formvaluesConnexions.portStatus,
+            finalDeviceName: formvaluesConnexions.finalDeviceName,
+            pachpanelName: formvaluesConnexions.pachpanelName,
+            xarxaName: formvaluesConnexions.xarxaName,
             descriptionConnexions: formvaluesConnexions.descriptionConnexions,
         });
 
@@ -57,12 +77,22 @@ const ConnexionsForm = () => {
             const updatedConnexions = [...connexionsData];
             updatedConnexions[selectedRowConnexionsForm] = {
                 InfraName: formvaluesConnexions.InfraName,
+                portInfra: formvaluesConnexions.portInfra,
+                portStatus: formvaluesConnexions.portStatus,
+                finalDeviceName: formvaluesConnexions.finalDeviceName,
+                pachpanelName: formvaluesConnexions.pachpanelName,
+                xarxaName: formvaluesConnexions.xarxaName,
                 descriptionConnexions: formvaluesConnexions.descriptionConnexions,
             };
             setconnexionsData(updatedConnexions);
             setselectedRowUbiacioForm(null);
             setformvaluesConnexions({
                 InfraName: '',
+                portInfra: '',
+                portStatus: '',
+                finalDeviceName: '',
+                pachpanelName: '',
+                xarxaName: '',
                 descriptionConnexions: '',
             });
         }
@@ -77,6 +107,11 @@ const ConnexionsForm = () => {
         setselectedRowUbiacioForm(null);
         setformvaluesConnexions({
             InfraName: '',
+            portInfra: '',
+            portStatus: '',
+            finalDeviceName: '',
+            pachpanelName: '',
+            xarxaName: '',
             descriptionConnexions: '',
         });
 
@@ -90,24 +125,24 @@ const ConnexionsForm = () => {
                 <form onSubmit={handleSubmit}>
 
                     <div className="form-group">
-                        <label htmlFor="connexionsInfraDiviceName">Dispostitu Infraestructura:</label>
+                        <label htmlFor="InfraName">Dispostitu Infraestructura:</label>
                         <input
                             type="text"
                             id="InfraName"
                             name="InfraName"
-                            value={formvaluesConnexions.InfrastuctureDeviceName}
+                            value={formvaluesConnexions.InfraName}
                             onChange={handleChange}
                             required
                         />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="connexionsPortNumberInfrastuctureDevice">Port:</label>
+                        <label htmlFor="portInfra">Port:</label>
                         <input
                             type="text"
-                            id="InfraName"
-                            name="InfraName"
-                            value={formvaluesConnexions.PortNumberInfrastuctureDevice}
+                            id="portInfra"
+                            name="portInfra"
+                            value={formvaluesConnexions.portInfra}
                             onChange={handleChange}
                             required
                         />
@@ -118,40 +153,35 @@ const ConnexionsForm = () => {
                         <label htmlFor="config-Port">Configuracio del port:</label>
                         {/* Radio buttons: Tagged */}
                         <div>
-                            <input type="radio" id="tagged" name="portStatus" value="tagged" />
+                            <input type="radio" id="tagged" name="portStatus" value="tagged" 
+                            checked= {formvaluesConnexions.portStatus === "tagged"}
+                            onChange={handleChange}
+                            />
                             <label htmlFor="tagged">Tagged</label>
                         </div>
                         {/* Radio buttons: Untagged */}
                         <div>
-                            <input type="radio" id="untagged" name="portStatus" value="untagged" />
+                            <input type="radio" id="untagged" name="portStatus" value="untagged" 
+                            checked= {formvaluesConnexions.portStatus === "untagged"}
+                            onChange={handleChange}
+                            />
                             <label htmlFor="untagged">Untagged</label>
                         </div>
                         {/* Radio buttons: Undefined */}
                         <div>
-                            <input type="radio" id="undefined" name="portStatus" value="undefined" />
+                            <input type="radio" id="undefined" name="portStatus" value="undefined"
+                            checked= {formvaluesConnexions.portStatus === "undefined"}
+                            onChange={handleChange}/>
                             <label htmlFor="undefined">Undefined</label>
                         </div>
                     </div>
 
-
                     <div className="form-group">
-                        <label htmlFor="InfraName">Xarxa:</label>
+                        <label htmlFor="finalDeviceName">Dispositu final:</label>
                         <input
                             type="text"
-                            id="InfraName"
-                            name="InfraName"
-                            value={formvaluesConnexions.xarxaName}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="InfraName">Dispositu final:</label>
-                        <input
-                            type="text"
-                            id="InfraName"
-                            name="InfraName"
+                            id="finalDeviceName"
+                            name="finalDeviceName"
                             value={formvaluesConnexions.finalDeviceName}
                             onChange={handleChange}
                             required
@@ -159,12 +189,24 @@ const ConnexionsForm = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="InfraName">Nom pachpanel:</label>
+                        <label htmlFor="pachpanelName">Nom pachpanel:</label>
                         <input
                             type="text"
-                            id="InfraName"
-                            name="InfraName"
+                            id="pachpanelName"
+                            name="pachpanelName"
                             value={formvaluesConnexions.pachpanelName}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    
+                    <div className="form-group">
+                        <label htmlFor="xarxaName">Xarxa:</label>
+                        <input
+                            type="text"
+                            id="xarxaName"
+                            name="xarxaName"
+                            value={formvaluesConnexions.xarxaName}
                             onChange={handleChange}
                             required
                         />
