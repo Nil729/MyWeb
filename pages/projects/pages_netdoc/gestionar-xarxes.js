@@ -16,7 +16,7 @@ export default function GestionarXarxa() {
 
     return (
 
-        <div className={styles.container}>
+      <div className={styles.container}>
       
         <div>
           <Navbar/>

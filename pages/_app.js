@@ -9,6 +9,7 @@ import '../styles/styles_netdoc/dispositius.css';
 import '../styles/styles_netdoc/dispositiusTaula.css';
 import '../styles/styles_netdoc/xarxa.css';
 import '../styles/styles_netdoc/xarxaTaula.css';
+import '../styles/styles_netdoc/connexionsTaula.css';
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
 }

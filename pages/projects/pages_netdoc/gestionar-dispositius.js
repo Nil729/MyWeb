@@ -5,14 +5,15 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
-
-
-
+import Image from 'next/image';
+import styles from '../../../styles/Home.module.css';
+import Navbar from '../../../Components/component_navbar/Navbar';
+import DispositiusForm from '../../../Components/ComponentNetDoc/componentsDispositius/DispositiuForm';
 
 export default function GestionarDispositius() {
 
     return (
-        <div className={styles.container}>
+      <div className={styles.container}>
       
         <div>
           <Navbar/>

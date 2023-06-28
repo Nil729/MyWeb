@@ -28,6 +28,11 @@ const ConnexionsTable = ({ connexions, onEditconnexions, onDeleteconnexions }) =
       <table>
         <thead>
           <tr>
+            <th>Dispositiu Infrarestuctura</th>
+            <th>Port Dispositiu</th>
+            <th>Configuracio port</th>
+            <th>Dispositiu Final</th>
+            <th>Pach panel</th>
             <th>Nom de la Xarxa</th>
             <th>Descripció</th>
           </tr>
@@ -35,7 +40,7 @@ const ConnexionsTable = ({ connexions, onEditconnexions, onDeleteconnexions }) =
         <tbody>
           {connexions.map((connexions, index) => (
             <tr key={index}>
-              <td>{connexions.connexionsName}</td>
+              <td>{connexions.InfraName}</td>
               <td>{connexions.descriptionConnexions}</td>
               <td><button type='button' className='editButonXarxa' onClick={() => handleEditRowconnexions(index)}>Edita</button></td>
               <td><button type='button' className='delButonXarxa' onClick={() => handleDeleteRowconnexions(index)}>Eliminar</button></td>

@@ -15,13 +15,17 @@
   justify-content: space-between; /* Col·loca els elements a les extremitats horitzontals */
 }
 
+
 .network-form .form-group {
   margin-bottom: 15px;
   flex-basis: calc(30% - 5px); /* Fes que cada camp tingui un 30% de l'ample disponible, descomptant l'espai entre ells */
 }
 
 .network-form label {
-  width: 140px;
+  display: block;
+  margin-bottom: 5px;
+  color: #fdfdfd;
+  width: 200px;
 }
 
 .network-form button {
@@ -43,3 +47,4 @@
   margin: 10px; /* Espai superior per separar dels camps */
   flex-basis: 100%; /* Fes que el grup de botons ocupi tot l'ample disponible */
 }
+

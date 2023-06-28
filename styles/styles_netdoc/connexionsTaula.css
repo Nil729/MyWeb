@@ -1,0 +1,53 @@
+.connexions-table-container {
+    display: flex;
+    justify-content: center;
+    background-color: #000;
+    padding: 20px;
+}
+
+.connexions-table {
+    width: 100%;
+    margin-top: 20px; /* Add spacing from the form */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+}
+
+
+.connexions-table th,
+.connexions-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #5e5e5e;
+    color: #ffffff;
+}
+
+.connexions-table th {
+    background-color: #202020;
+    font-weight: bold;
+}
+
+.connexions-table tr:hover {
+    background-color: #4b4b4b;
+}
+
+.connexions-table .action-buttons {
+    
+    display: flex;
+    gap: 5px;
+}
+
+.connexions-table .edit-button,
+.connexions-table .delete-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.connexions-table .edit-button:hover,
+.connexions-table .delete-button:hover {
+    background-color: #0056b3;
+}
+
