@@ -1,7 +1,9 @@
--- Active: 1687107432916@@127.0.0.1@3306@db_web
+-- Active: 1687107432916@@127.0.0.1@3306@bbdd_NetDoc
 
 -- SQLBook: Code
 -- Active: 1684133436936@@127.0.0.1@5432
+
+CREATE DATABASE bbdd_NetDoc;
 
 CREATE TABLE Dispositius (
     IP TEXT,
