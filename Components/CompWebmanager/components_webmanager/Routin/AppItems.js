@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import ico_Play from'./../../../../public/img_wm/play.png'
 import ico_delete from'./../../../../public/img_wm/deletevermell.png'
 import ico_Update from'./../../../../public/img_wm/diskette.png'

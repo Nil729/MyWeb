@@ -18,9 +18,9 @@ const Navbar = () => {
     <header>
       <nav className={`nav`}>
         <Link href={"/home"}>
-          <a>
-            <h1 className="logo">Nil Projects</h1>
-          </a>
+
+          <h1 className="logo">Nil Projects</h1>
+
         </Link>
         <div
           onClick={() => setNavActive(!navActive)}

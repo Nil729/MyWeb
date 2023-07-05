@@ -1,125 +1,240 @@
 -- Active: 1687107432916@@127.0.0.1@3306@bbdd_NetDoc
 
--- SQLBook: Code
--- Active: 1684133436936@@127.0.0.1@5432
 
 CREATE DATABASE bbdd_NetDoc;
 
 CREATE TABLE Dispositius (
-    IP TEXT,
-    NomDispositiu TEXT,
     id_dispositiu INTEGER PRIMARY KEY AUTO_INCREMENT,
-    id_entradaPort INTEGER,
+    IP VARCHAR(15) UNIQUE,
+    NomDispositiu TEXT,
     MAC TEXT,
     zona_id INTEGER,
     Id_vlan INTEGER,
+    QuantitatPortsEth INTEGER,
+    descripcio_dispositiu TEXT,
     FOREIGN KEY(zona_id) REFERENCES Zona(Id_zona),
-    FOREIGN KEY(Id_vlan) REFERENCES Xarxa(Id_vlan),
-    FOREIGN KEY(id_dispositiu) REFERENCES Dispositus_infraestructura(id_dispositiu)
-);
-
-CREATE TABLE Zona (
-    Id_zona INTEGER PRIMARY KEY,
-    NomZona TEXT
-);
-
-CREATE TABLE Xarxa (
-    Id_vlan INTEGER PRIMARY KEY,
-    nom TEXT
-);
-
-CREATE TABLE Dispositus_infraestructura (
-    id_dispositiu INTEGER PRIMARY KEY,
-    NumeroPorts INTEGER 
-);
-
-CREATE TABLE Ports (
-    IdPort INTEGER PRIMARY KEY,
-    EstatPOE TEXT,
-    EstatXarxa TEXT,
-    id_dispositiu_fk INTEGER,
-    FOREIGN KEY(id_dispositiu_fk) REFERENCES Dispositus_infraestructura(id_dispositiu)
-);
-
-CREATE TABLE Coneccio (
-    id_dispositiu INTEGER,
-    id_dispositiuFinals INTEGER,
-    Poe TEXT,
-    XarxaEstat TEXT,
-    IdPort INTEGER,
-    Id_vlan INTEGER,
-    xPort INTEGER,
-    FOREIGN KEY(id_dispositiuFinals) REFERENCES Dispositius(id_dispositiu),
-    FOREIGN KEY(id_dispositiu) REFERENCES Dispositus_infraestructura(id_dispositiu),
     FOREIGN KEY(Id_vlan) REFERENCES Xarxa(Id_vlan)
 );
 
+DROP TABLE Dispositius;
+
+CREATE TABLE PortsFinal (
+    IdPortFinal INTEGER PRIMARY KEY AUTO_INCREMENT,
+    numPortFinal INTEGER,
+    pachpanelFinal INTEGER,
+    id_disposituFinal_fk INTEGER,
+    FOREIGN KEY(id_disposituFinal_fk) REFERENCES Dispositus_final(id_disposituFinal)
+);
+
+DROP TABLE PortsFinal;
+
+CREATE TABLE PortsInfra (
+    IdPortInfra INTEGER PRIMARY KEY AUTO_INCREMENT,
+    EstatPOE TEXT,
+    EstatXarxa TEXT,
+    id_dispositiuInfra_fk INTEGER,
+    Id_vlan_fk INTEGER,
+    numPortInfra INTEGER,
+    pachpanelInfra TEXT,
+    FOREIGN KEY(id_dispositiuInfra_fk) REFERENCES Dispositus_infraestructura(id_dispositiuInfra),
+    FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan)
+
+);
+
+DROP TABLE PortsInfra;
+
+CREATE TABLE Dispositus_infraestructura (
+    id_dispositiuInfra INTEGER PRIMARY KEY AUTO_INCREMENT,
+    id_dispositiu_fk INTEGER
+);
+
+DROP TABLE Dispositus_infraestructura;
+
+CREATE TABLE Dispositus_final (
+    id_disposituFinal INTEGER PRIMARY KEY AUTO_INCREMENT,
+    id_dispositiu_fk INTEGER
+);
+
+DROP TABLE Dispositus_final;
+
+CREATE TABLE Zona (
+    Id_zona INTEGER PRIMARY KEY AUTO_INCREMENT,
+    NomZona TEXT,
+    DescZona TEXT
+);
+DROP TABLE Zona;
+
+CREATE TABLE Xarxa (
+    Id_vlan INTEGER PRIMARY KEY AUTO_INCREMENT,
+    NomXarxa TEXT,
+    DescXarxa TEXT
+);
+
+DROP TABLE Xarxa;
+
+
+CREATE TABLE Coneccio (
+    IdPortFinal_fk INTEGER,
+    IdPortInfra_fk INTEGER,
+    Poe TEXT,
+    XarxaEstat TEXT,
+    IdPort INTEGER,
+
+    FOREIGN KEY(IdPortFinal_fk) REFERENCES PortsFinal(IdPortFinal),
+    FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra)
+);
+
+#recursivitat connexió per poder connectar entre ports de infraestructura
+
+CREATE TABLE ConexioTrunk (
+    IdConexioTrunk INTEGER PRIMARY KEY AUTO_INCREMENT,
+    IdPortInfraParent_fk INTEGER,
+    IdPortInfraChild_fk INTEGER,
+    FOREIGN KEY(IdPortInfraParent_fk) REFERENCES PortsInfra(IdPortInfra),
+    FOREIGN KEY(IdPortInfraChild_fk) REFERENCES PortsInfra(IdPortInfra)
+);
+
+
+
+DROP TABLE Coneccio;
+
 CREATE TABLE Estat (
-    IdPort_fk INTEGER,
+    IdPortInfra_fk INTEGER,
     Id_vlan_fk INTEGER,
     tagged TEXT,
     untagged TEXT,
     _undefined TEXT,
-    FOREIGN KEY(IdPort_fk) REFERENCES Ports(IdPort),
+    FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra),
     FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan)
 );
 
+DROP TABLE Estat;
 
---ALTER TABLE Dispositius ADD FOREIGN KEY (id_dispositiu) REFERENCES Dispositus_infraestructura(id_dispositiu);
 
 # inserta a la base de dades un dispositu
---INSERT INTO Dispositius (IP, NomDispositiu, id_entradaPort, MAC, zona_id, Id_vlan)
---VALUES ('192.168.1.100', 'Router', 2, '00:11:22:33:44:55', 1, 1);
 
-# inserta a la base de dades un dispositiu_infraestructura
---INSERT INTO Dispositus_infraestructura (id_dispositiu, NumeroPorts) VALUES (1, 48);
+INSERT INTO Dispositius (id_dispositiu, IP, NomDispositiu, MAC, zona_id, Id_vlan, QuantitatPortsEth, descripcio_dispositiu) 
+VALUES (1, '192.168.1.1', 'RUTER', '00:00:00:00:00:00', 1, 1, 4, 'MAIN RUTER');
 
+INSERT INTO Dispositius (id_dispositiu, IP, NomDispositiu, MAC, zona_id, Id_vlan, QuantitatPortsEth, descripcio_dispositiu)
+VALUES (2, '192.168.10.100', 'SWITCH', '00:00:00:00:00:00', 1, 2, 24, 'MAIN SWITCH');
 
---select * FROM "Dispositius";
---SELECT * FROM "Dispositius" LEFT JOIN "Dispositus_infraestructura" ON "Dispositius"."id_dispositiu" = "Dispositus_infraestructura"."id_dispositiu";
+INSERT INTO Dispositius (id_dispositiu, IP, NomDispositiu, MAC, zona_id, Id_vlan, QuantitatPortsEth, descripcio_dispositiu)
+VALUES (3, '192.168.10.102', 'PC1', '00:00:00:00:00:00', 2, 3, 1, 'PC OFICINES');
 
-
--- DROP TABLE "Dispositius";
-
-
+INSERT INTO Dispositius (id_dispositiu, IP, NomDispositiu, MAC, zona_id, Id_vlan, QuantitatPortsEth, descripcio_dispositiu)
+VALUES (4, '192.168.10.103', 'PC2', '00:00:00:00:00:00', 3, 4, 1, 'PC PORDUCCIÓ');
 
 
--- DROP TABLE "Dispositus_infraestructura";
+SELECT * FROM Dispositius;
+# inserta a la base de dades una zona
 
---DROP TABLE "Coneccio";
+INSERT INTO Zona (Id_zona,NomZona, DescZona) VALUES (1, 'INFRA', 'INFRAESTRUCTURA');
 
+INSERT INTO Zona (Id_zona, NomZona, DescZona) VALUES (2, 'OFICINES', 'OFICINES');
 
--- DROP TABLE "Estat";
+INSERT INTO Zona (Id_zona, NomZona, DescZona) VALUES (3, 'PORDUCCIÓ', 'PRODUCCIÓ');
 
--- insert de dispositius
+SELECT * FROM Zona;
 
--- INSERT INTO Dispositius (IP, NomDispositiu, id_entradaPort, MAC, zona_id, Id_vlan) VALUES ("1.1.1.1", "Router", 1, "00:11:22:33:44:55", 1, 1);
+# inserta a la base de dades una xarxa 
 
--- select * from Dispositius LEFT JOIN Dispositus_infraestructura ON Dispositius.id_dispositiu = Dispositus_infraestructura.id_dispositiu;
-
-
--- select * from Dispositius LEFT JOIN Dispositus_infraestructura ON Dispositius.id_dispositiu = Dispositus_infraestructura.id_dispositiu where "NumeroPorts" > 1;
-
--- insert de dispositius_infraestructura
-
--- INSERT INTO Dispositus_infraestructura (id_dispositiu, NumeroPorts) VALUES (1, 48);
+INSERT INTO Xarxa (Id_vlan, NomXarxa, DescXarxa) VALUES (1, 'V_infra', 'V_infra');
+INSERT INTO Xarxa (Id_vlan, NomXarxa, DescXarxa) VALUES (2, 'V_officines', 'V_officines');
+INSERT INTO Xarxa (Id_vlan, NomXarxa, DescXarxa) VALUES (3, 'V_producció', 'V_producció');
 
 
 
--- insert de zones
-INSERT INTO Zona (Id_zona, NomZona) VALUES (1, 'Aula smx');
-INSERT INTO Zona (Id_zona, NomZona) VALUES (2, 'Aula asix');
-INSERT INTO Zona (Id_zona, NomZona) VALUES (3, 'Aula daw');
-INSERT INTO Zona (Id_zona, NomZona) VALUES (4, 'Aula Professors');
-SELECT * from  zona;
+# inserta a la base de dades dispositus de la infraestructura
+
+INSERT INTO Dispositus_infraestructura (id_dispositiu_fk) VALUES (1);
+
+INSERT INTO Dispositus_infraestructura (id_dispositiu_fk) VALUES (2);
+
+# inserta a la base de dades un dispositu final
+INSERT INTO Dispositus_final (id_dispositiu_fk) VALUES (3);
+
+INSERT INTO Dispositus_final (id_dispositiu_fk) VALUES (4);
 
 
--- insert de xarxes
+# inserta a la base de dades un port final
 
-INSERT INTO Xarxa (Id_vlan, nom) VALUES (1, 'vlan1');
-INSERT INTO Xarxa (Id_vlan, nom) VALUES (2, 'vlan2');
-INSERT INTO Xarxa (Id_vlan, nom) VALUES (3, 'vlan3');
-INSERT INTO Xarxa (Id_vlan, nom) VALUES (4, 'vlan4');
-INSERT INTO Xarxa (Id_vlan, nom) VALUES (?, 'vlanTest');
+INSERT INTO PortsFinal (`IdPortFinal`, numPort id_disposituFinal_fk) VALUES (1, 3);
 
-SELECT * from  Xarxa;
+INSERT INTO PortsFinal (IdPortFinal, numPort id_disposituFinal_fk) VALUES (1, 4);
+
+SELECT * FROM PortsFinal;
+
+# inserta a la base de dades una connexio dispositu infra (PC-1) a dispositu final (RUTER)
+INSERT INTO Coneccio (IdPortFinal_fk, IdPortInfra_fk, Poe, XarxaEstat, IdPort, pachpanel) VALUES (1, 4, 'POE', 'UP', 1, 1);
+
+# inserta a la base de dades una connexio dispositu infra (PC-2) a dispositu final (SWITCH)
+INSERT INTO Coneccio (IdPortFinal_fk, IdPortInfra_fk, Poe, XarxaEstat, IdPort, pachpanel) VALUES (2, 23, 'POE', 'UP', 1, 1);
+
+SELECT * FROM Coneccio;
+
+SELECT * FROM 
+
+# inserta a la base de dades un estat
+INSERT INTO Estat (IdPortInfra_fk, Id_vlan_fk, tagged, untagged, _undefined) VALUES (1, 1, 'tagged', 'untagged', '_undefined');
+
+INSERT INTO Estat (IdPortInfra_fk, Id_vlan_fk, tagged, untagged, _undefined) VALUES (2, 2, 'tagged', 'untagged', '_undefined');
+
+
+# inserta a la base de dades un dispositu final
+INSERT INTO Dispositus_final (id_dispositiu_fk, NumeroPortsFinal) VALUES (3, 1);
+
+INSERT INTO Dispositus_final (id_dispositiu_fk, NumeroPortsFinal) VALUES (4, 2);
+
+
+
+# inserta a la base de dades un port de la infraestructura
+
+INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, Id_vlan_fk, numPortInfra, pachpanelInfra) 
+VALUES (4, 'FALSE', 'UP', 1, 1, 4, 100); 
+
+INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, Id_vlan_fk, numPortInfra, pachpanelInfra) 
+VALUES (3, 'FALSE', 'UP', 1, 1, 4, 101); 
+
+INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, Id_vlan_fk, numPortInfra, pachpanelInfra) 
+VALUES (23, 'TRUE', 'DOWN', 2, 2, 23, 200);
+INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, Id_vlan_fk, numPortInfra, pachpanelInfra) 
+VALUES (24, 'TRUE', 'DOWN', 2, 2, 24, 201);  
+
+SELECT * FROM `Dispositus_infraestructura` JOIN `Dispositius` ON Dispositus_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu  WHERE `id_dispositiuInfra` = 1;
+
+SELECT * from `PortsInfra`;
+
+# inserta a la base de dades un port final
+
+INSERT INTO PortsFinal (IdPortFinal, numPortFinal, pachpanelFinal, id_disposituFinal_fk)
+VALUES (1, 1, 101, 1);
+
+INSERT INTO `PortsFinal` (`IdPortFinal`, `numPortFinal`, `pachpanelFinal`, `id_disposituFinal_fk`) 
+VALUES (2, 1, 102, 2);
+
+SELECT * FROM `PortsInfra`;
+
+SELECT * FROM PortsFinal;
+
+# inserta a la base de dades una connexio
+INSERT INTO `Coneccio` (`IdPortFinal_fk`, `IdPortInfra_fk`, `Poe`, `XarxaEstat`, `IdPort`, `pachpanel`)
+VALUES (1, 4, 'POE', 'UP', 1, 101);
+
+INSERT INTO `Coneccio` (`IdPortFinal_fk`, `IdPortInfra_fk`, `Poe`, `XarxaEstat`, `IdPort`, `pachpanel`)
+VALUES (2, 23, 'POE', 'UP', 2, 200);
+
+SELECT * FROM Coneccio;
+
+INSERT INTO `ConexioTrunk` (`IdPortInfraParent_fk`, `IdPortInfraChild_fk`)
+VALUES (3, 24);
+
+SELECT * FROM ConexioTrunk;
+
+# inserta a la base de dades un estat
+
+INSERT INTO Estat (IdPortInfra_fk, Id_vlan_fk, tagged, untagged, _undefined) VALUES (3, 1, 'tagged', 'untagged', '_undefined');
+
+INSERT INTO Estat (IdPortInfra_fk, Id_vlan_fk, tagged, untagged, _undefined) VALUES (24, 1, 'tagged', 'untagged', '_undefined');
+
+SELECT * FROM Estat;

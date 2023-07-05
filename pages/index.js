@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import styles from '../styles/Home.module.css'
 import LoginForm from "../Components/Component_login/Login_form.js"
 

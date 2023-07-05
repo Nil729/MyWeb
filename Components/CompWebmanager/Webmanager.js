@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect} from 'react';
 //import './App.css';
 
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import apiClient  from '../../Services/http-coomon';
 import litter from './../../public/img_wm/litter.png';
 import {v4 as uuidv4 } from "uuid";
