@@ -74,8 +74,8 @@ DROP TABLE Xarxa;
 
 
 CREATE TABLE Coneccio (
-    IdPortFinal_fk INTEGER,
-    IdPortInfra_fk INTEGER,
+    IdPortFinal_fk INTEGER UNIQUE,
+    IdPortInfra_fk INTEGER UNIQUE,
     Poe TEXT,
     XarxaEstat TEXT,
     IdPort INTEGER,
@@ -84,22 +84,27 @@ CREATE TABLE Coneccio (
     FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra)
 );
 
+#modifica la taula perque el IdPortFinal_fk i el IdPortInfra_fk perque siguin unique i eliminar el camp xPort
+
+Alter TABLE Coneccio DROP COLUMN xPort;
+
+ALTER TABLE Coneccio ADD UNIQUE (IdPortFinal_fk, IdPortInfra_fk);
+
 #recursivitat connexió per poder connectar entre ports de infraestructura
 
 CREATE TABLE ConexioTrunk (
     IdConexioTrunk INTEGER PRIMARY KEY AUTO_INCREMENT,
-    IdPortInfraParent_fk INTEGER,
-    IdPortInfraChild_fk INTEGER,
+    IdPortInfraParent_fk INTEGER UNIQUE,
+    IdPortInfraChild_fk INTEGER UNIQUE,
     FOREIGN KEY(IdPortInfraParent_fk) REFERENCES PortsInfra(IdPortInfra),
     FOREIGN KEY(IdPortInfraChild_fk) REFERENCES PortsInfra(IdPortInfra)
 );
-
-
+ALTER TABLE ConexioTrunk ADD UNIQUE (IdPortInfraParent_fk, IdPortInfraChild_fk);
 
 DROP TABLE Coneccio;
 
 CREATE TABLE Estat (
-    IdPortInfra_fk INTEGER,
+    IdPortInfra_fk INTEGER UNIQUE,
     Id_vlan_fk INTEGER,
     tagged TEXT,
     untagged TEXT,
@@ -107,9 +112,9 @@ CREATE TABLE Estat (
     FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra),
     FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan)
 );
-
+ALTER TABLE Estat ADD UNIQUE (    IdPortInfra_fk);
 DROP TABLE Estat;
-
+SELECT * from `Estat`;
 
 # inserta a la base de dades un dispositu
 
@@ -161,7 +166,7 @@ INSERT INTO Dispositus_final (id_dispositiu_fk) VALUES (4);
 
 INSERT INTO PortsFinal (`IdPortFinal`, numPort id_disposituFinal_fk) VALUES (1, 3);
 
-INSERT INTO PortsFinal (IdPortFinal, numPort id_disposituFinal_fk) VALUES (1, 4);
+INSERT INTO PortsFinal (IdPortFinal, numPort id_disposituFinal_fk) VALUES (3, 4);
 
 SELECT * FROM PortsFinal;
 
@@ -173,7 +178,8 @@ INSERT INTO Coneccio (IdPortFinal_fk, IdPortInfra_fk, Poe, XarxaEstat, IdPort, p
 
 SELECT * FROM Coneccio;
 
-SELECT * FROM 
+
+select * from Estat;
 
 # inserta a la base de dades un estat
 INSERT INTO Estat (IdPortInfra_fk, Id_vlan_fk, tagged, untagged, _undefined) VALUES (1, 1, 'tagged', 'untagged', '_undefined');

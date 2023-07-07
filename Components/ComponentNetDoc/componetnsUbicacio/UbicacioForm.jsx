@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 import TaulaUbicacions from './TaulaUbicacions';
 
@@ -29,12 +30,23 @@ const UbicacioForm = () => {
             descriptionUbicacio: formvaluesUbicacio.descriptionUbicacio,
         };
 
-        setUbicacioData((prevubicacio) => [...prevubicacio, novaUbicacio]);
+        try {
+            // Guardar la nova ubicacio a la base de dades
 
-        setformvaluesUbicacio({
-            ubicacioName: '',
-            descriptionUbicacio: '',
-        });
+            axios.post('http://localhost:3002/api/netdoc/ubicacions', novaUbicacio);
+            console.log('novaUbicacio', novaUbicacio);
+            // Guardar la nova ubicacio a la taula
+            setUbicacioData((prevubicacio) => [...prevubicacio, novaUbicacio]);
+
+            setformvaluesUbicacio({
+                ubicacioName: '',
+                descriptionUbicacio: '',
+            });
+
+        } catch (error) {
+            console.log('error', error);
+        }
+
     };
 
 
