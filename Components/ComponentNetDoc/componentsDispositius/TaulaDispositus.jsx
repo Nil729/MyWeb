@@ -47,7 +47,7 @@ const TaulaDispositus = ({dispositius, onEdit, onDelete}) => {
               className={selectedRow === index ? 'selected' : ''}
               onClick={() => handleRowClick(index)}
             >
-              <td>{dispositiu.nom}</td>
+              <td>{dispositiu.NomDispositiu}</td>
               <td>{dispositiu.ip}</td>
               <td>{dispositiu.mac}</td>
               <td>{dispositiu.port}</td>

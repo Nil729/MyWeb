@@ -8,10 +8,11 @@ const DeviceManagementForm = () => {
 
   const [deviceType, setDeviceType] = useState('final');
 
-  const [dispositius, setDispositius] = useState([    
-    { nom: 'Dispositiu 1', ip: '192.168.1.1', mac: '00:11:22:33:44:55', port: 4, ubicacio: 'Aula 1', vlan: 1, portEntrada: 1 },
-    { nom: 'Dispositiu 2', ip: '192.168.1.2', mac: 'AA:BB:CC:DD:EE:FF', port: 8, ubicacio: 'Aula 2', vlan: 2, portEntrada: 1 },
-    { nom: 'Dispositiu 3', ip: '192.168.1.3', mac: '11:22:33:44:55:66', port: 2, ubicacio: 'Aula 3', vlan: 3, portEntrada: 1 },
+  const [dispositius, setDispositius] = useState([
+    // id_dispositu, IP, NomDispositiuDipositiu, MAC, zona_id, id_vlan, QuantitatPortsEth, descripcio_dispositiu.    
+    { NomDispositiu: 'Dispositiu 1', ip: '192.168.1.1', mac: '00:11:22:33:44:55', port: 4, ubicacio: 'Aula 1', vlan: 1, portEntrada: 1 },
+    { NomDispositiu: 'Dispositiu 2', ip: '192.168.1.2', mac: 'AA:BB:CC:DD:EE:FF', port: 8, ubicacio: 'Aula 2', vlan: 2, portEntrada: 1 },
+    { NomDispositiu: 'Dispositiu 3', ip: '192.168.1.3', mac: '11:22:33:44:55:66', port: 2, ubicacio: 'Aula 3', vlan: 3, portEntrada: 1 },
   ]);
 
   const [selectedRowForm, setselectedRowForm] = useState(null);
@@ -48,35 +49,43 @@ const DeviceManagementForm = () => {
     // axios.post('/api/dispositius', formValues)
     //   .then((response) => {
     //     console.log('Dades enviades amb èxit:', response.data);
-        // Aquí pots actualitzar l'estat o realitzar altres accions després de l'enviament
-        const form = event.target; // Aquí pots accedir al formulari per resetejar-lo després d'enviar les dades amb èxit
-        // Actualitzem la llista de dispositius amb les dades enviades
-        const nouDispositiu = {
-          nom: formValues.deviceName,
-          ip: formValues.ip,
-          mac: formValues.mac,
-          port: formValues.ethernetPorts || '',
-          ubicacio: formValues.location,
-          vlan: formValues.vlan,
-          portEntrada: formValues.ethernetPort,
-        };
-        setFormValues({
-          deviceName: '',
-          ip: '',
-          mac: '',
-          ethernetPorts: '',
-          location: '',
-          vlan: '',
-          ethernetPort: '',
-        });
-        setDispositius((prevDispositius) => [...prevDispositius, nouDispositiu]);
-      // })
-      // .catch((error) => {
-      //   console.error('Error en enviar les dades:', error);
-      //   // Aquí pots gestionar els errors de l'enviament
-      // });
-      // Reseteja el formulari
-      //formValues.rest;
+    // Aquí pots actualitzar l'estat o realitzar altres accions després de l'enviament
+    const form = event.target; // Aquí pots accedir al formulari per resetejar-lo després d'enviar les dades amb èxit
+    // Actualitzem la llista de dispositius amb les dades enviades
+    const nouDispositiu = {
+      deviceType: deviceType,
+      NomDispositiu: formValues.deviceName,
+      ip: formValues.ip,
+      mac: formValues.mac,
+      port: formValues.ethernetPorts || '',
+      ubicacio: formValues.location,
+      vlan: formValues.vlan,
+      portEntrada: formValues.ethernetPort,
+    };
+    setFormValues({
+      deviceName: '',
+      ip: '',
+      mac: '',
+      ethernetPorts: '',
+      location: '',
+      vlan: '',
+      ethernetPort: '',
+    });
+    setDispositius((prevDispositius) => [...prevDispositius, nouDispositiu]);
+
+    if (defviceType === 'final') {
+      axios.post('http://localhost:3002/api/netdoc/dispositius', nouDispositiu);
+    } else {
+      axios.post('http://localhost:3002/api/netdoc/dispositius', nouDispositiu);
+    }
+
+    // })
+    // .catch((error) => {
+    //   console.error('Error en enviar les dades:', error);
+    //   // Aquí pots gestionar els errors de l'enviament
+    // });
+    // Reseteja el formulari
+    //formValues.rest;
 
   };
 
@@ -97,7 +106,7 @@ const DeviceManagementForm = () => {
       vlan: '',
       ethernetPort: '',
     });
-    
+
   };
 
 
@@ -109,7 +118,7 @@ const DeviceManagementForm = () => {
       // Actualitza l'estat del dispositiu seleccionat
       // Actualitzar les dades del formulari amb les dades de la fila seleccionada
       setFormValues({
-        deviceName: selectedDevice.nom,
+        deviceName: selectedDevice.NomDispositiu,
         ip: selectedDevice.ip,
         mac: selectedDevice.mac,
         ethernetPorts: selectedDevice.port,
@@ -127,7 +136,7 @@ const DeviceManagementForm = () => {
     if (selectedRowForm !== null) {
       const updatedDispositius = [...dispositius];
       updatedDispositius[selectedRowForm] = {
-        nom: formValues.deviceName,
+        NomDispositiu: formValues.deviceName,
         ip: formValues.ip,
         mac: formValues.mac,
         port: formValues.ethernetPorts || '',
@@ -152,7 +161,7 @@ const DeviceManagementForm = () => {
 
 
 
-  
+
   return (
     <div className="device-management">
       <form className="device-form" onSubmit={handleSubmit}>
@@ -176,7 +185,7 @@ const DeviceManagementForm = () => {
         </div>
 
         <div className="form-group">
-          <label>Nom del dispositiu:</label>
+          <label>Nomdel dispositiu:</label>
           <input type="text" name="deviceName" value={formValues.deviceName} onChange={handleChange} required />
         </div>
         <div className="form-group">
@@ -187,12 +196,12 @@ const DeviceManagementForm = () => {
           <label>MAC:</label>
           <input type="text" name="mac" value={formValues.mac} onChange={handleChange} required />
         </div>
-        {deviceType === 'infra' && (
-          <div className="form-group">
-            <label>Número de ports ethernet:</label>
-            <input type="number" name="ethernetPorts" value={formValues.ethernetPorts} onChange={handleChange} required />
-          </div>
-        )}
+
+        <div className="form-group">
+          <label>Quantitat de ports ethernet:</label>
+          <input type="number" name="ethernetPorts" value={formValues.ethernetPorts} onChange={handleChange} required />
+        </div>
+
         <div className="form-group">
           <label>Ubicació:</label>
           <input type="text" name="location" value={formValues.location} onChange={handleChange} required />
@@ -213,7 +222,7 @@ const DeviceManagementForm = () => {
           <button type="button" onClick={handleSaveRow}>Gurada</button>
         </div>
       </form>
-      <TaulaDispositus dispositius={dispositius} onEdit={handleEditRow} onDelete={handleDelete}/>
+      <TaulaDispositus dispositius={dispositius} onEdit={handleEditRow} onDelete={handleDelete} />
     </div>
   );
 };

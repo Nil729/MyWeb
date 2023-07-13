@@ -15,7 +15,8 @@ CREATE TABLE Dispositius (
     FOREIGN KEY(zona_id) REFERENCES Zona(Id_zona),
     FOREIGN KEY(Id_vlan) REFERENCES Xarxa(Id_vlan)
 );
-
+-- afeguir una columna deviceType que nomes pugui ser true o FALSE
+ALTER TABLE Dispositius ADD deviceType BOOLEAN;
 DROP TABLE Dispositius;
 
 CREATE TABLE PortsFinal (
@@ -64,6 +65,8 @@ CREATE TABLE Zona (
 );
 DROP TABLE Zona;
 
+ubicacioName, 
+
 CREATE TABLE Xarxa (
     Id_vlan INTEGER PRIMARY KEY AUTO_INCREMENT,
     NomXarxa TEXT,
@@ -71,7 +74,6 @@ CREATE TABLE Xarxa (
 );
 
 DROP TABLE Xarxa;
-
 
 CREATE TABLE Coneccio (
     IdPortFinal_fk INTEGER UNIQUE,
