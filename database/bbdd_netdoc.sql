@@ -12,11 +12,15 @@ CREATE TABLE Dispositius (
     Id_vlan INTEGER,
     QuantitatPortsEth INTEGER,
     descripcio_dispositiu TEXT,
+    deviceType BOOLEAN,
     FOREIGN KEY(zona_id) REFERENCES Zona(Id_zona),
     FOREIGN KEY(Id_vlan) REFERENCES Xarxa(Id_vlan)
 );
 -- afeguir una columna deviceType que nomes pugui ser true o FALSE
 ALTER TABLE Dispositius ADD deviceType BOOLEAN;
+
+SELECT * FROM Dispositius;
+
 DROP TABLE Dispositius;
 
 CREATE TABLE PortsFinal (
@@ -41,7 +45,6 @@ CREATE TABLE PortsInfra (
     FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan)
 
 );
-
 DROP TABLE PortsInfra;
 
 CREATE TABLE Dispositus_infraestructura (
@@ -120,8 +123,8 @@ SELECT * from `Estat`;
 
 # inserta a la base de dades un dispositu
 
-INSERT INTO Dispositius (id_dispositiu, IP, NomDispositiu, MAC, zona_id, Id_vlan, QuantitatPortsEth, descripcio_dispositiu) 
-VALUES (1, '192.168.1.1', 'RUTER', '00:00:00:00:00:00', 1, 1, 4, 'MAIN RUTER');
+INSERT INTO Dispositius (IP, NomDispositiu, MAC, zona_id, Id_vlan, QuantitatPortsEth, descripcio_dispositiu, deviceType) 
+VALUES ('192.168.1.1', 'pc-oriol', '00:00:00:00:00:00', 1, 1, 4, 'MAIN RUTER', false);
 
 INSERT INTO Dispositius (id_dispositiu, IP, NomDispositiu, MAC, zona_id, Id_vlan, QuantitatPortsEth, descripcio_dispositiu)
 VALUES (2, '192.168.10.100', 'SWITCH', '00:00:00:00:00:00', 1, 2, 24, 'MAIN SWITCH');
@@ -150,10 +153,10 @@ INSERT INTO Xarxa (Id_vlan, NomXarxa, DescXarxa) VALUES (1, 'V_infra', 'V_infra'
 INSERT INTO Xarxa (Id_vlan, NomXarxa, DescXarxa) VALUES (2, 'V_officines', 'V_officines');
 INSERT INTO Xarxa (Id_vlan, NomXarxa, DescXarxa) VALUES (3, 'V_producció', 'V_producció');
 
-
+SELECT * FROM Xarxa;
 
 # inserta a la base de dades dispositus de la infraestructura
-
+SELECT * from Dispositus_infraestructura;
 INSERT INTO Dispositus_infraestructura (id_dispositiu_fk) VALUES (1);
 
 INSERT INTO Dispositus_infraestructura (id_dispositiu_fk) VALUES (2);

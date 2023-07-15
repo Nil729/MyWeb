@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 
-const TaulaDispositus = ({dispositius, onEdit, onDelete}) => {
+const TaulaDispositus = ({dispositius, onEdit, onDelete, deviceType}) => {
 
   const [selectedRow, setSelectedRow] = useState(null);
 
@@ -30,10 +30,11 @@ const TaulaDispositus = ({dispositius, onEdit, onDelete}) => {
       <table>
         <thead>
           <tr>
+            <th>Tipus</th>
             <th>Nom</th>
             <th>IP</th>
             <th>MAC</th>
-            <th>Numero Ports Ethernet</th>
+            <th>Quantitat Ports Ethernet</th>
             <th>Ubicació</th>
             <th>VLAN</th>
             <th>Port ethernet d'entrada</th>
@@ -47,13 +48,13 @@ const TaulaDispositus = ({dispositius, onEdit, onDelete}) => {
               className={selectedRow === index ? 'selected' : ''}
               onClick={() => handleRowClick(index)}
             >
+              <td>{dispositiu.deviceType}</td>
               <td>{dispositiu.NomDispositiu}</td>
               <td>{dispositiu.ip}</td>
               <td>{dispositiu.mac}</td>
               <td>{dispositiu.port}</td>
               <td>{dispositiu.ubicacio}</td>
               <td>{dispositiu.vlan}</td>
-              <td>{dispositiu.portEntrada}</td>
               <td>
                 <button onClick={() => handledeviceEdit(index)}>Editar</button>
 

@@ -10,7 +10,6 @@ const UbicacioForm = () => {
     const [selectedRowUbicacioForm, setselectedRowUbiacioForm] = useState(null);
 
     const [formvaluesUbicacio, setformvaluesUbicacio] = useState({
-
         ubicacioName: '',
         descriptionUbicacio: '',
     });

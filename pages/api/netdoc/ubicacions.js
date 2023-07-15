@@ -14,8 +14,8 @@ export default function handlerNovaUbicacio(req, res) {
 
         // Create a new location object
         const novaUbicacio = {
-        ubicacioName,
-        descriptionUbicacio,
+            ubicacioName,
+            descriptionUbicacio,
         };
 
         // Insert the new location into the database

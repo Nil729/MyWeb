@@ -6,13 +6,13 @@ import TaulaDispositus from './TaulaDispositus';
 
 const DeviceManagementForm = () => {
 
-  const [deviceType, setDeviceType] = useState('final');
+  const [deviceType, setDeviceType] = useState(false);
 
   const [dispositius, setDispositius] = useState([
     // id_dispositu, IP, NomDispositiuDipositiu, MAC, zona_id, id_vlan, QuantitatPortsEth, descripcio_dispositiu.    
-    { NomDispositiu: 'Dispositiu 1', ip: '192.168.1.1', mac: '00:11:22:33:44:55', port: 4, ubicacio: 'Aula 1', vlan: 1, portEntrada: 1 },
-    { NomDispositiu: 'Dispositiu 2', ip: '192.168.1.2', mac: 'AA:BB:CC:DD:EE:FF', port: 8, ubicacio: 'Aula 2', vlan: 2, portEntrada: 1 },
-    { NomDispositiu: 'Dispositiu 3', ip: '192.168.1.3', mac: '11:22:33:44:55:66', port: 2, ubicacio: 'Aula 3', vlan: 3, portEntrada: 1 },
+    { deviceType: deviceType, NomDispositiu: 'Dispositiu 1', ip: '192.168.1.1', mac: '00:11:22:33:44:55', port: 4, ubicacio: 'Aula 1', vlan: 1, portEntrada: 1 },
+    { deviceType: deviceType,  NomDispositiu: 'Dispositiu 2', ip: '192.168.1.2', mac: 'AA:BB:CC:DD:EE:FF', port: 8, ubicacio: 'Aula 2', vlan: 2, portEntrada: 1 },
+    { deviceType: deviceType,  NomDispositiu: 'Dispositiu 3', ip: '192.168.1.3', mac: '11:22:33:44:55:66', port: 2, ubicacio: 'Aula 3', vlan: 3, portEntrada: 1 },
   ]);
 
   const [selectedRowForm, setselectedRowForm] = useState(null);
@@ -24,7 +24,6 @@ const DeviceManagementForm = () => {
     ethernetPorts: '',
     location: '',
     vlan: '',
-    ethernetPort: '',
   });
 
   const handleChange = (event) => {
@@ -42,17 +41,11 @@ const DeviceManagementForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Aquí pots gestionar l'enviament del formulari i les dades introduïdes
-    // a través de l'estat del component o enviar-les a un gestor de dades
-
-    // Exemple d'enviament de dades amb axios
-    // axios.post('/api/dispositius', formValues)
-    //   .then((response) => {
-    //     console.log('Dades enviades amb èxit:', response.data);
-    // Aquí pots actualitzar l'estat o realitzar altres accions després de l'enviament
-    const form = event.target; // Aquí pots accedir al formulari per resetejar-lo després d'enviar les dades amb èxit
-    // Actualitzem la llista de dispositius amb les dades enviades
-    const nouDispositiu = {
+  
+    const form = event.target;
+    
+    // Create a new device object with the form values
+    const newDevice = {
       deviceType: deviceType,
       NomDispositiu: formValues.deviceName,
       ip: formValues.ip,
@@ -60,8 +53,28 @@ const DeviceManagementForm = () => {
       port: formValues.ethernetPorts || '',
       ubicacio: formValues.location,
       vlan: formValues.vlan,
-      portEntrada: formValues.ethernetPort,
     };
+    try {
+      // Guardar la nova ubicacio a la base de dades
+      axios.post('http://localhost:3002/api/netdoc/dispositius/insert', newDevice);
+      console.log('newDevice', newDevice);
+    }
+    catch (error) {
+      console.error(error);
+    }
+
+    if (selectedRowForm === null) {
+      // Add a new device
+      setDispositius((prevDispositius) => [...prevDispositius, newDevice]);
+    } else {
+      // Update the existing device
+      const updatedDispositius = [...dispositius];
+      updatedDispositius[selectedRowForm] = newDevice;
+      setDispositius(updatedDispositius);
+      setselectedRowForm(null);
+    }
+  
+    // Reset the form values
     setFormValues({
       deviceName: '',
       ip: '',
@@ -69,26 +82,10 @@ const DeviceManagementForm = () => {
       ethernetPorts: '',
       location: '',
       vlan: '',
-      ethernetPort: '',
     });
-    setDispositius((prevDispositius) => [...prevDispositius, nouDispositiu]);
-
-    if (defviceType === 'final') {
-      axios.post('http://localhost:3002/api/netdoc/dispositius', nouDispositiu);
-    } else {
-      axios.post('http://localhost:3002/api/netdoc/dispositius', nouDispositiu);
-    }
-
-    // })
-    // .catch((error) => {
-    //   console.error('Error en enviar les dades:', error);
-    //   // Aquí pots gestionar els errors de l'enviament
-    // });
-    // Reseteja el formulari
-    //formValues.rest;
 
   };
-
+  
   const handleDelete = (index) => {
     if (index >= 0 && index < dispositius.length) {
       const updatedDispositius = [...dispositius];
@@ -104,7 +101,6 @@ const DeviceManagementForm = () => {
       ethernetPorts: '',
       location: '',
       vlan: '',
-      ethernetPort: '',
     });
 
   };
@@ -115,8 +111,10 @@ const DeviceManagementForm = () => {
     if (index >= 0 && index < dispositius.length) {
       console.log('index', index);
       const selectedDevice = dispositius[index];
-      // Actualitza l'estat del dispositiu seleccionat
-      // Actualitzar les dades del formulari amb les dades de la fila seleccionada
+      
+      setDeviceType(selectedDevice.deviceType); // Set the device type
+      
+      // Update the form values with the selected device data
       setFormValues({
         deviceName: selectedDevice.NomDispositiu,
         ip: selectedDevice.ip,
@@ -124,9 +122,8 @@ const DeviceManagementForm = () => {
         ethernetPorts: selectedDevice.port,
         location: selectedDevice.ubicacio,
         vlan: selectedDevice.vlan,
-        ethernetPort: selectedDevice.portEntrada,
       });
-
+  
       setselectedRowForm(index);
     }
   };
@@ -142,7 +139,7 @@ const DeviceManagementForm = () => {
         port: formValues.ethernetPorts || '',
         ubicacio: formValues.location,
         vlan: formValues.vlan,
-        portEntrada: formValues.ethernetPort,
+
       };
       setDispositius(updatedDispositius);
       setselectedRowForm(null);
@@ -153,7 +150,6 @@ const DeviceManagementForm = () => {
         ethernetPorts: '',
         location: '',
         vlan: '',
-        ethernetPort: '',
       });
 
     }
@@ -171,14 +167,14 @@ const DeviceManagementForm = () => {
 
         <div className="device-type-selector">
           <button
-            className={`option-button ${deviceType === 'final' ? 'selected' : ''}`}
-            onClick={() => handleDeviceTypeChange('final')}
+            className={`option-button ${deviceType === false ? 'selected' : ''}`}
+            onClick={() => handleDeviceTypeChange(false)}
           >
             Dispositiu Final
           </button>
           <button
-            className={`option-button ${deviceType === 'infra' ? 'selected' : ''}`}
-            onClick={() => handleDeviceTypeChange('infra')}
+            className={`option-button ${deviceType === true ? 'selected' : ''}`}
+            onClick={() => handleDeviceTypeChange(true)}
           >
             Dispositiu d'Infraestructura
           </button>
@@ -210,10 +206,7 @@ const DeviceManagementForm = () => {
           <label>VLAN de la xarxa:</label>
           <input type="text" name="vlan" value={formValues.vlan} onChange={handleChange} required />
         </div>
-        <div className="form-group">
-          <label>Port ethernet d'entrada:</label>
-          <input type="text" name="ethernetPort" value={formValues.ethernetPort} onChange={handleChange} required />
-        </div>
+
         <div className="form-buttons">
           <button type="reset">Neteja</button>
 
@@ -222,7 +215,7 @@ const DeviceManagementForm = () => {
           <button type="button" onClick={handleSaveRow}>Gurada</button>
         </div>
       </form>
-      <TaulaDispositus dispositius={dispositius} onEdit={handleEditRow} onDelete={handleDelete} />
+      <TaulaDispositus dispositius={dispositius} onEdit={handleEditRow} onDelete={handleDelete} deviceType={deviceType}/>
     </div>
   );
 };

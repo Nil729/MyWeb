@@ -30,7 +30,7 @@ export default function handler(req, res) {
         res.status(200).json({ message: "Location updated successfully" });
       }
     });
-      
+
   } else {
     res.status(405).json({ error: "Method not allowed" });
   }
