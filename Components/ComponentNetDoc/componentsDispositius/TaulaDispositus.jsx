@@ -52,9 +52,9 @@ const TaulaDispositus = ({dispositius, onEdit, onDelete, deviceType}) => {
               <td>{dispositiu.NomDispositiu}</td>
               <td>{dispositiu.ip}</td>
               <td>{dispositiu.mac}</td>
-              <td>{dispositiu.port}</td>
-              <td>{dispositiu.ubicacio}</td>
-              <td>{dispositiu.vlan}</td>
+              <td>{dispositiu.quantitatPortsEth}</td>
+              <td>{dispositiu.zona_id}</td>
+              <td>{dispositiu.Id_vlan}</td>
               <td>
                 <button onClick={() => handledeviceEdit(index)}>Editar</button>
 

@@ -5,19 +5,24 @@ CREATE DATABASE bbdd_NetDoc;
 
 CREATE TABLE Dispositius (
     id_dispositiu INTEGER PRIMARY KEY AUTO_INCREMENT,
-    IP VARCHAR(15) UNIQUE,
+    ip VARCHAR(15) UNIQUE,
     NomDispositiu TEXT,
-    MAC TEXT,
+    mac TEXT,
     zona_id INTEGER,
     Id_vlan INTEGER,
-    QuantitatPortsEth INTEGER,
+    quantitatPortsEth INTEGER,
     descripcio_dispositiu TEXT,
     deviceType BOOLEAN,
     FOREIGN KEY(zona_id) REFERENCES Zona(Id_zona),
     FOREIGN KEY(Id_vlan) REFERENCES Xarxa(Id_vlan)
 );
--- afeguir una columna deviceType que nomes pugui ser true o FALSE
+-- cavia els noms de les columents IP i MAC perque siguin minusculas
+ALTER TABLE Dispositius CHANGE IP ip VARCHAR(15) UNIQUE;
+ALTER TABLE Dispositius CHANGE QuantitatPortsEth quantitatPortsEth TEXT;
 ALTER TABLE Dispositius ADD deviceType BOOLEAN;
+
+-- Canvia perque el tipus de dispositu sigui TEXT
+ALTER TABLE Dispositius MODIFY COLUMN deviceType TEXT;
 
 SELECT * FROM Dispositius;
 
