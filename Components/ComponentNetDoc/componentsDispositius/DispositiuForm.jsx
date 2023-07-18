@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 
 import TaulaDispositus from './TaulaDispositus';
+import UbicacioComboBox from '../componetnsUbicacio/UbicacioComboBox';
+import ZonesComboBox from '../componentsXarxa/XarxaComboBox';
 
 const DeviceManagementForm = () => {
 
@@ -10,8 +12,8 @@ const DeviceManagementForm = () => {
   const [dispositius, setDispositius] = useState([
     // id_dispositu, IP, NomDispositiuDipositiu, MAC, zona_id, id_vlan, QuantitatPortsEth, descripcio_dispositiu.    
     { deviceType: deviceType, NomDispositiu: 'Dispositiu 1', ip: '192.168.1.1', mac: '00:11:22:33:44:55', port: 4, ubicacio: 'Aula 1', vlan: 1, portEntrada: 1 },
-    { deviceType: deviceType,  NomDispositiu: 'Dispositiu 2', ip: '192.168.1.2', mac: 'AA:BB:CC:DD:EE:FF', port: 8, ubicacio: 'Aula 2', vlan: 2, portEntrada: 1 },
-    { deviceType: deviceType,  NomDispositiu: 'Dispositiu 3', ip: '192.168.1.3', mac: '11:22:33:44:55:66', port: 2, ubicacio: 'Aula 3', vlan: 3, portEntrada: 1 },
+    { deviceType: deviceType, NomDispositiu: 'Dispositiu 2', ip: '192.168.1.2', mac: 'AA:BB:CC:DD:EE:FF', port: 8, ubicacio: 'Aula 2', vlan: 2, portEntrada: 1 },
+    { deviceType: deviceType, NomDispositiu: 'Dispositiu 3', ip: '192.168.1.3', mac: '11:22:33:44:55:66', port: 2, ubicacio: 'Aula 3', vlan: 3, portEntrada: 1 },
   ]);
 
   const [selectedRowForm, setselectedRowForm] = useState(null);
@@ -59,9 +61,9 @@ const DeviceManagementForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-  
+
     const form = event.target;
-    
+
     // Create a new device object with the form values
     const newDevice = {
       deviceType: deviceType,
@@ -93,7 +95,7 @@ const DeviceManagementForm = () => {
       setDispositius(updatedDispositius);
       setselectedRowForm(null);
     }
-  
+
     // Reset the form values
     setFormValues({
       deviceName: '',
@@ -105,22 +107,22 @@ const DeviceManagementForm = () => {
     });
 
   };
-  
+
   const handleDelete = (index) => {
     if (index >= 0 && index < dispositius.length) {
-
-      const updatedDispositius = [...dispositius];
-      updatedDispositius.splice(index, 1);
-      setDispositius(updatedDispositius);
-      const delDispositu = dispositius[index]
+      const delDispositu = dispositius[index];
+      // get id dispositiu 
       try {
         // Guardar la nova ubicacio a la base de dades
-        axios.post('http://localhost:3002/api/netdoc/dispositius/delete', delDispositu);
-        console.log('dispositius[index]', delDispositu);
+        console.log('dispositius[index]', delDispositu.id_dispositiu);
+        axios.post(`http://localhost:3002/api/netdoc/dispositius/delete?id_dispositiu=${delDispositu.id_dispositiu}`);;
       }
       catch (error) {
         console.error(error);
       }
+      const updatedDispositius = [...dispositius];
+      updatedDispositius.splice(index, 1);
+      setDispositius(updatedDispositius);
 
     }
     // gurada els canvis
@@ -143,7 +145,7 @@ const DeviceManagementForm = () => {
       const selectedDevice = dispositius[index];
       console.log('selectedDevice', selectedDevice);
       setDeviceType(selectedDevice.deviceType); // Set the device type
-      
+
       // Update the form values with the selected device data
       setFormValues({
         deviceName: selectedDevice.NomDispositiu,
@@ -153,7 +155,7 @@ const DeviceManagementForm = () => {
         location: selectedDevice.zona_id,
         vlan: selectedDevice.Id_vlan,
       });
-  
+
       setselectedRowForm(index);
     }
   };
@@ -185,7 +187,7 @@ const DeviceManagementForm = () => {
       } catch (error) {
         console.error('Error updating device:', error);
       }
-      
+
 
       setselectedRowForm(null);
       setFormValues({
@@ -205,7 +207,7 @@ const DeviceManagementForm = () => {
 
   return (
     <div className="device-management">
-      <form className="device-form" onSubmit={handleSubmit}>
+      <form className="device-form">
         <div className="form-header">
           <h2>Gestionar Dispositius</h2>
         </div>
@@ -242,15 +244,24 @@ const DeviceManagementForm = () => {
           <label>Quantitat de ports ethernet:</label>
           <input type="number" name="ethernetPorts" value={formValues.ethernetPorts} onChange={handleChange} required />
         </div>
-
+        
+        {/* 
         <div className="form-group">
           <label>Ubicació:</label>
           <input type="text" name="location" value={formValues.location} onChange={handleChange} required />
         </div>
+        */}
+
+        <UbicacioComboBox value={formValues.location} onChange={handleChange} />
+
+        <ZonesComboBox value={formValues.vlan} onChange={handleChange} />
+        
+        {/*
         <div className="form-group">
           <label>VLAN de la xarxa:</label>
           <input type="text" name="vlan" value={formValues.vlan} onChange={handleChange} required />
         </div>
+        */}
 
         <div className="form-buttons">
           <button type="reset">Neteja</button>
@@ -260,7 +271,7 @@ const DeviceManagementForm = () => {
           <button type="button" onClick={handleSaveRow}>Gurada</button>
         </div>
       </form>
-      <TaulaDispositus dispositius={dispositius} onEdit={handleEditRow} onDelete={handleDelete} deviceType={deviceType}/>
+      <TaulaDispositus dispositius={dispositius} onEdit={handleEditRow} onDelete={handleDelete} deviceType={deviceType} />
     </div>
   );
 };

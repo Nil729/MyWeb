@@ -117,7 +117,7 @@ const UbicacioForm = () => {
             console.log('ubicacioId', ubicacioId);
 
             // Send a request to delete the ubicació
-            await axios.delete(`/api/netdoc/ubicacioId?ubicacioId=${ubicacioId}`);
+            await axios.delete(`/api/netdoc/ubicacioId?ubicacioId=${ubicacioId}`, ubicacioData[index]);
 
             // Update the ubicacioData state to reflect the deletion
             const updatedUbicacioData = [...ubicacioData];

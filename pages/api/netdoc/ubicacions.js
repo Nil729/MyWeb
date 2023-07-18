@@ -34,15 +34,13 @@ export default function handlerNovaUbicacio(req, res) {
         );
 
     } else if (req.method === 'GET') {
-        console.log('GET');
+
         // Process a GET request
         pool.query('SELECT  Id_zona as idUbicacio, NomZona AS ubicacioName, DescZona AS descriptionUbicacio FROM Zona', (error, results, feilds) => {
             if (error) {
                 console.error(error);
                 res.status(500).json({ error: 'Error retrieving locations from database' });
             } else {
-                console.log(results);
-
                 res.status(200).json(results);
             }
             // Disconnect from the 

@@ -141,7 +141,14 @@ INSERT INTO Dispositius (id_dispositiu, IP, NomDispositiu, MAC, zona_id, Id_vlan
 VALUES (4, '192.168.10.103', 'PC2', '00:00:00:00:00:00', 3, 4, 1, 'PC PORDUCCIÓ');
 
 
+select `NomDispositiu`, `Id_zona`, `NomZona` from Dispositius join Zona on Dispositius. zona_id = Zona.Id_zona;
+
 SELECT * FROM Dispositius;
+
+select * from Zona;
+SELECT Id_zona FROM Zona WHERE NomZona =  'Aula 32';
+
+
 # inserta a la base de dades una zona
 
 INSERT INTO Zona (Id_zona,NomZona, DescZona) VALUES (1, 'INFRA', 'INFRAESTRUCTURA');
@@ -150,7 +157,6 @@ INSERT INTO Zona (Id_zona, NomZona, DescZona) VALUES (2, 'OFICINES', 'OFICINES')
 
 INSERT INTO Zona (Id_zona, NomZona, DescZona) VALUES (3, 'PORDUCCIÓ', 'PRODUCCIÓ');
 
-SELECT * FROM Zona;
 
 # inserta a la base de dades una xarxa 
 
@@ -254,3 +260,13 @@ INSERT INTO Estat (IdPortInfra_fk, Id_vlan_fk, tagged, untagged, _undefined) VAL
 INSERT INTO Estat (IdPortInfra_fk, Id_vlan_fk, tagged, untagged, _undefined) VALUES (24, 1, 'tagged', 'untagged', '_undefined');
 
 SELECT * FROM Estat;
+
+SELECT * from `Dispositius`;
+
+select ip, NomDispositiu, mac, quantitatPortsEth, deviceType, NomZona, NomXarxa
+from Dispositius 
+JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
+JOIN Xarxa ON Dispositius.Id_vlan = Xarxa.Id_vlan;
+
+
+select * from `Xarxa`;
