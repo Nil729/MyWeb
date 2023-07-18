@@ -24,7 +24,7 @@ const UbicacionsTable = ({ ubicacio, onEditUbicacio, onDeleteUbicacio }) => {
 
 
   return (
-    <div className="ubicacio-table">
+    <div className="network-table">
       <table>
         <thead>
           <tr>
@@ -47,5 +47,6 @@ const UbicacionsTable = ({ ubicacio, onEditUbicacio, onDeleteUbicacio }) => {
       </table>
     </div>
   );
+
 };
 export default UbicacionsTable;

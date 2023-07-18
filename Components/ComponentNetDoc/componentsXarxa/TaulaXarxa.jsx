@@ -35,17 +35,18 @@ const NetworkTable = ({ networks, onEditXarxa, onDeleteXarxa }) => {
           </tr>
         </thead>
         <tbody>
-          {networks.map((network, index) => (
 
+          {networks.map((network, index) => (
             <tr key={index}>
               <td>{network.networkId}</td>
               <td>{network.networkName}</td>
-              <td>{network.description}</td>
+              <td>{network.networkDesc}</td>
               <td><button type='button' className='editButonXarxa' onClick={() => handleEditRowXarxa(index)}>Edita</button></td>
               <td><button type='button' className='delButonXarxa' onClick={() => handleDeleteRowXarxa(index)}>Eliminar</button></td>
             </tr>
-            
+
           ))}
+
         </tbody>
       </table>
     </div>

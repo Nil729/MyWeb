@@ -5,7 +5,7 @@ import pool from "../../../../database/db.connection";
 export default function getAllXarxes(req, res){
 
     pool.query(
-        `SELECT * FROM Xarxa`
+        `SELECT Id_vlan , NomXarxa , DescXarxa  FROM Xarxa`
     , (error, results) => {
         if (error) {
             res.status(500).json({ message: 'Error fetching records', error });

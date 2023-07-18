@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import TaulaXarxa from './TaulaXarxa';
 
 
 const NetworkForm = () => {
-    const [networkData, setNetworkData] = useState([]);
+    const [networkData, setNetworkData] = useState([
+        { Id_vlan: '1', NomXarxa: 'Xarxa 1', DescXarxa: 'Xarxa 1' },
+    ]);
 
     const [selectedRowXarxaForm, setselectedRowXarxaForm] = useState(null);
 
     const [formvaluesXarxa, setformvaluesXarxa] = useState({
+
         networkId: '',
         networkName: '',
-        description: '',
+        networkDesc: '',
+
     });
 
     const handleChange = (event) => {
@@ -22,13 +26,29 @@ const NetworkForm = () => {
         }));
     };
 
+    useEffect(() => {
+        fetchNetworkData();
+    }, []);
+
+    const fetchNetworkData = async () => {
+        try {
+            const response = await fetch('http://localhost:3002/api/netdoc/xarxa/getXarxa');
+            const networkData = await response.json();
+            console.log('networkData', networkData);
+            setNetworkData(networkData);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+
     const handleSubmit = (event) => {
         event.preventDefault();
 
         const novaXarxa = {
             networkId: formvaluesXarxa.networkId,
             networkName: formvaluesXarxa.networkName,
-            description: formvaluesXarxa.description,
+            networkDesc: formvaluesXarxa.networkDesc,
         };
 
         setNetworkData((prevNetworks) => [...prevNetworks, novaXarxa]);
@@ -36,12 +56,13 @@ const NetworkForm = () => {
         setformvaluesXarxa({
             networkId: '',
             networkName: '',
-            description: '',
+            networkDesc: '',
         });
     };
 
 
     const handleEditRow = (index) => {
+
         console.log('index', index);
         if (index >= 0 && index < networkData.length) {
             
@@ -50,7 +71,7 @@ const NetworkForm = () => {
             setformvaluesXarxa({
                 networkId: formvaluesXarxa.networkId,
                 networkName: formvaluesXarxa.networkName,
-                description: formvaluesXarxa.description,
+                networkDesc: formvaluesXarxa.networkDesc,
             });
 
 
@@ -65,14 +86,14 @@ const NetworkForm = () => {
             updatedNetworks[selectedRowXarxaForm] = {
                 networkId: formvaluesXarxa.networkId,
                 networkName: formvaluesXarxa.networkName,
-                description: formvaluesXarxa.description,
+                networkDesc: formvaluesXarxa.networkDesc,
             };
             setNetworkData(updatedNetworks);
             setselectedRowXarxaForm(null);
             setformvaluesXarxa({
                 networkId: '',
                 networkName: '',
-                description: '',
+                networkDesc: '',
             });
         }
     };
@@ -87,9 +108,8 @@ const NetworkForm = () => {
         setformvaluesXarxa({
             networkId: '',
             networkName: '',
-            description: '',
+            networkDesc: '',
         });
-
     };
 
 
@@ -122,11 +142,11 @@ const NetworkForm = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="description">Descripció:</label>
+                        <label htmlFor="networkDesc">Descripció:</label>
                         <textarea
-                            id="description"
-                            name="description"
-                            value={formvaluesXarxa.description}
+                            id="networkDesc"
+                            name="networkDesc"
+                            value={formvaluesXarxa.networkDesc}
                             onChange={handleChange}
                         ></textarea>
                     </div>

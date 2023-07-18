@@ -71,9 +71,8 @@ CREATE TABLE Zona (
     NomZona TEXT,
     DescZona TEXT
 );
-DROP TABLE Zona;
 
-ubicacioName, 
+DROP TABLE Zona;
 
 CREATE TABLE Xarxa (
     Id_vlan INTEGER PRIMARY KEY AUTO_INCREMENT,
