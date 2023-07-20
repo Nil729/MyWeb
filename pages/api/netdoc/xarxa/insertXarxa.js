@@ -1,12 +1,12 @@
 import pool from "../../../../database/db.connection";
 
-export default function delXarxa(req, res) {
 
-    const { Id_vlan } = req.body;
-    console.log(Id_vlan);
-    
+export default function insetXarxa(req, res) {
+
+    const { Id_vlan, NomXarxa, DescXarxa } = req.body;
+
     pool.query(
-        `DELETE FROM Xarxa WHERE Id_vlan = ?`, [Id_vlan]
+        `INSERT INTO Xarxa (Id_vlan , NomXarxa , DescXarxa) VALUES (?,?,?)`, [Id_vlan, NomXarxa, DescXarxa]
         , (error, results) => {
             if (error) {
                 res.status(500).json({ message: 'Error fetching records', error });

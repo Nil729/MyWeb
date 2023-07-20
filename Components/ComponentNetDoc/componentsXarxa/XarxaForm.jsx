@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import TaulaXarxa from './TaulaXarxa';
+import axios from 'axios';
 
 
 const NetworkForm = () => {
@@ -46,18 +47,27 @@ const NetworkForm = () => {
         event.preventDefault();
 
         const novaXarxa = {
-            networkId: formvaluesXarxa.networkId,
-            networkName: formvaluesXarxa.networkName,
-            networkDesc: formvaluesXarxa.networkDesc,
+            Id_vlan: formvaluesXarxa.networkId,
+            NomXarxa: formvaluesXarxa.networkName,
+            DescXarxa: formvaluesXarxa.networkDesc,
         };
 
-        setNetworkData((prevNetworks) => [...prevNetworks, novaXarxa]);
+        try {
+            axios.post('http://localhost:3002/api/netdoc/xarxa/insertXarxa', novaXarxa);
+            console.log('novaXarxa', novaXarxa);
+            
+            setNetworkData((prevNetworks) => [...prevNetworks, novaXarxa]);
 
-        setformvaluesXarxa({
-            networkId: '',
-            networkName: '',
-            networkDesc: '',
-        });
+            setformvaluesXarxa({
+                networkId: '',
+                networkName: '',
+                networkDesc: '',
+            });
+
+        } catch (error) {
+            console.error(error);
+        }
+
     };
 
 
@@ -98,18 +108,31 @@ const NetworkForm = () => {
         }
     };
     
-    const handleDeleteRowXarxa = (index) => {
+    const handleDeleteRowXarxa = async (index) => {
         // Eliminar la fila seleccionada
         const updatedNetworks = [...networkData];
-        updatedNetworks.splice(index, 1);
-        setNetworkData(updatedNetworks);
-        // gurada els canvis
-        setselectedRowXarxaForm(null);
-        setformvaluesXarxa({
-            networkId: '',
-            networkName: '',
-            networkDesc: '',
-        });
+        // Obtenim el id de la xarxa a eliminar
+
+        try{
+
+            const networkId = updatedNetworks[index].Id_vlan;
+            console.log('networkId', networkId);
+            
+            await axios.delete('http://localhost:3002/api/netdoc/xarxa/delXarxa', networkId);
+            updatedNetworks.splice(index, 1);
+            setNetworkData(updatedNetworks);
+            // gurada els canvis
+            setselectedRowXarxaForm(null);
+            setformvaluesXarxa({
+                networkId: '',
+                networkName: '',
+                networkDesc: '',
+            });
+
+        } catch (error) {
+            console.error(error);
+        }
+
     };
 
 
