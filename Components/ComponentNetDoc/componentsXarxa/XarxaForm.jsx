@@ -113,12 +113,12 @@ const NetworkForm = () => {
         const updatedNetworks = [...networkData];
         // Obtenim el id de la xarxa a eliminar
 
+        const networkId = updatedNetworks[index].Id_vlan;
+        console.log('networkId', networkId);
+        
         try{
 
-            const networkId = updatedNetworks[index].Id_vlan;
-            console.log('networkId', networkId);
-            
-            await axios.delete('http://localhost:3002/api/netdoc/xarxa/delXarxa', networkId);
+            await axios.delete(`http://localhost:3002/api/netdoc/xarxa/delXarxa?networkId=${networkId}`);
             updatedNetworks.splice(index, 1);
             setNetworkData(updatedNetworks);
             // gurada els canvis
