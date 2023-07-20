@@ -78,10 +78,11 @@ const NetworkForm = () => {
             
             // Omplir els camps del formulari amb les dades de la fila seleccionada
             const formvaluesXarxa = networkData[index];
+
             setformvaluesXarxa({
-                networkId: formvaluesXarxa.networkId,
-                networkName: formvaluesXarxa.networkName,
-                networkDesc: formvaluesXarxa.networkDesc,
+                networkId: formvaluesXarxa.Id_vlan,
+                networkName: formvaluesXarxa.NomXarxa,
+                networkDesc: formvaluesXarxa.DescXarxa,
             });
 
 
@@ -91,20 +92,35 @@ const NetworkForm = () => {
 
     // Guardar els canvis
     const handleSaveRow = () => {
+        
         if (selectedRowXarxaForm !== null) {
             const updatedNetworks = [...networkData];
+
             updatedNetworks[selectedRowXarxaForm] = {
-                networkId: formvaluesXarxa.networkId,
-                networkName: formvaluesXarxa.networkName,
-                networkDesc: formvaluesXarxa.networkDesc,
+                Id_vlan: formvaluesXarxa.networkId,
+                NomXarxa: formvaluesXarxa.networkName,
+                DescXarxa: formvaluesXarxa.networkDesc
             };
             setNetworkData(updatedNetworks);
+
+            try {
+
+                axios.put('http://localhost:3002/api/netdoc/xarxa/updateXarxa', updatedNetworks[selectedRowXarxaForm]);
+                console.log('updatedNetworks[selectedRowXarxaForm]', updatedNetworks[selectedRowXarxaForm]);
+
+            }catch(error) {
+                console.error(error);
+            }
+
             setselectedRowXarxaForm(null);
+                
             setformvaluesXarxa({
                 networkId: '',
                 networkName: '',
                 networkDesc: '',
             });
+
+
         }
     };
     
