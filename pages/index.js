@@ -21,11 +21,12 @@ export default function LoginPage() {
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
           target="_blank"
           rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
+        >          
+        <span className={styles.logo}>
+          <Image src="/logoFooter.png" alt="Vercel Logo" width={100} height={100} />
+        </span>
+          Powered by Nil Piñana{' '}
+
         </a>
       </footer>
     </div>

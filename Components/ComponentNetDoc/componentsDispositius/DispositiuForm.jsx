@@ -207,7 +207,7 @@ const DeviceManagementForm = () => {
 
   return (
     <div className="device-management">
-      <form className="device-form">
+      <form className="device-form" onSubmit={(e) => e.preventDefault()}>
         <div className="form-header">
           <h2>Gestionar Dispositius</h2>
         </div>
@@ -244,24 +244,10 @@ const DeviceManagementForm = () => {
           <label>Quantitat de ports ethernet:</label>
           <input type="number" name="ethernetPorts" value={formValues.ethernetPorts} onChange={handleChange} required />
         </div>
-        
-        {/* 
-        <div className="form-group">
-          <label>Ubicació:</label>
-          <input type="text" name="location" value={formValues.location} onChange={handleChange} required />
-        </div>
-        */}
 
         <UbicacioComboBox value={formValues.location} onChange={handleChange} />
 
         <ZonesComboBox value={formValues.vlan} onChange={handleChange} />
-        
-        {/*
-        <div className="form-group">
-          <label>VLAN de la xarxa:</label>
-          <input type="text" name="vlan" value={formValues.vlan} onChange={handleChange} required />
-        </div>
-        */}
 
         <div className="form-buttons">
           <button type="reset">Neteja</button>

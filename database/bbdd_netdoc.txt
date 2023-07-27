@@ -1,0 +1,112 @@
+CREATE TABLE Dispositius (
+    id_dispositiu INTEGER PRIMARY KEY AUTO_INCREMENT,
+    ip VARCHAR(15) UNIQUE,
+    NomDispositiu TEXT,
+    mac TEXT,
+    zona_id INTEGER,
+    Id_vlan INTEGER,
+    quantitatPortsEth INTEGER,
+    descripcio_dispositiu TEXT,
+    deviceType TEXT,
+    FOREIGN KEY(zona_id) REFERENCES Zona(Id_zona),
+    FOREIGN KEY(Id_vlan) REFERENCES Xarxa(Id_vlan)
+);
+
+
+CREATE TABLE PortsFinal (
+    IdPortFinal INTEGER PRIMARY KEY AUTO_INCREMENT,
+    numPortFinal INTEGER,
+    pachpanelFinal INTEGER,
+    id_disposituFinal_fk INTEGER,
+    FOREIGN KEY(id_disposituFinal_fk) REFERENCES Dispositus_final(id_disposituFinal)
+);
+
+
+
+CREATE TABLE PortsInfra (
+    IdPortInfra INTEGER PRIMARY KEY AUTO_INCREMENT,
+    EstatPOE TEXT,
+    EstatXarxa TEXT,
+    id_dispositiuInfra_fk INTEGER,
+    Id_vlan_fk INTEGER,
+    numPortInfra INTEGER,
+    pachpanelInfra TEXT,
+    FOREIGN KEY(id_dispositiuInfra_fk) REFERENCES Dispositus_infraestructura(id_dispositiuInfra),
+    FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan)
+
+);
+
+
+CREATE TABLE Dispositus_infraestructura (
+    id_dispositiuInfra INTEGER PRIMARY KEY AUTO_INCREMENT,
+    id_dispositiu_fk INTEGER
+);
+
+CREATE TABLE Dispositus_final (
+    id_disposituFinal INTEGER PRIMARY KEY AUTO_INCREMENT,
+    id_dispositiu_fk INTEGER
+);
+
+
+
+CREATE TABLE Zona (
+    Id_zona INTEGER PRIMARY KEY AUTO_INCREMENT,
+    NomZona TEXT,
+    DescZona TEXT
+);
+
+CREATE TABLE Xarxa (
+    Id_vlan INTEGER PRIMARY KEY AUTO_INCREMENT,
+    NomXarxa TEXT,
+    DescXarxa TEXT
+);
+
+CREATE TABLE Coneccio (
+    IdPortFinal_fk INTEGER UNIQUE,
+    IdPortInfra_fk INTEGER UNIQUE,
+    Poe TEXT,
+    XarxaEstat TEXT,
+    IdPort INTEGER,
+
+    FOREIGN KEY(IdPortFinal_fk) REFERENCES PortsFinal(IdPortFinal),
+    FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra)
+);
+
+
+#recursivitat connexió per poder connectar entre ports de infraestructura
+
+CREATE TABLE ConexioTrunk (
+    IdConexioTrunk INTEGER PRIMARY KEY AUTO_INCREMENT,
+    IdPortInfraParent_fk INTEGER UNIQUE,
+    IdPortInfraChild_fk INTEGER UNIQUE,
+    FOREIGN KEY(IdPortInfraParent_fk) REFERENCES PortsInfra(IdPortInfra),
+    FOREIGN KEY(IdPortInfraChild_fk) REFERENCES PortsInfra(IdPortInfra)
+);
+
+CREATE TABLE Estat (
+    IdPortInfra_fk INTEGER UNIQUE,
+    Id_vlan_fk INTEGER,
+    tagged TEXT,
+    untagged TEXT,
+    _undefined TEXT,
+    FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra),
+    FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan)
+);
+
+select * from Dispositius; -- Done
+
+select * from Zona; -- Done
+select * from Xarxa; -- Done
+select * from Dispositus_infraestructura; 
+
+select * from Dispositus_final; 
+
+select * from PortsFinal;
+
+select * from PortsInfra;
+
+select * from Coneccio;
+
+select * from ConexioTrunk;
+
+select * from Estat;

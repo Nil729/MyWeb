@@ -12,14 +12,20 @@ CREATE TABLE Dispositius (
     Id_vlan INTEGER,
     quantitatPortsEth INTEGER,
     descripcio_dispositiu TEXT,
-    deviceType BOOLEAN,
-    FOREIGN KEY(zona_id) REFERENCES Zona(Id_zona),
-    FOREIGN KEY(Id_vlan) REFERENCES Xarxa(Id_vlan)
+    deviceType TEXT,
+    FOREIGN KEY(zona_id) REFERENCES Zona(Id_zona) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(Id_vlan) REFERENCES Xarxa(Id_vlan)ON UPDATE CASCADE ON DELETE CASCADE
 );
 -- cavia els noms de les columents IP i MAC perque siguin minusculas
 ALTER TABLE Dispositius CHANGE IP ip VARCHAR(15) UNIQUE;
 ALTER TABLE Dispositius CHANGE QuantitatPortsEth quantitatPortsEth TEXT;
-ALTER TABLE Dispositius ADD deviceType BOOLEAN;
+
+-- change the constraint forenkey to cascade
+ALTER TABLE Dispositius DROP FOREIGN KEY `dispositius_ibfk_2`;
+ALTER TABLE Dispositius ADD FOREIGN KEY(zona_id) REFERENCES Zona(Id_zona) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE Dispositius DROP FOREIGN KEY `dispositius_ibfk_1`;
+ALTER TABLE Dispositius ADD FOREIGN KEY(Id_vlan) REFERENCES Xarxa(Id_vlan)ON UPDATE CASCADE ON DELETE CASCADE;
+
 
 -- Canvia perque el tipus de dispositu sigui TEXT
 ALTER TABLE Dispositius MODIFY COLUMN deviceType TEXT;
@@ -33,10 +39,15 @@ CREATE TABLE PortsFinal (
     numPortFinal INTEGER,
     pachpanelFinal INTEGER,
     id_disposituFinal_fk INTEGER,
-    FOREIGN KEY(id_disposituFinal_fk) REFERENCES Dispositus_final(id_disposituFinal)
+    FOREIGN KEY(id_disposituFinal_fk) REFERENCES Dispositus_final(id_disposituFinal) ON UPDATE CASCADE ON DELETE CASCADE
 );
-
+select * from `Dispositus_final`
+select * from PortsFinal;
 DROP TABLE PortsFinal;
+
+-- change the constraint forenkey to cascade
+ALTER TABLE PortsFinal ADD FOREIGN KEY(id_disposituFinal_fk) REFERENCES Dispositus_final(id_disposituFinal) ON UPDATE CASCADE ON DELETE CASCADE;
+
 
 CREATE TABLE PortsInfra (
     IdPortInfra INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -46,23 +57,39 @@ CREATE TABLE PortsInfra (
     Id_vlan_fk INTEGER,
     numPortInfra INTEGER,
     pachpanelInfra TEXT,
-    FOREIGN KEY(id_dispositiuInfra_fk) REFERENCES Dispositus_infraestructura(id_dispositiuInfra),
-    FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan)
-
+    FOREIGN KEY(id_dispositiuInfra_fk) REFERENCES Dispositus_infraestructura(id_dispositiuInfra) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan) ON UPDATE CASCADE ON DELETE CASCADE
+    
 );
 DROP TABLE PortsInfra;
+-- change the constraint forenkey to cascade
+ALTER TABLE PortsInfra ADD FOREIGN KEY(id_dispositiuInfra_fk) REFERENCES Dispositus_infraestructura(id_dispositiuInfra) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE PortsInfra ADD FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan) ON UPDATE CASCADE ON DELETE CASCADE;
+-- DELETE A FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan) ON UPDATE CASCADE ON DELETE CASCADE
+ALTER TABLE PortsInfra DROP FOREIGN KEY PortsInfra_ibfk_5;
+ALTER TABLE PortsInfra DROP COLUMN Id_vlan_fk;
+
 
 CREATE TABLE Dispositus_infraestructura (
     id_dispositiuInfra INTEGER PRIMARY KEY AUTO_INCREMENT,
-    id_dispositiu_fk INTEGER
+    id_dispositiu_fk INTEGER,
+    FOREIGN KEY(id_dispositiu_fk) REFERENCES Dispositius(id_dispositiu) ON UPDATE CASCADE ON DELETE CASCADE
 );
+select * from Dispositu
+SELECT * FROM Dispositus_infraestructura;
+ALTER TABLE Dispositus_infraestructura ADD FOREIGN KEY(id_dispositiu_fk) REFERENCES Dispositius(id_dispositiu) ON UPDATE CASCADE ON DELETE CASCADE;
 
-DROP TABLE Dispositus_infraestructura;
+
 
 CREATE TABLE Dispositus_final (
     id_disposituFinal INTEGER PRIMARY KEY AUTO_INCREMENT,
-    id_dispositiu_fk INTEGER
+    id_dispositiu_fk INTEGER,
+    FOREIGN KEY(id_dispositiu_fk) REFERENCES Dispositius(id_dispositiu) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+ALTER TABLE Dispositus_final ADD FOREIGN KEY(id_dispositiu_fk) REFERENCES Dispositius(id_dispositiu) ON UPDATE CASCADE ON DELETE CASCADE;
+
+select * from `Dispositus_final`;
 
 DROP TABLE Dispositus_final;
 
@@ -93,11 +120,20 @@ CREATE TABLE Coneccio (
     FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra)
 );
 
+
 #modifica la taula perque el IdPortFinal_fk i el IdPortInfra_fk perque siguin unique i eliminar el camp xPort
 
 Alter TABLE Coneccio DROP COLUMN xPort;
 
 ALTER TABLE Coneccio ADD UNIQUE (IdPortFinal_fk, IdPortInfra_fk);
+
+-- change the constraint forenkey to cascade
+ALTER TABLE Coneccio DROP FOREIGN KEY `coneccio_ibfk_2`;
+ALTER TABLE Coneccio ADD FOREIGN KEY(IdPortFinal_fk) REFERENCES PortsFinal(IdPortFinal) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE Coneccio DROP FOREIGN KEY `coneccio_ibfk_1`;
+ALTER TABLE Coneccio ADD FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
 
 #recursivitat connexió per poder connectar entre ports de infraestructura
 
@@ -105,12 +141,19 @@ CREATE TABLE ConexioTrunk (
     IdConexioTrunk INTEGER PRIMARY KEY AUTO_INCREMENT,
     IdPortInfraParent_fk INTEGER UNIQUE,
     IdPortInfraChild_fk INTEGER UNIQUE,
-    FOREIGN KEY(IdPortInfraParent_fk) REFERENCES PortsInfra(IdPortInfra),
-    FOREIGN KEY(IdPortInfraChild_fk) REFERENCES PortsInfra(IdPortInfra)
+    FOREIGN KEY(IdPortInfraParent_fk) REFERENCES PortsInfra(IdPortInfra) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(IdPortInfraChild_fk) REFERENCES PortsInfra(IdPortInfra) ON UPDATE CASCADE ON DELETE CASCADE
 );
 ALTER TABLE ConexioTrunk ADD UNIQUE (IdPortInfraParent_fk, IdPortInfraChild_fk);
 
 DROP TABLE Coneccio;
+
+
+-- change the constraint forenkey to cascade
+ALTER TABLE ConexioTrunk DROP FOREIGN KEY `conexiotrunk_ibfk_2`;
+ALTER TABLE ConexioTrunk ADD FOREIGN KEY(IdPortInfraParent_fk) REFERENCES PortsInfra(IdPortInfra) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ConexioTrunk DROP FOREIGN KEY `conexiotrunk_ibfk_1`;
+ALTER TABLE ConexioTrunk ADD FOREIGN KEY(IdPortInfraChild_fk) REFERENCES PortsInfra(IdPortInfra) ON UPDATE CASCADE ON DELETE CASCADE;
 
 CREATE TABLE Estat (
     IdPortInfra_fk INTEGER UNIQUE,
@@ -118,9 +161,15 @@ CREATE TABLE Estat (
     tagged TEXT,
     untagged TEXT,
     _undefined TEXT,
-    FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra),
-    FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan)
+    FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+-- change the constraint forenkey to cascade
+ALTER TABLE Estat DROP FOREIGN KEY `estat_ibfk_2`;
+ALTER TABLE Estat ADD FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE Estat DROP FOREIGN KEY `estat_ibfk_1`;
+ALTER TABLE Estat ADD FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE Estat ADD UNIQUE (    IdPortInfra_fk);
 DROP TABLE Estat;
 SELECT * from `Estat`;
@@ -142,7 +191,6 @@ VALUES (4, '192.168.10.103', 'PC2', '00:00:00:00:00:00', 3, 4, 1, 'PC PORDUCCIÓ
 
 select `NomDispositiu`, `Id_zona`, `NomZona` from Dispositius join Zona on Dispositius. zona_id = Zona.Id_zona;
 
-SELECT * FROM Dispositius;
 
 select * from Zona;
 SELECT Id_zona FROM Zona WHERE NomZona =  'Aula 32';
@@ -176,7 +224,7 @@ INSERT INTO Dispositus_final (id_dispositiu_fk) VALUES (3);
 
 INSERT INTO Dispositus_final (id_dispositiu_fk) VALUES (4);
 
-
+SELECT * FROM Dispositus;
 # inserta a la base de dades un port final
 
 INSERT INTO PortsFinal (`IdPortFinal`, numPort id_disposituFinal_fk) VALUES (1, 3);
@@ -192,21 +240,27 @@ INSERT INTO Coneccio (IdPortFinal_fk, IdPortInfra_fk, Poe, XarxaEstat, IdPort, p
 INSERT INTO Coneccio (IdPortFinal_fk, IdPortInfra_fk, Poe, XarxaEstat, IdPort, pachpanel) VALUES (2, 23, 'POE', 'UP', 1, 1);
 
 SELECT * FROM Coneccio;
+# crea una sentenica per seleccionar el nom del dispositu infraestructura i port , el nom i port el del dispositu final el port, el nom de la xarxa el estat tagged, untaged o undefined, el nom de la zona i el pachpanel
+    
+# selecciona els noms de els dispositus de infraestructrra
+SELECT *  FROM Dispositius LEFT JOIN Dispositus_infraestructura ON Dispositius.id_dispositiu = Dispositus_infraestructura.id_dispositiu_fk;
 
+select * from Dispositius where `deviceType` = 'infra';
+
+select * from `Dispositius` LEFT JOIN `PortsInfra` ON Dispositius.id_dispositiu = PortsInfra.id_dispositiuInfra_fk;
 
 select * from Estat;
 
 # inserta a la base de dades un estat
 INSERT INTO Estat (IdPortInfra_fk, Id_vlan_fk, tagged, untagged, _undefined) VALUES (1, 1, 'tagged', 'untagged', '_undefined');
 
-INSERT INTO Estat (IdPortInfra_fk, Id_vlan_fk, tagged, untagged, _undefined) VALUES (2, 2, 'tagged', 'untagged', '_undefined');
+INSERT INTO Estat (IdPortInfra_fk, Id_vlan_fk, tagged, untagged, _undefined) VALUES (2, 2, 'tagged', 'untagged', '_undefined'); # afeguir un camp connectat a la taula estat
 
 
 # inserta a la base de dades un dispositu final
 INSERT INTO Dispositus_final (id_dispositiu_fk, NumeroPortsFinal) VALUES (3, 1);
 
 INSERT INTO Dispositus_final (id_dispositiu_fk, NumeroPortsFinal) VALUES (4, 2);
-
 
 
 # inserta a la base de dades un port de la infraestructura
@@ -217,10 +271,12 @@ VALUES (4, 'FALSE', 'UP', 1, 1, 4, 100);
 INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, Id_vlan_fk, numPortInfra, pachpanelInfra) 
 VALUES (3, 'FALSE', 'UP', 1, 1, 4, 101); 
 
-INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, Id_vlan_fk, numPortInfra, pachpanelInfra) 
-VALUES (23, 'TRUE', 'DOWN', 2, 2, 23, 200);
-INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, Id_vlan_fk, numPortInfra, pachpanelInfra) 
-VALUES (24, 'TRUE', 'DOWN', 2, 2, 24, 201);  
+
+INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, numPortInfra, pachpanelInfra)
+VALUES (25, 'TRUE', 'DOWN', 6, 4, 202);
+INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, numPortInfra, pachpanelInfra)
+VALUES (26, 'TRUE', 'DOWN', 7, 6, 203);
+
 
 SELECT * FROM `Dispositus_infraestructura` JOIN `Dispositius` ON Dispositus_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu  WHERE `id_dispositiuInfra` = 1;
 
@@ -234,10 +290,6 @@ VALUES (1, 1, 101, 1);
 INSERT INTO `PortsFinal` (`IdPortFinal`, `numPortFinal`, `pachpanelFinal`, `id_disposituFinal_fk`) 
 VALUES (2, 1, 102, 2);
 
-SELECT * FROM `PortsInfra`;
-
-SELECT * FROM PortsFinal;
-
 # inserta a la base de dades una connexio
 INSERT INTO `Coneccio` (`IdPortFinal_fk`, `IdPortInfra_fk`, `Poe`, `XarxaEstat`, `IdPort`, `pachpanel`)
 VALUES (1, 4, 'POE', 'UP', 1, 101);
@@ -248,7 +300,10 @@ VALUES (2, 23, 'POE', 'UP', 2, 200);
 SELECT * FROM Coneccio;
 
 INSERT INTO `ConexioTrunk` (`IdPortInfraParent_fk`, `IdPortInfraChild_fk`)
-VALUES (3, 24);
+VALUES (25, 26);
+
+-- crea una funcio que si el numero de ports 
+
 
 SELECT * FROM ConexioTrunk;
 
@@ -267,5 +322,27 @@ from Dispositius
 JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
 JOIN Xarxa ON Dispositius.Id_vlan = Xarxa.Id_vlan;
 
+-- Crea una funcio que cuan inserim un reguistre a la taula dispositus també linsereixi a la taula diposiitus_infraestructura o dispositus_final segons el seu deviceType
+DELIMITER $$
+CREATE TRIGGER `insert_dispositiuType` AFTER INSERT ON `Dispositius` FOR EACH ROW BEGIN
+    IF NEW.deviceType = 'infra' THEN
+        INSERT INTO Dispositus_infraestructura (id_dispositiu_fk) VALUES (NEW.id_dispositiu);
+    ELSEIF NEW.deviceType = 'final' THEN
+        INSERT INTO Dispositus_final (id_dispositiu_fk) VALUES (NEW.id_dispositiu);
+    END IF;
+END$$
 
-select * from `Xarxa`;
+CREATE TRIGGER `update_dispositiuType` AFTER UPDATE ON `Dispositius` FOR EACH ROW BEGIN
+    IF NEW.deviceType <> OLD.deviceType THEN
+        IF NEW.deviceType = 'infra' THEN
+            INSERT INTO Dispositus_infraestructura (id_dispositiu_fk) VALUES (NEW.id_dispositiu);
+            DELETE FROM Dispositus_final WHERE id_dispositiu_fk = NEW.id_dispositiu;
+        ELSEIF NEW.deviceType = 'final' THEN
+            INSERT INTO Dispositus_final (id_dispositiu_fk) VALUES (NEW.id_dispositiu);
+            DELETE FROM Dispositus_infraestructura WHERE id_dispositiu_fk = NEW.id_dispositiu;
+        END IF;
+    END IF;
+END$$
+
+
+-- Crea un triger cuan s'actualizi la quantitat de dispositus devicetype == 'infra' si es infarior a la que tenia anteriorment
