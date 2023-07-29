@@ -5,7 +5,7 @@ const DispositiusInfraComboBox = ({ onChange, value }) => {
     const [dispositiusInfra, setDispositiusInfra] = useState([]);
     
     const fetchData = async () => {
-        const result = await axios.get('http://localhost:3002/api/netdoc/dispositius/dispositiusInfra/getDispositiusInfra');
+        const result = await axios.get('http://localhost:3002/api/netdoc/dispositius/dispositiusInfra/getDispositiusInfra', );
         setDispositiusInfra(result.data);
     }
     

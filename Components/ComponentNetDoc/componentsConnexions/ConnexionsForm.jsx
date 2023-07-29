@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import ConnexionsTable from './TaulaConnexions';
 import DispositiusInfraComboBox from '../componentsDispositius/dispositiusComboBox/DispositiusInfraComboBox';
+import PortsInfraComboBox from '../componentsPorts/PortsInfraComboBox';
 
 
 const ConnexionsForm = () => {
@@ -26,6 +27,18 @@ const ConnexionsForm = () => {
             [name]: value,
         }));
     };
+
+    const handleDeviceTypeChange = (event) => {
+        // get id from InfraName ang make a query to get the ports of the device
+
+        const { name, value } = event.target;
+        setformvaluesConnexions((prevValues) => ({
+            ...prevValues,
+            [name]: value,
+        }));
+    };
+    
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -127,20 +140,22 @@ const ConnexionsForm = () => {
 
                     <div className="form-group">
                         <label htmlFor="InfraName">DispostituInfraestructura:</label>
-                        <DispositiusInfraComboBox onChange={handleChange} value={formvaluesConnexions.nomDispositiuInfraestructura} />
+                        <DispositiusInfraComboBox onChange={handleDeviceTypeChange} value={formvaluesConnexions.nomDispositiuInfraestructura} />
 
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="portInfra">Port:</label>
-                        <input
+                        {/* <input
                             type="text"
                             id="portInfra"
                             name="portInfra"
                             value={formvaluesConnexions.portInfra}
                             onChange={handleChange}
                             required
-                        />
+                        /> */}
+                        {/*CARGAR EL COMBOBOX DE PORTS DE LA INFRAESTRUCTURA I passar el valor de el nom del dispositiu que esta seleccionat DispositiusInfraComboBox */ }
+                        <PortsInfraComboBox onChange={handleDeviceTypeChange} value={formvaluesConnexions.nomPortInfraestructura} nomDispositiuInfraestructura={formvaluesConnexions.nomDispositiuInfraestructura} />    
                     </div>
 
 

@@ -278,7 +278,8 @@ VALUES (25, 'TRUE', 'DOWN', 6, 4, 202);
 INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, numPortInfra, pachpanelInfra)
 VALUES (26, 'TRUE', 'DOWN', 7, 6, 203);
 
-SELECT `NomDispositiu` FROM `Dispositus_infraestructura` JOIN `Dispositius` ON Dispositus_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu  WHERE `id_dispositiuInfra` = 1;
+SELECT * FROM `Dispositus_infraestructura` LEFT JOIN `Dispositius` ON Dispositus_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu 
+LEFT JOIN `PortsInfra` ON Dispositus_infraestructura.id_dispositiu_fk = PortsInfra.id_dispositiuInfra_fk WHERE `NomDispositiu` = 'SWITCH-01';
 
 SELECT * from `PortsInfra`;
 
@@ -321,5 +322,4 @@ select ip, NomDispositiu, mac, quantitatPortsEth, deviceType, NomZona, NomXarxa
 from Dispositius 
 JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
 JOIN Xarxa ON Dispositius.Id_vlan = Xarxa.Id_vlan;
-
 
