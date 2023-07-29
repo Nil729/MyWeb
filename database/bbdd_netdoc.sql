@@ -54,17 +54,16 @@ CREATE TABLE PortsInfra (
     EstatPOE TEXT,
     EstatXarxa TEXT,
     id_dispositiuInfra_fk INTEGER,
-    Id_vlan_fk INTEGER,
     numPortInfra INTEGER,
     pachpanelInfra TEXT,
     FOREIGN KEY(id_dispositiuInfra_fk) REFERENCES Dispositus_infraestructura(id_dispositiuInfra) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan) ON UPDATE CASCADE ON DELETE CASCADE
+
     
 );
 DROP TABLE PortsInfra;
 -- change the constraint forenkey to cascade
+ALTER TABLE PortsInfra DROP FOREIGN KEY `portsinfra_ibfk_5`;
 ALTER TABLE PortsInfra ADD FOREIGN KEY(id_dispositiuInfra_fk) REFERENCES Dispositus_infraestructura(id_dispositiuInfra) ON UPDATE CASCADE ON DELETE CASCADE;
-ALTER TABLE PortsInfra ADD FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan) ON UPDATE CASCADE ON DELETE CASCADE;
 -- DELETE A FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan) ON UPDATE CASCADE ON DELETE CASCADE
 ALTER TABLE PortsInfra DROP FOREIGN KEY PortsInfra_ibfk_5;
 ALTER TABLE PortsInfra DROP COLUMN Id_vlan_fk;
@@ -343,6 +342,9 @@ CREATE TRIGGER `update_dispositiuType` AFTER UPDATE ON `Dispositius` FOR EACH RO
         END IF;
     END IF;
 END$$
+
+
+
 
 
 -- Crea un triger cuan s'actualizi la quantitat de dispositus devicetype == 'infra' si es infarior a la que tenia anteriorment
