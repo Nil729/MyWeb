@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import ConnexionsTable from './TaulaConnexions';
+import DispositiusInfraComboBox from '../componentsDispositius/dispositiusComboBox/DispositiusInfraComboBox';
 
 
 const ConnexionsForm = () => {
@@ -125,15 +126,9 @@ const ConnexionsForm = () => {
                 <form onSubmit={handleSubmit}>
 
                     <div className="form-group">
-                        <label htmlFor="InfraName">Dispostitu Infraestructura:</label>
-                        <input
-                            type="text"
-                            id="InfraName"
-                            name="InfraName"
-                            value={formvaluesConnexions.InfraName}
-                            onChange={handleChange}
-                            required
-                        />
+                        <label htmlFor="InfraName">DispostituInfraestructura:</label>
+                        <DispositiusInfraComboBox onChange={handleChange} value={formvaluesConnexions.nomDispositiuInfraestructura} />
+
                     </div>
 
                     <div className="form-group">

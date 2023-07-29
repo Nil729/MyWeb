@@ -10,10 +10,12 @@ const DeviceManagementForm = () => {
 
   const [deviceType, setDeviceType] = useState("final");
   const [dispositius, setDispositius] = useState([
+
     // id_dispositu, IP, NomDispositiuDipositiu, MAC, zona_id, id_vlan, QuantitatPortsEth, descripcio_dispositiu.    
     { deviceType: deviceType, NomDispositiu: 'Dispositiu 1', ip: '192.168.1.1', mac: '00:11:22:33:44:55', port: 4, ubicacio: 'Aula 1', vlan: 1, portEntrada: 1 },
     { deviceType: deviceType, NomDispositiu: 'Dispositiu 2', ip: '192.168.1.2', mac: 'AA:BB:CC:DD:EE:FF', port: 8, ubicacio: 'Aula 2', vlan: 2, portEntrada: 1 },
     { deviceType: deviceType, NomDispositiu: 'Dispositiu 3', ip: '192.168.1.3', mac: '11:22:33:44:55:66', port: 2, ubicacio: 'Aula 3', vlan: 3, portEntrada: 1 },
+    
   ]);
 
   const [selectedRowForm, setselectedRowForm] = useState(null);
@@ -80,6 +82,7 @@ const DeviceManagementForm = () => {
     if (selectedRowForm === null) {
       // Add a new device
       setDispositius((prevDispositius) => [...prevDispositius, newDevice]);
+
       try {
         // Guardar la nova ubicacio a la base de dades
         axios.post('http://localhost:3002/api/netdoc/dispositius/insert', newDevice);
@@ -88,6 +91,7 @@ const DeviceManagementForm = () => {
       catch (error) {
         console.error(error);
       }
+
     } else {
       // Update the existing device
       const updatedDispositius = [...dispositius];
@@ -109,6 +113,7 @@ const DeviceManagementForm = () => {
   };
 
   const handleDelete = (index) => {
+
     if (index >= 0 && index < dispositius.length) {
       const delDispositu = dispositius[index];
       // get id dispositiu 
@@ -123,8 +128,8 @@ const DeviceManagementForm = () => {
       const updatedDispositius = [...dispositius];
       updatedDispositius.splice(index, 1);
       setDispositius(updatedDispositius);
-
     }
+
     // gurada els canvis
     setselectedRowForm(null);
     setFormValues({
@@ -135,10 +140,7 @@ const DeviceManagementForm = () => {
       location: '',
       vlan: '',
     });
-
   };
-
-
 
   const handleEditRow = (index) => {
     if (index >= 0 && index < dispositius.length) {
@@ -177,8 +179,8 @@ const DeviceManagementForm = () => {
         quantitatPortsEth: formValues.ethernetPorts,
         zona_id: formValues.location,
         Id_vlan: formValues.vlan,
-
       };
+
       setDispositius(updatedDispositius);
       console.log('updatedDispositius[selectedRowForm]', updatedDispositius[selectedRowForm]);
       try {
@@ -187,7 +189,6 @@ const DeviceManagementForm = () => {
       } catch (error) {
         console.error('Error updating device:', error);
       }
-
 
       setselectedRowForm(null);
       setFormValues({
@@ -201,9 +202,6 @@ const DeviceManagementForm = () => {
 
     }
   };
-
-
-
 
   return (
     <div className="device-management">
