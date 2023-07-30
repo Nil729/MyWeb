@@ -49,7 +49,7 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
               className={selectedRow === index ? 'selected' : ''}
               onClick={() => handleRowClick(index)}
             >
-              <td>{connexions.InfraName}</td>
+              <td>{connexions.infraDeviceName}</td>
               <td>{connexions.portInfra}</td>
               <td>{connexions.portStatus}</td>
               <td>{connexions.finalDeviceName}</td>

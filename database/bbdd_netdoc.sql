@@ -323,3 +323,8 @@ from Dispositius
 JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
 JOIN Xarxa ON Dispositius.Id_vlan = Xarxa.Id_vlan;
 
+SELECT quantitatPortsEth 
+            FROM Dispositus_infraestructura 
+                JOIN Dispositius 
+                ON Dispositus_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu 
+                WHERE NomDispositiu = 'SWITCH-01';

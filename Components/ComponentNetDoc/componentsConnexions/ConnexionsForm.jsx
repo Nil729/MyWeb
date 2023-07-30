@@ -11,7 +11,7 @@ const ConnexionsForm = () => {
     const [selectedRowConnexionsForm, setselectedRowUbiacioForm] = useState(null);
 
     const [formvaluesConnexions, setformvaluesConnexions] = useState({
-        InfraName: '',
+        infraDeviceName: '',
         portInfra: '',
         portStatus: '',
         finalDeviceName: '',
@@ -29,7 +29,7 @@ const ConnexionsForm = () => {
     };
 
     const handleDeviceTypeChange = (event) => {
-        // get id from InfraName ang make a query to get the ports of the device
+        // get id from infraDeviceName ang make a query to get the ports of the device
 
         const { name, value } = event.target;
         setformvaluesConnexions((prevValues) => ({
@@ -44,7 +44,7 @@ const ConnexionsForm = () => {
         event.preventDefault();
 
         const novaConnexions = {
-            InfraName: formvaluesConnexions.InfraName,
+            infraDeviceName: formvaluesConnexions.infraDeviceName,
             portInfra: formvaluesConnexions.portInfra,
             portStatus: formvaluesConnexions.portStatus,
             finalDeviceName: formvaluesConnexions.finalDeviceName,
@@ -56,7 +56,7 @@ const ConnexionsForm = () => {
         setconnexionsData((prevConnexions) => [...prevConnexions, novaConnexions]);
 
         setformvaluesConnexions({
-            InfraName: '',
+            infraDeviceName: '',
             portInfra: '',
             portStatus: '',
             finalDeviceName: '',
@@ -72,7 +72,7 @@ const ConnexionsForm = () => {
         // Omplir els camps del formulari amb les dades de la fila seleccionada
         const formvaluesConnexions = connexionsData[index];
         setformvaluesConnexions({
-            InfraName: formvaluesConnexions.InfraName,
+            infraDeviceName: formvaluesConnexions.infraDeviceName,
             portInfra: formvaluesConnexions.portInfra,
             portStatus: formvaluesConnexions.portStatus,
             finalDeviceName: formvaluesConnexions.finalDeviceName,
@@ -90,7 +90,7 @@ const ConnexionsForm = () => {
         if (selectedRowConnexionsForm !== null) {
             const updatedConnexions = [...connexionsData];
             updatedConnexions[selectedRowConnexionsForm] = {
-                InfraName: formvaluesConnexions.InfraName,
+                infraDeviceName: formvaluesConnexions.infraDeviceName,
                 portInfra: formvaluesConnexions.portInfra,
                 portStatus: formvaluesConnexions.portStatus,
                 finalDeviceName: formvaluesConnexions.finalDeviceName,
@@ -100,8 +100,9 @@ const ConnexionsForm = () => {
             };
             setconnexionsData(updatedConnexions);
             setselectedRowUbiacioForm(null);
+
             setformvaluesConnexions({
-                InfraName: '',
+                infraDeviceName: '',
                 portInfra: '',
                 portStatus: '',
                 finalDeviceName: '',
@@ -120,7 +121,7 @@ const ConnexionsForm = () => {
         // gurada els canvis
         setselectedRowUbiacioForm(null);
         setformvaluesConnexions({
-            InfraName: '',
+            infraDeviceName: '',
             portInfra: '',
             portStatus: '',
             finalDeviceName: '',
@@ -139,23 +140,15 @@ const ConnexionsForm = () => {
                 <form onSubmit={handleSubmit}>
 
                     <div className="form-group">
-                        <label htmlFor="InfraName">DispostituInfraestructura:</label>
-                        <DispositiusInfraComboBox onChange={handleDeviceTypeChange} value={formvaluesConnexions.nomDispositiuInfraestructura} />
-
+                        <label htmlFor="nomDispositiuInfraestructura">DispostituInfraestructura:</label>
+                        {/*CARGAR EL COMBOBOX DE DISPOSITIUS DE LA INFRAESTRUCTURA I passar el valor de el nom del dispositiu que esta seleccionat DispositiusInfraComboBox */ }
+                        <DispositiusInfraComboBox onChange={handleChange} value={formvaluesConnexions.nomDispositiuInfraestructura} />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="portInfra">Port:</label>
-                        {/* <input
-                            type="text"
-                            id="portInfra"
-                            name="portInfra"
-                            value={formvaluesConnexions.portInfra}
-                            onChange={handleChange}
-                            required
-                        /> */}
                         {/*CARGAR EL COMBOBOX DE PORTS DE LA INFRAESTRUCTURA I passar el valor de el nom del dispositiu que esta seleccionat DispositiusInfraComboBox */ }
-                        <PortsInfraComboBox onChange={handleDeviceTypeChange} value={formvaluesConnexions.nomPortInfraestructura} nomDispositiuInfraestructura={formvaluesConnexions.nomDispositiuInfraestructura} />    
+                        <PortsInfraComboBox onChange={handleChange} value={formvaluesConnexions.portInfra}  />    
                     </div>
 
 
