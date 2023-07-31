@@ -19,23 +19,20 @@ const ConnexionsForm = () => {
         xarxaName: '',
         descriptionConnexions: '',
     });
+    const [nomDispositiuInfraestructura, setNomDispositiuInfraestructura] = useState('');
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setformvaluesConnexions((prevValues) => ({
             ...prevValues,
             [name]: value,
+            console: console.log('name: ', name),
         }));
-    };
 
-    const handleDeviceTypeChange = (event) => {
-        // get id from infraDeviceName ang make a query to get the ports of the device
-
-        const { name, value } = event.target;
-        setformvaluesConnexions((prevValues) => ({
-            ...prevValues,
-            [name]: value,
-        }));
+        if (name === 'dispositiu Infraestructura') {
+            // get id from infraDeviceName ang make a query to get the ports of the device
+            setNomDispositiuInfraestructura(value);
+        }
     };
     
 
@@ -142,13 +139,19 @@ const ConnexionsForm = () => {
                     <div className="form-group">
                         <label htmlFor="nomDispositiuInfraestructura">DispostituInfraestructura:</label>
                         {/*CARGAR EL COMBOBOX DE DISPOSITIUS DE LA INFRAESTRUCTURA I passar el valor de el nom del dispositiu que esta seleccionat DispositiusInfraComboBox */ }
-                        <DispositiusInfraComboBox onChange={handleChange} value={formvaluesConnexions.nomDispositiuInfraestructura} />
+                        <DispositiusInfraComboBox 
+                            onChange={handleChange} 
+                            nomDispositiuInfraestructura={formvaluesConnexions.nomDispositiuInfraestructura} />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="portInfra">Port:</label>
                         {/*CARGAR EL COMBOBOX DE PORTS DE LA INFRAESTRUCTURA I passar el valor de el nom del dispositiu que esta seleccionat DispositiusInfraComboBox */ }
-                        <PortsInfraComboBox onChange={handleChange} value={formvaluesConnexions.portInfra}  />    
+                        <PortsInfraComboBox 
+                            onChange={handleChange} 
+                            portInfra={formvaluesConnexions.portInfra} 
+                            nomDispositiuInfraestructura={nomDispositiuInfraestructura} 
+                        />    
                     </div>
 
 

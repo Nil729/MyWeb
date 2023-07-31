@@ -315,7 +315,7 @@ INSERT INTO Estat (IdPortInfra_fk, Id_vlan_fk, tagged, untagged, _undefined) VAL
 INSERT INTO Estat (IdPortInfra_fk, Id_vlan_fk, tagged, untagged, _undefined) VALUES (24, 1, 'tagged', 'untagged', '_undefined');
 
 SELECT * FROM Estat;
-
+dispositiu Infraestructura
 SELECT * from `Dispositius`;
 
 select ip, NomDispositiu, mac, quantitatPortsEth, deviceType, NomZona, NomXarxa
@@ -328,3 +328,4 @@ SELECT quantitatPortsEth
                 JOIN Dispositius 
                 ON Dispositus_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu 
                 WHERE NomDispositiu = 'SWITCH-01';
+
