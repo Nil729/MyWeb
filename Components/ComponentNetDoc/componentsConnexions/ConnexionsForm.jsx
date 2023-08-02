@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import ConnexionsTable from './TaulaConnexions';
 import DispositiusInfraComboBox from '../componentsDispositius/dispositiusComboBox/DispositiusInfraComboBox';
 import PortsInfraComboBox from '../componentsPorts/PortsInfraComboBox';
+import DispositiusFinalComboBox from '../componentsDispositius/dispositiusComboBox/DispositiusFinalComboBox';
+import EndPortComboBox from '../componentsPorts/EndPortComboBox.jsx';
 
 
 const ConnexionsForm = () => {
@@ -15,24 +17,21 @@ const ConnexionsForm = () => {
         portInfra: '',
         portStatus: '',
         finalDeviceName: '',
+        endPort: '',
         pachpanelName: '',
         xarxaName: '',
         descriptionConnexions: '',
     });
-    const [nomDispositiuInfraestructura, setNomDispositiuInfraestructura] = useState('');
+    //const [nomDispositiuInfraestructura, setNomDispositiuInfraestructura] = useState('');
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setformvaluesConnexions((prevValues) => ({
             ...prevValues,
             [name]: value,
-            console: console.log('name: ', name),
+            console: console.log('name: ', name, 'value: ', value),
         }));
-
-        if (name === 'dispositiu Infraestructura') {
-            // get id from infraDeviceName ang make a query to get the ports of the device
-            setNomDispositiuInfraestructura(value);
-        }
+        console.log('formvaluesConnexions: ', formvaluesConnexions);
     };
     
 
@@ -45,6 +44,7 @@ const ConnexionsForm = () => {
             portInfra: formvaluesConnexions.portInfra,
             portStatus: formvaluesConnexions.portStatus,
             finalDeviceName: formvaluesConnexions.finalDeviceName,
+            endPort: formvaluesConnexions.endPort,
             pachpanelName: formvaluesConnexions.pachpanelName,
             xarxaName: formvaluesConnexions.xarxaName,
             descriptionConnexions: formvaluesConnexions.descriptionConnexions,
@@ -52,11 +52,13 @@ const ConnexionsForm = () => {
 
         setconnexionsData((prevConnexions) => [...prevConnexions, novaConnexions]);
 
+        setselectedRowUbiacioForm(null);
         setformvaluesConnexions({
             infraDeviceName: '',
             portInfra: '',
             portStatus: '',
             finalDeviceName: '',
+            endPort: '',
             pachpanelName: '',
             xarxaName: '',
             descriptionConnexions: '',
@@ -65,7 +67,6 @@ const ConnexionsForm = () => {
 
 
     const handleEditRowConnexions = (index) => {
-        console.log('Edita la fila: ', index);
         // Omplir els camps del formulari amb les dades de la fila seleccionada
         const formvaluesConnexions = connexionsData[index];
         setformvaluesConnexions({
@@ -73,6 +74,7 @@ const ConnexionsForm = () => {
             portInfra: formvaluesConnexions.portInfra,
             portStatus: formvaluesConnexions.portStatus,
             finalDeviceName: formvaluesConnexions.finalDeviceName,
+            endPort: formvaluesConnexions.endPort,
             pachpanelName: formvaluesConnexions.pachpanelName,
             xarxaName: formvaluesConnexions.xarxaName,
             descriptionConnexions: formvaluesConnexions.descriptionConnexions,
@@ -91,6 +93,7 @@ const ConnexionsForm = () => {
                 portInfra: formvaluesConnexions.portInfra,
                 portStatus: formvaluesConnexions.portStatus,
                 finalDeviceName: formvaluesConnexions.finalDeviceName,
+                endPort: formvaluesConnexions.endPort,
                 pachpanelName: formvaluesConnexions.pachpanelName,
                 xarxaName: formvaluesConnexions.xarxaName,
                 descriptionConnexions: formvaluesConnexions.descriptionConnexions,
@@ -103,6 +106,7 @@ const ConnexionsForm = () => {
                 portInfra: '',
                 portStatus: '',
                 finalDeviceName: '',
+                endPort: '',
                 pachpanelName: '',
                 xarxaName: '',
                 descriptionConnexions: '',
@@ -122,6 +126,7 @@ const ConnexionsForm = () => {
             portInfra: '',
             portStatus: '',
             finalDeviceName: '',
+            endPort: '',
             pachpanelName: '',
             xarxaName: '',
             descriptionConnexions: '',
@@ -137,23 +142,20 @@ const ConnexionsForm = () => {
                 <form onSubmit={handleSubmit}>
 
                     <div className="form-group">
-                        <label htmlFor="nomDispositiuInfraestructura">DispostituInfraestructura:</label>
-                        {/*CARGAR EL COMBOBOX DE DISPOSITIUS DE LA INFRAESTRUCTURA I passar el valor de el nom del dispositiu que esta seleccionat DispositiusInfraComboBox */ }
+                        <label htmlFor="infraDeviceName">Dispositiu infraestructura:</label>
                         <DispositiusInfraComboBox 
                             onChange={handleChange} 
-                            nomDispositiuInfraestructura={formvaluesConnexions.nomDispositiuInfraestructura} />
+                            nomDispositiuInfraestructura={formvaluesConnexions.infraDeviceName} />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="portInfra">Port:</label>
-                        {/*CARGAR EL COMBOBOX DE PORTS DE LA INFRAESTRUCTURA I passar el valor de el nom del dispositiu que esta seleccionat DispositiusInfraComboBox */ }
+                        <label htmlFor="portInfra">Port infraestructura:</label>
                         <PortsInfraComboBox 
                             onChange={handleChange} 
                             portInfra={formvaluesConnexions.portInfra} 
-                            nomDispositiuInfraestructura={nomDispositiuInfraestructura} 
+                            nomDispositiuInfraestructura={formvaluesConnexions.infraDeviceName} 
                         />    
                     </div>
-
 
                     <div className="form-group">
                         <label htmlFor="config-Port">Configuracio del port:</label>
@@ -182,7 +184,7 @@ const ConnexionsForm = () => {
                         </div>
                     </div>
 
-                    <div className="form-group">
+                    {/* <div className="form-group">
                         <label htmlFor="finalDeviceName">Dispositu final:</label>
                         <input
                             type="text"
@@ -192,8 +194,22 @@ const ConnexionsForm = () => {
                             onChange={handleChange}
                             required
                         />
+                    </div> */}
+                    <div className="form-group">
+                        <label htmlFor="finalDeviceName">Dispositu final:</label>
+                        <DispositiusFinalComboBox
+                            onChange={handleChange}
+                            nomDispositiuFinal={formvaluesConnexions.finalDeviceName}
+                        />
                     </div>
-
+                    <div className='form-group'>
+                        <label htmlFor="endPort">Port final:</label>
+                        <EndPortComboBox 
+                            onChange={handleChange}
+                            endPort={formvaluesConnexions.endPort}
+                            nomDispositiuFinal={formvaluesConnexions.finalDeviceName}
+                        />
+                    </div>                    
                     <div className="form-group">
                         <label htmlFor="pachpanelName">Nom pachpanel:</label>
                         <input

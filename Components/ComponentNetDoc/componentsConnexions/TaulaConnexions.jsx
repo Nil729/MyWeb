@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) => {
 
   const [selectedRow, setSelectedRow] = useState(null);
-
+  console.log('connexions: ', connexions);
   const handleRowClick = (index) => {
     setSelectedRow(index);
   };
@@ -37,6 +37,7 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
             <th>Port Dispositiu</th>
             <th>Configuracio port</th>
             <th>Dispositiu Final</th>
+            <th>Port Final</th>
             <th>Pach panel</th>
             <th>Nom de la Xarxa</th>
             <th>Descripció</th>
@@ -53,6 +54,7 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
               <td>{connexions.portInfra}</td>
               <td>{connexions.portStatus}</td>
               <td>{connexions.finalDeviceName}</td>
+              <td>{connexions.endPortName}</td>
               <td>{connexions.pachpanelName}</td>
               <td>{connexions.xarxaName}</td>
               <td>{connexions.descriptionConnexions}</td>

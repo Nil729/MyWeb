@@ -18,10 +18,10 @@ const PortsInfraComboBox = ({onChange, portInfra, nomDispositiuInfraestructura})
 
     return (
         
-        <select name="ports Infraestructura" portInfra={portInfra} onChange={onChange} required >
-            <option portInfra="">Selecciona un port</option>
+        <select name="portInfra" value={portInfra} onChange={onChange} required >
+            <option value="">Selecciona un port</option>
             {portsInfra.map((portsInfra, index) => (
-                <option key={index} portInfra={portsInfra}>
+                <option key={index} value={portsInfra}>
                     {portsInfra}
                 </option>
             ))}

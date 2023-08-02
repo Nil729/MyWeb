@@ -329,3 +329,14 @@ SELECT quantitatPortsEth
                 ON Dispositus_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu 
                 WHERE NomDispositiu = 'SWITCH-01';
 
+SELECT NomDispositiu AS nomDispositiuInfraestructura FROM Dispositus_infraestructura 
+            JOIN Dispositius ON Dispositus_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu;
+SELECT NomDispositiu AS nomDispositiuFinal FROM Dispositus_final 
+            JOIN Dispositius ON  Dispositus_final.id_dispositiu_fk = Dispositius.id_dispositiu; 
+
+
+SELECT quantitatPortsEth 
+            FROM Dispositus_final
+                JOIN Dispositius 
+                ON Dispositus_final.id_dispositiu_fk = Dispositius.id_dispositiu 
+                WHERE NomDispositiu = 'Terminal-01';
