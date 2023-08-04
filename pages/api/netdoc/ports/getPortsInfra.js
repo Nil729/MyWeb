@@ -6,9 +6,9 @@ export default function getPortsInfra(req, res) {
     
     pool.query(
         `SELECT quantitatPortsEth 
-            FROM Dispositus_infraestructura 
+            FROM Dispositius_infraestructura 
                 JOIN Dispositius 
-                ON Dispositus_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu 
+                ON Dispositius_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu 
                 WHERE NomDispositiu = ?`,
         [nomDipositiuInfra]
         , (error, results) => {

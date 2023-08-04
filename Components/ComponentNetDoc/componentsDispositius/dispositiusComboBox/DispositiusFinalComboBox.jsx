@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
 
-const DispositiusInfraComboBox = ({ onChange, nomDispositiuFinal }) => {
+const DispositiusFinalComboBox = ({ onChange, nomDispositiuFinal }) => {
     const [dispositiusFinal, setDispositiusFinal] = useState([]);
 
     const fetchData = async () => {
         const result = await axios.get('http://localhost:3002/api/netdoc/dispositius/dispositiusFinal/getDispositiusFinal');
         setDispositiusFinal(result.data);
-        console.log(result.data);
+        console.log(result.data);  //{ nomDispositiuFinal: 'Dispositiu 2', deviceType: 'Infra' }, { nomDispositiuFinal: 'final_test', deviceType: 'final' }
     };
 
     useEffect(() => {
@@ -16,14 +16,14 @@ const DispositiusInfraComboBox = ({ onChange, nomDispositiuFinal }) => {
 
     return (
         <select name="finalDeviceName" value={nomDispositiuFinal} onChange={onChange} required>
-            <option value="">Selecciona un dispositiu</option>
-            {dispositiusFinal.map((dispositiuFinal, index) => (
-                <option key={index} value={dispositiuFinal.nomDispositiuFinal}>
-                    {dispositiuFinal.nomDispositiuFinal}
-                </option>
-            ))}
+          <option value="">Selecciona un dispositiu</option>
+          {dispositiusFinal.map((dispositiuFinal, index) => (
+            <option key={index} value={dispositiuFinal.nomDispositiuFinal}>
+              {dispositiuFinal.nomDispositiuFinal}
+            </option>
+          ))}
         </select>
     );
 }
 
-export default DispositiusInfraComboBox;
+export default DispositiusFinalComboBox;

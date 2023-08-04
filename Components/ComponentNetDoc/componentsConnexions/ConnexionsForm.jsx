@@ -5,9 +5,10 @@ import DispositiusInfraComboBox from '../componentsDispositius/dispositiusComboB
 import PortsInfraComboBox from '../componentsPorts/PortsInfraComboBox';
 import DispositiusFinalComboBox from '../componentsDispositius/dispositiusComboBox/DispositiusFinalComboBox';
 import EndPortComboBox from '../componentsPorts/EndPortComboBox.jsx';
-
+import XarxaComboBox from '../componentsXarxa/XarxaComboBox';
 
 const ConnexionsForm = () => {
+
     const [connexionsData, setconnexionsData] = useState([]);
 
     const [selectedRowConnexionsForm, setselectedRowUbiacioForm] = useState(null);
@@ -184,17 +185,6 @@ const ConnexionsForm = () => {
                         </div>
                     </div>
 
-                    {/* <div className="form-group">
-                        <label htmlFor="finalDeviceName">Dispositu final:</label>
-                        <input
-                            type="text"
-                            id="finalDeviceName"
-                            name="finalDeviceName"
-                            value={formvaluesConnexions.finalDeviceName}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div> */}
                     <div className="form-group">
                         <label htmlFor="finalDeviceName">Dispositu final:</label>
                         <DispositiusFinalComboBox
@@ -209,7 +199,24 @@ const ConnexionsForm = () => {
                             endPort={formvaluesConnexions.endPort}
                             nomDispositiuFinal={formvaluesConnexions.finalDeviceName}
                         />
-                    </div>                    
+                    </div>
+
+                    {/* <div className="form-group">
+                        <label htmlFor="xarxaName">Xarxa:</label>
+                        <input
+                            type="text"
+                            id="xarxaName"
+                            name="xarxaName"
+                            value={formvaluesConnexions.xarxaName}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div> */}
+
+                    
+
+                    <XarxaComboBox onChange={handleChange} xarxaName={formvaluesConnexions.xarxaName} />
+
                     <div className="form-group">
                         <label htmlFor="pachpanelName">Nom pachpanel:</label>
                         <input
@@ -222,17 +229,7 @@ const ConnexionsForm = () => {
                         />
                     </div>
                     
-                    <div className="form-group">
-                        <label htmlFor="xarxaName">Xarxa:</label>
-                        <input
-                            type="text"
-                            id="xarxaName"
-                            name="xarxaName"
-                            value={formvaluesConnexions.xarxaName}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+
 
                     <div className="form-group">
                         <label htmlFor="descriptionConnexions">Descripció de la connexio:</label>

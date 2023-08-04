@@ -57,7 +57,7 @@ CREATE TABLE PortsInfra (
     id_dispositiuInfra_fk INTEGER,
     numPortInfra INTEGER,
     pachpanelInfra TEXT,
-    FOREIGN KEY(id_dispositiuInfra_fk) REFERENCES Dispositus_infraestructura(id_dispositiuInfra) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(id_dispositiuInfra_fk) REFERENCES Dispositius_infraestructura(id_dispositiuInfra) ON UPDATE CASCADE ON DELETE CASCADE,
 );
 
 
@@ -66,20 +66,20 @@ ALTER TABLE PortsInfra MODIFY COLUMN numPortInfra INTEGER;
 DROP TABLE PortsInfra;
 -- change the constraint forenkey to cascade
 ALTER TABLE PortsInfra DROP FOREIGN KEY `portsinfra_ibfk_5`;
-ALTER TABLE PortsInfra ADD FOREIGN KEY(id_dispositiuInfra_fk) REFERENCES Dispositus_infraestructura(id_dispositiuInfra) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE PortsInfra ADD FOREIGN KEY(id_dispositiuInfra_fk) REFERENCES Dispositius_infraestructura(id_dispositiuInfra) ON UPDATE CASCADE ON DELETE CASCADE;
 -- DELETE A FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan) ON UPDATE CASCADE ON DELETE CASCADE
 ALTER TABLE PortsInfra DROP FOREIGN KEY PortsInfra_ibfk_5;
 ALTER TABLE PortsInfra DROP COLUMN Id_vlan_fk;
 
 
-CREATE TABLE Dispositus_infraestructura (
+CREATE TABLE Dispositius_infraestructura (
     id_dispositiuInfra INTEGER PRIMARY KEY AUTO_INCREMENT,
     id_dispositiu_fk INTEGER,
     FOREIGN KEY(id_dispositiu_fk) REFERENCES Dispositius(id_dispositiu) ON UPDATE CASCADE ON DELETE CASCADE
 );
 select * from Dispositu;
-SELECT * FROM Dispositus_infraestructura;
-ALTER TABLE Dispositus_infraestructura ADD FOREIGN KEY(id_dispositiu_fk) REFERENCES Dispositius(id_dispositiu) ON UPDATE CASCADE ON DELETE CASCADE;
+SELECT * FROM Dispositius_infraestructura;
+ALTER TABLE Dispositius_infraestructura ADD FOREIGN KEY(id_dispositiu_fk) REFERENCES Dispositius(id_dispositiu) ON UPDATE CASCADE ON DELETE CASCADE;
 
 CREATE TABLE Dispositus_final (
     id_disposituFinal INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -217,10 +217,10 @@ INSERT INTO Xarxa (Id_vlan, NomXarxa, DescXarxa) VALUES (3, 'V_producció', 'V_p
 SELECT * FROM Xarxa;
 
 # inserta a la base de dades dispositus de la infraestructura
-SELECT * from Dispositus_infraestructura;
-INSERT INTO Dispositus_infraestructura (id_dispositiu_fk) VALUES (1);
+SELECT * from Dispositius_infraestructura;
+INSERT INTO Dispositius_infraestructura (id_dispositiu_fk) VALUES (1);
 
-INSERT INTO Dispositus_infraestructura (id_dispositiu_fk) VALUES (2);
+INSERT INTO Dispositius_infraestructura (id_dispositiu_fk) VALUES (2);
 
 # inserta a la base de dades un dispositu final
 INSERT INTO Dispositus_final (id_dispositiu_fk) VALUES (3);
@@ -246,7 +246,7 @@ SELECT * FROM Coneccio;
 # crea una sentenica per seleccionar el nom del dispositu infraestructura i port , el nom i port el del dispositu final el port, el nom de la xarxa el estat tagged, untaged o undefined, el nom de la zona i el pachpanel
     
 # selecciona els noms de els dispositus de infraestructrra
-SELECT *  FROM Dispositius LEFT JOIN Dispositus_infraestructura ON Dispositius.id_dispositiu = Dispositus_infraestructura.id_dispositiu_fk;
+SELECT *  FROM Dispositius LEFT JOIN Dispositius_infraestructura ON Dispositius.id_dispositiu = Dispositius_infraestructura.id_dispositiu_fk;
 
 select * from Dispositius where `deviceType` = 'infra';
 
@@ -278,8 +278,8 @@ VALUES (25, 'TRUE', 'DOWN', 6, 4, 202);
 INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, numPortInfra, pachpanelInfra)
 VALUES (26, 'TRUE', 'DOWN', 7, 6, 203);
 
-SELECT * FROM `Dispositus_infraestructura` LEFT JOIN `Dispositius` ON Dispositus_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu 
-LEFT JOIN `PortsInfra` ON Dispositus_infraestructura.id_dispositiu_fk = PortsInfra.id_dispositiuInfra_fk WHERE `NomDispositiu` = 'SWITCH-01';
+SELECT * FROM `Dispositius_infraestructura` LEFT JOIN `Dispositius` ON Dispositius_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu 
+LEFT JOIN `PortsInfra` ON Dispositius_infraestructura.id_dispositiu_fk = PortsInfra.id_dispositiuInfra_fk WHERE `NomDispositiu` = 'SWITCH-01';
 
 SELECT * from `PortsInfra`;
 
@@ -324,19 +324,49 @@ JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
 JOIN Xarxa ON Dispositius.Id_vlan = Xarxa.Id_vlan;
 
 SELECT quantitatPortsEth 
-            FROM Dispositus_infraestructura 
+            FROM Dispositius_infraestructura 
                 JOIN Dispositius 
-                ON Dispositus_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu 
+                ON Dispositius_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu 
                 WHERE NomDispositiu = 'SWITCH-01';
 
-SELECT NomDispositiu AS nomDispositiuInfraestructura FROM Dispositus_infraestructura 
-            JOIN Dispositius ON Dispositus_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu;
+SELECT NomDispositiu AS nomDispositiuInfraestructura FROM Dispositius_infraestructura 
+            JOIN Dispositius ON Dispositius_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu;
 SELECT NomDispositiu AS nomDispositiuFinal FROM Dispositus_final 
             JOIN Dispositius ON  Dispositus_final.id_dispositiu_fk = Dispositius.id_dispositiu; 
 
 
-SELECT quantitatPortsEth 
-            FROM Dispositus_final
+SELECT * 
+            FROM  Dispositius 
                 JOIN Dispositius 
                 ON Dispositus_final.id_dispositiu_fk = Dispositius.id_dispositiu 
                 WHERE NomDispositiu = 'Terminal-01';
+
+
+-- subconsulta per saber el numero de ports del dispositu tant pot ser Dispositus_final o Dispositius_infraestructura segons el nom donat
+
+SELECT 
+       CASE 
+           WHEN deviceType LIKE 'infra' 
+           THEN (SELECT quantitatPortsEth 
+                 FROM   Dispositius_infraestructura 
+                 WHERE  Dispositius_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu) 
+           ELSE (SELECT quantitatPortsEth 
+                 FROM   Dispositus_final 
+                 WHERE  Dispositus_final.id_dispositiu_fk = Dispositius.id_dispositiu)
+         END AS quantitatPortsEth
+FROM Dispositius WHERE `NomDispositiu` = 'SWITCH-01';
+
+
+
+-- Dispositiu Infrarestuctura	Port Dispositiu	Configuracio port	Dispositiu Final	Port Final	Pach panel	Nom de la Xarxa	Descripció
+
+SELECT 
+    Dispositius.NomDispositiu AS nomDispositiuInfraestructura, 
+    PortsInfra.numPortInfra AS portDispositiuInfraestructura, 
+    PortsInfra.EstatXarxa AS configuracioPort, 
+    Dispositius_final.NomDispositiu AS nomDispositiuFinal, 
+    PortsFinal.numPortFinal AS portFinal, 
+    PortsFinal.pachpanelFinal AS pachpanel, 
+    Xarxa.NomXarxa AS nomXarxa, 
+    Dispositius.descripcio_dispositiu AS descripcio
+FROM Dispositius
