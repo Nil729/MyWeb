@@ -37,6 +37,7 @@ const NetworkTable = ({ networks, onEditXarxa, onDeleteXarxa }) => {
         <tbody>
 
           {networks.map((network, index) => (
+            
             <tr key={index}>
               <td>{network.Id_vlan}</td>
               <td>{network.NomXarxa}</td>

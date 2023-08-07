@@ -370,3 +370,14 @@ SELECT
     Xarxa.NomXarxa AS nomXarxa, 
     Dispositius.descripcio_dispositiu AS descripcio
 FROM Dispositius
+
+
+SELECT 
+    Dispositius.NomDispositiu AS nomDispositiuInfraestructura, 
+    PortsInfra.numPortInfra AS portDispositiuInfraestructura, 
+    PortsInfra.EstatXarxa AS configuracioPort, 
+    Dispositius_final.NomDispositiu AS nomDispositiuFinal, 
+    PortsFinal.numPortFinal AS portFinal, 
+    PortsFinal.pachpanelFinal AS pachpanel, 
+    Xarxa.NomXarxa AS nomXarxa, 
+    Dispositius.descripcio_dispositiu AS descripcio

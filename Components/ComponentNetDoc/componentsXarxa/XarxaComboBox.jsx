@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 
-const XarxaComboBox = ({ value, onChange }) => {
+const XarxaComboBox = ({ vlan, onChange }) => {
+  console.log('vlan: ', vlan);
   const [xarxa, setxarxa] = useState([]);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const XarxaComboBox = ({ value, onChange }) => {
   return (
     <div className="form-group">
       <label>Xarxa:</label>
-      <select name="vlan" value={value} onChange={onChange} required>
+      <select name="vlan" value={vlan} onChange={onChange} required>
         <option value="">Selecciona una xarxa</option>
         {xarxa.map((xarxa, index) => (
           <option key={index} value={xarxa}>

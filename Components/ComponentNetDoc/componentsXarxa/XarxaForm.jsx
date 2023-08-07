@@ -84,8 +84,7 @@ const NetworkForm = () => {
                 networkName: formvaluesXarxa.NomXarxa,
                 networkDesc: formvaluesXarxa.DescXarxa,
             });
-
-
+            
             setselectedRowXarxaForm(index);
         }
     };

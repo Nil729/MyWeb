@@ -20,10 +20,9 @@ const ConnexionsForm = () => {
         finalDeviceName: '',
         endPort: '',
         pachpanelName: '',
-        xarxaName: '',
+        vlan: '',
         descriptionConnexions: '',
     });
-    //const [nomDispositiuInfraestructura, setNomDispositiuInfraestructura] = useState('');
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -47,7 +46,7 @@ const ConnexionsForm = () => {
             finalDeviceName: formvaluesConnexions.finalDeviceName,
             endPort: formvaluesConnexions.endPort,
             pachpanelName: formvaluesConnexions.pachpanelName,
-            xarxaName: formvaluesConnexions.xarxaName,
+            vlan: formvaluesConnexions.vlan,
             descriptionConnexions: formvaluesConnexions.descriptionConnexions,
         };
 
@@ -61,7 +60,7 @@ const ConnexionsForm = () => {
             finalDeviceName: '',
             endPort: '',
             pachpanelName: '',
-            xarxaName: '',
+            vlan: '',
             descriptionConnexions: '',
         });
     };
@@ -77,7 +76,7 @@ const ConnexionsForm = () => {
             finalDeviceName: formvaluesConnexions.finalDeviceName,
             endPort: formvaluesConnexions.endPort,
             pachpanelName: formvaluesConnexions.pachpanelName,
-            xarxaName: formvaluesConnexions.xarxaName,
+            vlan: formvaluesConnexions.vlan,
             descriptionConnexions: formvaluesConnexions.descriptionConnexions,
         });
 
@@ -96,7 +95,7 @@ const ConnexionsForm = () => {
                 finalDeviceName: formvaluesConnexions.finalDeviceName,
                 endPort: formvaluesConnexions.endPort,
                 pachpanelName: formvaluesConnexions.pachpanelName,
-                xarxaName: formvaluesConnexions.xarxaName,
+                vlan: formvaluesConnexions.vlan,
                 descriptionConnexions: formvaluesConnexions.descriptionConnexions,
             };
             setconnexionsData(updatedConnexions);
@@ -109,7 +108,7 @@ const ConnexionsForm = () => {
                 finalDeviceName: '',
                 endPort: '',
                 pachpanelName: '',
-                xarxaName: '',
+                vlan: '',
                 descriptionConnexions: '',
             });
         }
@@ -129,7 +128,7 @@ const ConnexionsForm = () => {
             finalDeviceName: '',
             endPort: '',
             pachpanelName: '',
-            xarxaName: '',
+            vlan: '',
             descriptionConnexions: '',
         });
 
@@ -202,12 +201,12 @@ const ConnexionsForm = () => {
                     </div>
 
                     {/* <div className="form-group">
-                        <label htmlFor="xarxaName">Xarxa:</label>
+                        <label htmlFor="vlan">Xarxa:</label>
                         <input
                             type="text"
-                            id="xarxaName"
-                            name="xarxaName"
-                            value={formvaluesConnexions.xarxaName}
+                            id="vlan"
+                            name="vlan"
+                            value={formvaluesConnexions.vlan}
                             onChange={handleChange}
                             required
                         />
@@ -215,7 +214,7 @@ const ConnexionsForm = () => {
 
                     
 
-                    <XarxaComboBox onChange={handleChange} xarxaName={formvaluesConnexions.xarxaName} />
+                    <XarxaComboBox onChange={handleChange} vlan={formvaluesConnexions.vlan} />
 
                     <div className="form-group">
                         <label htmlFor="pachpanelName">Nom pachpanel:</label>
@@ -228,8 +227,6 @@ const ConnexionsForm = () => {
                             required
                         />
                     </div>
-                    
-
 
                     <div className="form-group">
                         <label htmlFor="descriptionConnexions">Descripció de la connexio:</label>

@@ -11,10 +11,11 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
   const handleEditRowconnexions = (index) => {
     setSelectedRow(index);
     // Si existeix la propietat onEditconnexions, crida a la funció
-    if (onEditConnexions)
+    if (onEditConnexions) {
       console.log('Edita la fila: ', index);
       onEditConnexions(index);
-    
+    }
+
   };
 
 
@@ -54,9 +55,9 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
               <td>{connexions.portInfra}</td>
               <td>{connexions.portStatus}</td>
               <td>{connexions.finalDeviceName}</td>
-              <td>{connexions.endPortName}</td>
+              <td>{connexions.endPort}</td>
               <td>{connexions.pachpanelName}</td>
-              <td>{connexions.xarxaName}</td>
+              <td>{connexions.vlan}</td>
               <td>{connexions.descriptionConnexions}</td>
               <td><button type='button' className='editButonXarxa' onClick={() => handleEditRowconnexions(index)}>Edita</button></td>
               <td><button type='button' className='delButonXarxa' onClick={() => handleDeleteRowconnexions(index)}>Eliminar</button></td>
