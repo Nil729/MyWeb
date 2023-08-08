@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import TaulaDispositus from './TaulaDispositus';
 import UbicacioComboBox from '../componetnsUbicacio/UbicacioComboBox';
-import ZonesComboBox from '../componentsXarxa/XarxaComboBox';
+import XarxaComboBox from '../componentsXarxa/XarxaComboBox';
 
 const DeviceManagementForm = () => {
 
@@ -53,9 +53,9 @@ const DeviceManagementForm = () => {
     setFormValues((prevValues) => ({
       ...prevValues,
       [name]: value,
+      console: console.log('name', name, 'value', value),
     }));
   };
-
 
   const handleDeviceTypeChange = (type) => {
     setDeviceType(type);
@@ -63,8 +63,6 @@ const DeviceManagementForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    const form = event.target;
 
     // Create a new device object with the form values
     const newDevice = {
@@ -108,6 +106,7 @@ const DeviceManagementForm = () => {
       ethernetPorts: '',
       location: '',
       vlan: '',
+
     });
 
   };
@@ -157,7 +156,6 @@ const DeviceManagementForm = () => {
         location: selectedDevice.zona_id,
         vlan: selectedDevice.Id_vlan,
       });
-
       setselectedRowForm(index);
     }
   };
@@ -245,7 +243,7 @@ const DeviceManagementForm = () => {
 
         <UbicacioComboBox value={formValues.location} onChange={handleChange} />
 
-        <ZonesComboBox value={formValues.vlan} onChange={handleChange} />
+        <XarxaComboBox vlan={formValues.vlan} onChange={handleChange} />
 
         <div className="form-buttons">
           <button type="reset">Neteja</button>

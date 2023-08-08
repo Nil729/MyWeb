@@ -75,6 +75,7 @@ ALTER TABLE PortsInfra DROP COLUMN Id_vlan_fk;
 CREATE TABLE Dispositius_infraestructura (
     id_dispositiuInfra INTEGER PRIMARY KEY AUTO_INCREMENT,
     id_dispositiu_fk INTEGER,
+    numPortsInfra INTEGER,
     FOREIGN KEY(id_dispositiu_fk) REFERENCES Dispositius(id_dispositiu) ON UPDATE CASCADE ON DELETE CASCADE
 );
 select * from Dispositu;
@@ -112,19 +113,27 @@ ALTER TABLE Xarxa MODIFY COLUMN NomXarxa VARCHAR(25) UNIQUE;
 DROP TABLE Xarxa;
 
 CREATE TABLE Coneccio (
+    idConneccio INTEGER PRIMARY KEY AUTO_INCREMENT,
     IdPortFinal_fk INTEGER UNIQUE,
     IdPortInfra_fk INTEGER UNIQUE,
     Poe TEXT,
     XarxaEstat TEXT,
     IdPort INTEGER,
 
-    FOREIGN KEY(IdPortFinal_fk) REFERENCES PortsFinal(IdPortFinal),
-    FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra)
+    FOREIGN KEY(IdPortFinal_fk) REFERENCES PortsFinal(IdPortFinal) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra)  ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+-- Add a idConneccio 
+ALTER TABLE Coneccio ADD COLUMN idConneccio INTEGER PRIMARY KEY AUTO_INCREMENT;
+
+-- change the constraint forenkey to cascade
+ALTER TABLE Coneccio DROP FOREIGN KEY `coneccio_ibfk_2`;
+ALTER TABLE Coneccio ADD FOREIGN KEY(IdPortFinal_fk) REFERENCES PortsFinal(IdPortFinal) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE Coneccio DROP FOREIGN KEY `coneccio_ibfk_1`;
+ALTER TABLE Coneccio ADD FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra) ON UPDATE CASCADE ON DELETE CASCADE;
 
 #modifica la taula perque el IdPortFinal_fk i el IdPortInfra_fk perque siguin unique i eliminar el camp xPort
-
 Alter TABLE Coneccio DROP COLUMN xPort;
 
 ALTER TABLE Coneccio ADD UNIQUE (IdPortFinal_fk, IdPortInfra_fk);
@@ -193,6 +202,13 @@ VALUES (4, '192.168.10.103', 'PC2', '00:00:00:00:00:00', 3, 4, 1, 'PC PORDUCCIÓ
 
 
 select `NomDispositiu`, `Id_zona`, `NomZona` from Dispositius join Zona on Dispositius. zona_id = Zona.Id_zona;
+
+UPDATE Dispositius 
+SET NomDispositiu = 'Firewall', deviceType = 'Infra', ip = '192.168.10.70', mac = 'AA:BB:CC:DD:EE:FF', zona_id = 3, Id_vlan = 1, quantitatPortsEth = '24', descripcio_dispositiu = 'test' 
+WHERE id_dispositiu = 51;
+
+INSERT INTO `Dispositius` (`IP`, `NomDispositiu`, `MAC`, `zona_id`, `Id_vlan`, `QuantitatPortsEth`, `descripcio_dispositiu`, `deviceType`)
+VALUES ('192.168.10.45', 'Ruter',  'AA:BB:CC:DD:EE:FF', 3, 1,  24, 'test', 'Infra' );
 
 
 select * from Zona;
@@ -273,10 +289,9 @@ VALUES (4, 'FALSE', 'UP', 1, 1, 4, 100);
 INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, Id_vlan_fk, numPortInfra, pachpanelInfra) 
 VALUES (3, 'FALSE', 'UP', 1, 1, 4, 101); 
 
-INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, numPortInfra, pachpanelInfra)
-VALUES (25, 'TRUE', 'DOWN', 6, 4, 202);
-INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, numPortInfra, pachpanelInfra)
-VALUES (26, 'TRUE', 'DOWN', 7, 6, 203);
+INSERT INTO PortsInfra ( EstatPOE, EstatXarxa, id_dispositiuInfra_fk, numPortInfra, pachpanelInfra)
+VALUES ('FALSE', 'UP', 2, 2, 23, 'Pachpanel');
+
 
 SELECT * FROM `Dispositius_infraestructura` LEFT JOIN `Dispositius` ON Dispositius_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu 
 LEFT JOIN `PortsInfra` ON Dispositius_infraestructura.id_dispositiu_fk = PortsInfra.id_dispositiuInfra_fk WHERE `NomDispositiu` = 'SWITCH-01';
@@ -358,26 +373,8 @@ FROM Dispositius WHERE `NomDispositiu` = 'SWITCH-01';
 
 
 
--- Dispositiu Infrarestuctura	Port Dispositiu	Configuracio port	Dispositiu Final	Port Final	Pach panel	Nom de la Xarxa	Descripció
-
-SELECT 
-    Dispositius.NomDispositiu AS nomDispositiuInfraestructura, 
-    PortsInfra.numPortInfra AS portDispositiuInfraestructura, 
-    PortsInfra.EstatXarxa AS configuracioPort, 
-    Dispositius_final.NomDispositiu AS nomDispositiuFinal, 
-    PortsFinal.numPortFinal AS portFinal, 
-    PortsFinal.pachpanelFinal AS pachpanel, 
-    Xarxa.NomXarxa AS nomXarxa, 
-    Dispositius.descripcio_dispositiu AS descripcio
-FROM Dispositius
-
-
-SELECT 
-    Dispositius.NomDispositiu AS nomDispositiuInfraestructura, 
-    PortsInfra.numPortInfra AS portDispositiuInfraestructura, 
-    PortsInfra.EstatXarxa AS configuracioPort, 
-    Dispositius_final.NomDispositiu AS nomDispositiuFinal, 
-    PortsFinal.numPortFinal AS portFinal, 
-    PortsFinal.pachpanelFinal AS pachpanel, 
-    Xarxa.NomXarxa AS nomXarxa, 
-    Dispositius.descripcio_dispositiu AS descripcio
+--- create a trigger once insert into `ConexioTrunk` or `Coneccio` before insert a `PortsFinal` and `PortsInfra` row
+DELIMITER //
+CREATE TRIGGER `insert_ports_ConexioTrunk` AFTER INSERT ON `ConexioTrunk` FOR EACH ROW BEGIN
+    INSERT INTO PortsInfra (id_dispositiuInfra_fk, numPortInfra) VALUES (NEW.id_dispositiuInfra_fk, NEW.numPortInfra);
+END;

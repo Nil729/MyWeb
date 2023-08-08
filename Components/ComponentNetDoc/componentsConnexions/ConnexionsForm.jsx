@@ -6,6 +6,7 @@ import PortsInfraComboBox from '../componentsPorts/PortsInfraComboBox';
 import DispositiusFinalComboBox from '../componentsDispositius/dispositiusComboBox/DispositiusFinalComboBox';
 import EndPortComboBox from '../componentsPorts/EndPortComboBox.jsx';
 import XarxaComboBox from '../componentsXarxa/XarxaComboBox';
+import axios from 'axios';
 
 const ConnexionsForm = () => {
 
@@ -33,7 +34,7 @@ const ConnexionsForm = () => {
         }));
         console.log('formvaluesConnexions: ', formvaluesConnexions);
     };
-    
+
 
 
     const handleSubmit = (event) => {
@@ -51,6 +52,16 @@ const ConnexionsForm = () => {
         };
 
         setconnexionsData((prevConnexions) => [...prevConnexions, novaConnexions]);
+
+        console.log('novaConnexions: ', novaConnexions);
+        try {
+
+            axios.post('http://localhost:3002/api/netdoc/connexions/insertConneccio', novaConnexions);
+        } catch (error) {
+            console.error(error);
+        }
+
+
 
         setselectedRowUbiacioForm(null);
         setformvaluesConnexions({
@@ -143,43 +154,43 @@ const ConnexionsForm = () => {
 
                     <div className="form-group">
                         <label htmlFor="infraDeviceName">Dispositiu infraestructura:</label>
-                        <DispositiusInfraComboBox 
-                            onChange={handleChange} 
+                        <DispositiusInfraComboBox
+                            onChange={handleChange}
                             nomDispositiuInfraestructura={formvaluesConnexions.infraDeviceName} />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="portInfra">Port infraestructura:</label>
-                        <PortsInfraComboBox 
-                            onChange={handleChange} 
-                            portInfra={formvaluesConnexions.portInfra} 
-                            nomDispositiuInfraestructura={formvaluesConnexions.infraDeviceName} 
-                        />    
+                        <PortsInfraComboBox
+                            onChange={handleChange}
+                            portInfra={formvaluesConnexions.portInfra}
+                            nomDispositiuInfraestructura={formvaluesConnexions.infraDeviceName}
+                        />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="config-Port">Configuracio del port:</label>
                         {/* Radio buttons: Tagged */}
                         <div>
-                            <input type="radio" id="tagged" name="portStatus" value="tagged" 
-                            checked= {formvaluesConnexions.portStatus === "tagged"}
-                            onChange={handleChange}
+                            <input type="radio" id="tagged" name="portStatus" value="tagged"
+                                checked={formvaluesConnexions.portStatus === "tagged"}
+                                onChange={handleChange}
                             />
                             <label htmlFor="tagged">Tagged</label>
                         </div>
                         {/* Radio buttons: Untagged */}
                         <div>
-                            <input type="radio" id="untagged" name="portStatus" value="untagged" 
-                            checked= {formvaluesConnexions.portStatus === "untagged"}
-                            onChange={handleChange}
+                            <input type="radio" id="untagged" name="portStatus" value="untagged"
+                                checked={formvaluesConnexions.portStatus === "untagged"}
+                                onChange={handleChange}
                             />
                             <label htmlFor="untagged">Untagged</label>
                         </div>
                         {/* Radio buttons: Undefined */}
                         <div>
                             <input type="radio" id="undefined" name="portStatus" value="undefined"
-                            checked= {formvaluesConnexions.portStatus === "undefined"}
-                            onChange={handleChange}/>
+                                checked={formvaluesConnexions.portStatus === "undefined"}
+                                onChange={handleChange} />
                             <label htmlFor="undefined">Undefined</label>
                         </div>
                     </div>
@@ -193,7 +204,7 @@ const ConnexionsForm = () => {
                     </div>
                     <div className='form-group'>
                         <label htmlFor="endPort">Port final:</label>
-                        <EndPortComboBox 
+                        <EndPortComboBox
                             onChange={handleChange}
                             endPort={formvaluesConnexions.endPort}
                             nomDispositiuFinal={formvaluesConnexions.finalDeviceName}
@@ -212,9 +223,7 @@ const ConnexionsForm = () => {
                         />
                     </div> */}
 
-                    
-
-                    <XarxaComboBox onChange={handleChange} vlan={formvaluesConnexions.vlan} />
+                    <XarxaComboBox vlan={formvaluesConnexions.vlan} onChange={handleChange} />
 
                     <div className="form-group">
                         <label htmlFor="pachpanelName">Nom pachpanel:</label>
