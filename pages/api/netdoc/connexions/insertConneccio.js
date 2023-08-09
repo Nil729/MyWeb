@@ -20,9 +20,7 @@ export default async function insertConneccio(req, res) {
 
     const infraDeviceId = await getIdDispositiuInfra(infraDeviceName);
     const finalDeviceId = await getIdDispositiuFinal(finalDeviceName);
-    const portInfraId = await getIdPortInfra(infraDeviceId[0].id_dispositiuInfra, portInfra);
-    const portFinalId = await getIdPortFinal(finalDeviceId[0].id_disposituFinal, endPort);
-    
+
 
     console.log('infraDeviceId: ', infraDeviceId);
     console.log('finalDeviceId: ', finalDeviceId);
@@ -44,7 +42,7 @@ export default async function insertConneccio(req, res) {
             console.log('finalDeviceId port : ', endPort);
 
             pool.query(
-                `INSERT INTO PortsFinals (id_dispositiuFinal_fk, numPortFinal)
+                `INSERT INTO PortsFinals (numPortFinal, pachpanelFinal, id_dispositiuFinal_fk, )
                     VALUES (?, ?)`,
                 // no esta be, s'ha de fer 
                 [finalDeviceId[0].id_dispositiu, endPort]
@@ -82,7 +80,7 @@ export default async function insertConneccio(req, res) {
             pool.query(
                 `INSERT INTO PortsFinal ( numPortFinal, id_disposituFinal_fk)
                     VALUES ( ?, ?)`,
-                [finalDeviceId[0].id_disposituFinal, endPort]                
+                [endPort, finalDeviceId[0].id_disposituFinal]                
                 , (error, results) => {
                     if (error) {
                         console.error('Error inserting PortsInfra record:', error);
@@ -94,9 +92,15 @@ export default async function insertConneccio(req, res) {
                 }
             );
 
+            console.log('infraDeviceId: ', infraDeviceId[0].id_dispositiuInfra, 'PortInfra: ', portInfra);
+            const portInfraId = await getIdPortInfra(infraDeviceId[0].id_dispositiuInfra, portInfra);
+            console.log('finalDeviceId: ', finalDeviceId[0].id_disposituFinal ,  'PortFinal: ', endPort )
+            const portFinalId = await getIdPortFinal(finalDeviceId[0].id_disposituFinal, endPort);
+
+
             pool.query(
                 `INSERT INTO Coneccio (IdPortInfra_fk, IdPortFinal_fk) VALUES (?, ?)`,
-                [portInfraId[0].IdPortFinal, portFinalId[0].IdPortFinal]
+                [portInfraId[0].IdPortInfra, portFinalId[0].IdPortFinal]
                 , (error, results) => {
                     if (error) {
                         console.error('Error inserting Coneccio record:', error);

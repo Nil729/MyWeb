@@ -326,7 +326,11 @@ VALUES (1, 4, 'POE', 'UP', 1, 101);
 INSERT INTO `Coneccio` (`IdPortFinal_fk`, `IdPortInfra_fk`, `Poe`, `XarxaEstat`, `IdPort`, `pachpanel`)
 VALUES (2, 23, 'POE', 'UP', 2, 200);
 
-SELECT * FROM Coneccio;
+SELECT IdPortFinal FROM PortsFinal WHERE id_disposituFinal_fk = 2 AND numPortFinal = 7;
+
+SELECT IdPortFinal FROM PortsFinal WHERE id_disposituFinal_fk = 7 AND numPortFinal = 2;
+
+SELECT IdPortInfra FROM PortsInfra WHERE id_dispositiuInfra_fk = 6 AND numPortInfra = 1;
 
 INSERT INTO `ConexioTrunk` (`IdPortInfraParent_fk`, `IdPortInfraChild_fk`)
 VALUES (25, 26);
