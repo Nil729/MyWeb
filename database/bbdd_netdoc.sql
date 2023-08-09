@@ -42,6 +42,7 @@ CREATE TABLE PortsFinal (
     id_disposituFinal_fk INTEGER,
     FOREIGN KEY(id_disposituFinal_fk) REFERENCES Dispositus_final(id_disposituFinal) ON UPDATE CASCADE ON DELETE CASCADE
 );
+ALTER TABLE `PortsFinal` ADD UNIQUE (numPortFinal);
 select * from `Dispositus_final`
 select * from PortsFinal;
 DROP TABLE PortsFinal;
@@ -55,11 +56,13 @@ CREATE TABLE PortsInfra (
     EstatPOE TEXT,
     EstatXarxa TEXT,
     id_dispositiuInfra_fk INTEGER,
-    numPortInfra INTEGER,
+    numPortInfra INTEGER UNIQUE,
     pachpanelInfra TEXT,
     FOREIGN KEY(id_dispositiuInfra_fk) REFERENCES Dispositius_infraestructura(id_dispositiuInfra) ON UPDATE CASCADE ON DELETE CASCADE,
 );
 
+--  Quit PortsInfra UNIQUE (numPortInfra);
+ALTER TABLE PortsInfra DROP INDEX numPortInfra;
 
 ALTER TABLE PortsInfra MODIFY COLUMN numPortInfra INTEGER;
 
@@ -281,6 +284,8 @@ INSERT INTO Dispositus_final (id_dispositiu_fk, NumeroPortsFinal) VALUES (3, 1);
 
 INSERT INTO Dispositus_final (id_dispositiu_fk, NumeroPortsFinal) VALUES (4, 2);
 
+
+
 # inserta a la base de dades un port de la infraestructura
 
 INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, Id_vlan_fk, numPortInfra, pachpanelInfra) 
@@ -296,7 +301,6 @@ VALUES ('FALSE', 'UP', 2, 2, 23, 'Pachpanel');
 SELECT * FROM `Dispositius_infraestructura` LEFT JOIN `Dispositius` ON Dispositius_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu 
 LEFT JOIN `PortsInfra` ON Dispositius_infraestructura.id_dispositiu_fk = PortsInfra.id_dispositiuInfra_fk WHERE `NomDispositiu` = 'SWITCH-01';
 
-SELECT * from `PortsInfra`;
 
 # inserta a la base de dades un port final
 
@@ -305,6 +309,15 @@ VALUES (1, 1, 101, 1);
 
 INSERT INTO `PortsFinal` (`IdPortFinal`, `numPortFinal`, `pachpanelFinal`, `id_disposituFinal_fk`) 
 VALUES (2, 1, 102, 2);
+
+INSERT INTO `PortsFinal` ( numPortFinal, id_disposituFinal_fk)
+VALUES ( 7, 2);6
+
+SELECT IdPortInfra FROM PortsInfra WHERE id_dispositiuInfra_fk = 6 AND numPortInfra = 1
+
+SELECT  IdPortFinal from PortsFinal where numPortFinal = 7 and id_disposituFinal_fk = 2;
+
+SELECT   IdPortInfra FROM `PortsInfra` WHERE `numPortInfra` = 4 and `id_dispositiuInfra_fk` = 6;
 
 # inserta a la base de dades una connexio
 INSERT INTO `Coneccio` (`IdPortFinal_fk`, `IdPortInfra_fk`, `Poe`, `XarxaEstat`, `IdPort`, `pachpanel`)
