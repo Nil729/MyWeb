@@ -173,13 +173,13 @@ ALTER TABLE ConexioTrunk ADD FOREIGN KEY(IdPortInfraChild_fk) REFERENCES PortsIn
 CREATE TABLE Estat (
     IdPortInfra_fk INTEGER UNIQUE,
     Id_vlan_fk INTEGER,
-    tagged TEXT,
-    untagged TEXT,
-    _undefined TEXT,
+    VlanConfig TEXT,
+    Connectat BOOLEAN,
     FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan) ON UPDATE CASCADE ON DELETE CASCADE
 );
-
+-- Change Connectat data type to boolean
+ALTER TABLE Estat MODIFY COLUMN Connectat BOOLEAN;
 -- change the constraint forenkey to cascade
 ALTER TABLE Estat DROP FOREIGN KEY `estat_ibfk_2`;
 ALTER TABLE Estat ADD FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra) ON UPDATE CASCADE ON DELETE CASCADE;

@@ -3,6 +3,8 @@ import pool from "../../../../database/db.connection";
 
 import { getIdDispositiuInfra, getIdDispositiuFinal } from "../dispositius/getIdDispositiu";
 import {getIdPortInfra, getIdPortFinal} from "../ports/getIdPorts";
+import { insertEstatPortInfra } from "../ports/insertEstatPortInfra";
+import getIdXarxa from "../xarxa/getIdXarxa";
 
 export default async function insertConneccio(req, res) {
     console.log('req.body: ', req.body);
@@ -52,8 +54,11 @@ export default async function insertConneccio(req, res) {
                 `INSERT INTO ConeccioTrunk (IdPortInfraParent_fk, IdPortInfraChild_fk) VALUES (?, ?)`,
                 [infraDeviceId[0].id_dispositiu, finalDeviceId[0].id_dispositiu]
             );
+            
+            insertEstatPortInfra(infraDeviceId[0].id_dispositiu, portStatus, vlan, 1);
 
         } else {
+
 
             console.log('InfraDeviceId port : ', infraDeviceId);
             console.log('InfraDeviceId[0].deviceType: ', infraDeviceId[0].id_dispositiuInfra);
@@ -97,7 +102,6 @@ export default async function insertConneccio(req, res) {
             console.log('finalDeviceId: ', finalDeviceId[0].id_disposituFinal ,  'PortFinal: ', endPort )
             const portFinalId = await getIdPortFinal(finalDeviceId[0].id_disposituFinal, endPort);
 
-
             pool.query(
                 `INSERT INTO Coneccio (IdPortInfra_fk, IdPortFinal_fk) VALUES (?, ?)`,
                 [portInfraId[0].IdPortInfra, portFinalId[0].IdPortFinal]
@@ -109,8 +113,24 @@ export default async function insertConneccio(req, res) {
                         console.log('Coneccio record inserted successfully');
                     }
                 }
-            );
+                
+            ); 
 
+            const idXarxa = await getIdXarxa(vlan);
+                
+            console.log('PortInfra: ', portInfraId[0].IdPortInfra, 'IdXarxa: ', idXarxa, 'VlanConfig; ', portStatus)
+
+            pool.query(
+                `INSERT INTO Estat (IdPortInfra_fk, Id_vlan_fk, VlanConfig ) VALUES (?, ?, ?)`,
+                [portInfraId[0].IdPortInfra, idXarxa, portStatus ],
+                (err, results) => {
+                    if (err) {
+                        console.log('Error Insert Estat Port Infra', err);
+                    } else {
+                        console.log('Estat record inserted successfully');
+                    }
+                }
+            ) 
         }
 
         res.status(200).json({ message: 'Records inserted successfully' });

@@ -15,6 +15,5 @@ export default function insetXarxa(req, res) {
             }
         }
     );
-
-
+    
 }
