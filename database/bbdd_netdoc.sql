@@ -395,3 +395,6 @@ DELIMITER //
 CREATE TRIGGER `insert_ports_ConexioTrunk` AFTER INSERT ON `ConexioTrunk` FOR EACH ROW BEGIN
     INSERT INTO PortsInfra (id_dispositiuInfra_fk, numPortInfra) VALUES (NEW.id_dispositiuInfra_fk, NEW.numPortInfra);
 END;
+
+
+
