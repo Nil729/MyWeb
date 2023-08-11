@@ -19,6 +19,7 @@ export async function getIdDispositiu(id_dispositiu) {
 }
 
 export async function getIdDispositiuInfra(id_dispositiu) {
+  console.log('id_dispositiu: ', id_dispositiu);
   return new Promise((resolve, reject) => {
     pool.query(
       ` SELECT  

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import ConnexionsTable from './TaulaConnexions';
 import DispositiusInfraComboBox from '../componentsDispositius/dispositiusComboBox/DispositiusInfraComboBox';
@@ -35,6 +35,16 @@ const ConnexionsForm = () => {
         console.log('formvaluesConnexions: ', formvaluesConnexions);
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios(
+                'http://localhost:3002/api/netdoc/connexions/getConnexions',
+            );
+            console.log('response.data: ', response.data);
+            setconnexionsData(response.data);
+        };
+        fetchData();
+    }, []);
 
 
     const handleSubmit = (event) => {

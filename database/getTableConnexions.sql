@@ -39,3 +39,5 @@ JOIN
     `PortsFinal` ON `Coneccio`.`IdPortFinal_fk` = `PortsFinal`.`IdPortFinal`
 JOIN
     `Dispositus_final` ON `PortsFinal`.`id_disposituFinal_fk` = `Dispositus_final`.`id_disposituFinal`;
+
+

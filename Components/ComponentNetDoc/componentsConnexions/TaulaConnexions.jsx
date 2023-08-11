@@ -27,8 +27,6 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
   };
 
 
-
-
   return (
     <div className="connexions-table">
       <table>

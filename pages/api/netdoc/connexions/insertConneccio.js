@@ -1,7 +1,7 @@
 
 import pool from "../../../../database/db.connection";
 
-import { getIdDispositiuInfra, getIdDispositiuFinal } from "../dispositius/getIdDispositiu";
+import { getIdDispositiu, getIdDispositiuInfra, getIdDispositiuFinal } from "../dispositius/getIdDispositiu";
 import {getIdPortInfra, getIdPortFinal} from "../ports/getIdPorts";
 import { insertEstatPortInfra } from "../ports/insertEstatPortInfra";
 import getIdXarxa from "../xarxa/getIdXarxa";
@@ -19,46 +19,101 @@ export default async function insertConneccio(req, res) {
         descriptionConnexions 
     } = req.body;
 
+    console.log('infraDeviceName: ', infraDeviceName);
+    console.log('finalDeviceName: ', finalDeviceName);
 
-    const infraDeviceId = await getIdDispositiuInfra(infraDeviceName);
-    const finalDeviceId = await getIdDispositiuFinal(finalDeviceName);
-
-
-    console.log('infraDeviceId: ', infraDeviceId);
-    console.log('finalDeviceId: ', finalDeviceId);
-
-
+    const typeDevice = await getIdDispositiu(finalDeviceName)
+    console.log('typeDevice: ', typeDevice);
+    console.log('typeDevice: ', typeDevice[0].deviceType);
     try {
+        
+        if (typeDevice[0].deviceType === 'Infra') {
+            
+            const infraDeviceId = await getIdDispositiuInfra(infraDeviceName);
+            const finalDeviceId = await getIdDispositiuInfra(finalDeviceName);
 
-        if (finalDeviceId[0].deviceType === 'Infra') {
-            console.log('finalDeviceId[0].deviceType: ', infraDeviceId[0].id_dispositiu);
+            console.log('infraDeviceId: ', infraDeviceId);
+            console.log('finalDeviceId: ', finalDeviceId);
+
+
+            console.log('finalDeviceId[0]: ', infraDeviceId[0].id_dispositiuInfra);
             console.log('finalDeviceId port : ', endPort);
 
+            // pool.query(
+            //     `INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, Id_vlan_fk, numPortInfra, pachpanelInfra) 
+            //      VALUES ( ?, ?)`,
+            //     [infraDeviceId[0].id_dispositiu, portInfra] 
+            // );
+                
+            console.log('finalDeviceId[0]: ', finalDeviceId[0].id_dispositiuInfra);
+            console.log('finalDeviceId port : ', endPort);
+
+            // pool.query(
+            //     `INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, Id_vlan_fk, numPortInfra, pachpanelInfra) 
+            //      VALUES ( ?, ?)`,
+            //     // no esta be, s'ha de fer 
+            //     [finalDeviceId[0].id_dispositiu, endPort]
+            // );
+
             pool.query(
-                `INSERT INTO PortsInfra (IdPortInfra, EstatPOE, EstatXarxa, id_dispositiuInfra_fk, Id_vlan_fk, numPortInfra, pachpanelInfra) 
+                `INSERT INTO PortsInfra (id_dispositiuInfra_fk, numPortInfra)
                  VALUES ( ?, ?)`,
-                [infraDeviceId[0].id_dispositiu, portInfra] 
+                [infraDeviceId[0].id_dispositiuInfra, portInfra]
+                , (error, results) => {
+                    if (error) {
+                        console.error('Error inserting PortsInfra record:', error);
+                        res.status(500).json({ message: 'Error inserting PortsInfra record', error });
+                    } else {
+                        console.log('PortsInfra record inserted successfully');
+                    }
+                }
+            );
+
+            pool.query(
+                `INSERT INTO PortsInfra (id_dispositiuInfra_fk, numPortInfra) 
+                 VALUES ( ?, ?)`,
+                 [finalDeviceId[0].id_dispositiuInfra, endPort]
+                , (error, results) => {
+                    if (error) {
+                        console.error('Error inserting PortsInfra record:', error);
+                        res.status(500).json({ message: 'Error inserting PortsInfra record', error });
+                    } else {
+                        console.log('PortsInfra record inserted successfully');
+                    }
+                }
             );
                 
-            console.log('finalDeviceId[0].deviceType: ', finalDeviceId[0].id_dispositiu);
-            console.log('finalDeviceId port : ', endPort);
+            console.log('infraDeviceId: ', infraDeviceId[0].id_dispositiuInfra, 'PortInfra: ', portInfra);
+            const portInfraId = await getIdPortInfra(infraDeviceId[0].id_dispositiuInfra, portInfra);
+            console.log('finalDeviceId: ', finalDeviceId[0].id_dispositiuInfra ,  'PortFinal: ', endPort )
+            const portFinalId = await getIdPortInfra(finalDeviceId[0].id_dispositiuInfra, endPort);
+            
+            console.log('portInfraId: ', portInfraId, 'portFinalId: ', portFinalId);
 
             pool.query(
-                `INSERT INTO PortsFinals (numPortFinal, pachpanelFinal, id_dispositiuFinal_fk, )
-                    VALUES (?, ?)`,
-                // no esta be, s'ha de fer 
-                [finalDeviceId[0].id_dispositiu, endPort]
+                
+                `INSERT INTO ConexioTrunk (IdPortInfraParent_fk, IdPortInfraChild_fk) VALUES (?, ?)`,
+                [portInfraId[0].IdPortInfra, portFinalId[0].IdPortInfra]
+                , (error, results) => {
+                    if (error) {
+                        console.error('Error inserting Coneccio record:', error);
+                        res.status(500).json({ message: 'Error inserting Coneccio record', error });
+                    } else {
+                        console.log('Coneccio record inserted successfully');
+                    }
+                }
+                
             );
-    
-            pool.query(
-                `INSERT INTO ConeccioTrunk (IdPortInfraParent_fk, IdPortInfraChild_fk) VALUES (?, ?)`,
-                [infraDeviceId[0].id_dispositiu, finalDeviceId[0].id_dispositiu]
-            );
+
             
-            insertEstatPortInfra(infraDeviceId[0].id_dispositiu, portStatus, vlan, 1);
+            const idXarxa = await getIdXarxa(vlan);
+            console.log('PortInfra: ', portInfraId[0].IdPortInfra, 'IdXarxa: ', idXarxa, 'VlanConfig; ', portStatus)
+            await insertEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
 
         } else {
 
+            const infraDeviceId = await getIdDispositiuInfra(infraDeviceName);
+            const finalDeviceId = await getIdDispositiuFinal(finalDeviceName);
 
             console.log('InfraDeviceId port : ', infraDeviceId);
             console.log('InfraDeviceId[0].deviceType: ', infraDeviceId[0].id_dispositiuInfra);
