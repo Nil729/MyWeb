@@ -41,3 +41,106 @@ JOIN
     `Dispositus_final` ON `PortsFinal`.`id_disposituFinal_fk` = `Dispositus_final`.`id_disposituFinal`;
 
 
+SELECT 
+        (SELECT NomDispositiu 
+     FROM Dispositius 
+     WHERE id_dispositiu = Dispositius_infraestructura.id_dispositiu_fk) AS Dispositiu_Infraestructura,
+    PortsInfra.numPortInfra AS Parent Port,
+    NomXarxa,
+    VlanConfig
+    -- get name Dispositius_infraestructura AS DispositiuInfraChild
+    -- get child ports from DispositiuInfraChild
+FROM
+    ConexioTrunk
+JOIN
+    PortsInfra ON ConexioTrunk.IdPortInfraParent_fk = PortsInfra.IdPortInfra
+JOIN 
+    Estat ON PortsInfra.IdPortInfra = Estat.IdPortInfra_fk
+JOIN 
+    Xarxa ON Estat.Id_vlan_fk = Xarxa.Id_vlan
+JOIN
+    Dispositius_infraestructura ON PortsInfra.id_dispositiuInfra_fk = Dispositius_infraestructura.id_dispositiuInfra
+JOIN
+    PortsInfra AS PortsInfraChild  ON ConexioTrunk.IdPortInfraChild_fk = PortsInfraChild.IdPortInfra
+JOIN
+    Dispositius_infraestructura AS DispositiuInfraChild ON PortsInfraChild.id_dispositiuInfra_fk = DispositiuInfraChild.id_dispositiuInfra;
+
+SELECT 
+    (SELECT NomDispositiu 
+     FROM Dispositius 
+     WHERE id_dispositiu = Dispositius_infraestructura.id_dispositiu_fk) AS Dispositiu_Infraestructura,
+    PortsInfra.numPortInfra AS Port_Dispositiu_Infraestructura,
+    (SELECT NomDispositiu 
+     FROM Dispositius 
+     WHERE id_dispositiu = Dispositus_final.id_dispositiu_fk) AS Dispositiu_Final,
+    PortsFinal.numPortFinal AS Port_Dispositiu_Final
+FROM
+    Coneccio
+JOIN
+    PortsInfra ON Coneccio.IdPortInfra_fk = PortsInfra.IdPortInfra
+JOIN
+    Dispositius_infraestructura ON PortsInfra.id_dispositiuInfra_fk = Dispositius_infraestructura.id_dispositiuInfra
+JOIN
+    PortsFinal ON Coneccio.IdPortFinal_fk = PortsFinal.IdPortFinal
+JOIN
+    Dispositus_final ON PortsFinal.id_disposituFinal_fk = Dispositus_final.id_disposituFinal;
+
+
+
+SELECT 
+    (SELECT NomDispositiu 
+     FROM Dispositius 
+     WHERE id_dispositiu = Dispositius_infraestructura.id_dispositiu_fk) AS Dispositiu_Infraestructura,
+    PortsInfra.numPortInfra AS Parent Port,
+    NomXarxa,
+    VlanConfig,
+    (SELECT NomDispositiu 
+     FROM Dispositius 
+     WHERE id_dispositiu = Dispositus_final.id_dispositiu_fk) AS Dispositiu_Final,
+    PortsFinal.numPortFinal AS Child Port
+FROM
+    Coneccio
+JOIN
+    PortsInfra ON Coneccio.IdPortInfra_fk = PortsInfra.IdPortInfra
+JOIN 
+    Estat ON PortsInfra.IdPortInfra = Estat.IdPortInfra_fk
+JOIN 
+    Xarxa ON Estat.Id_vlan_fk = Xarxa.Id_vlan
+JOIN
+    Dispositius_infraestructura ON PortsInfra.id_dispositiuInfra_fk = Dispositius_infraestructura.id_dispositiuInfra
+JOIN
+    PortsFinal ON Coneccio.IdPortFinal_fk = PortsFinal.IdPortFinal
+JOIN
+    Dispositus_final ON PortsFinal.id_disposituFinal_fk = Dispositus_final.id_disposituFinal
+UNION
+SELECT 
+    -- Get parent Dispositiu_Infraestructura name
+    (SELECT NomDispositiu 
+     FROM Dispositius 
+     WHERE id_dispositiu = Dispositius_infraestructura.id_dispositiu_fk) AS Dispositiu_Infraestructura,
+    -- Parent Port
+    PortsInfra.numPortInfra AS Parent Port,
+    -- Network Name (NomXarxa) and VlanConfig
+    NomXarxa,
+    VlanConfig,
+    -- Get child Dispositiu_Infraestructura name
+    (SELECT NomDispositiu 
+     FROM Dispositius 
+     WHERE id_dispositiu = DispositiuInfraChild.id_dispositiu_fk) AS Dispositiu_Final,
+    -- Child ports from DispositiuInfraChild
+    PortsInfraChild.numPortInfra AS Port_Dispositiu_Final
+FROM
+    ConexioTrunk
+JOIN
+    PortsInfra ON ConexioTrunk.IdPortInfraParent_fk = PortsInfra.IdPortInfra
+JOIN 
+    Estat ON PortsInfra.IdPortInfra = Estat.IdPortInfra_fk
+JOIN 
+    Xarxa ON Estat.Id_vlan_fk = Xarxa.Id_vlan
+JOIN
+    Dispositius_infraestructura ON PortsInfra.id_dispositiuInfra_fk = Dispositius_infraestructura.id_dispositiuInfra
+JOIN
+    PortsInfra AS PortsInfraChild  ON ConexioTrunk.IdPortInfraChild_fk = PortsInfraChild.IdPortInfra
+JOIN
+    Dispositius_infraestructura AS DispositiuInfraChild ON PortsInfraChild.id_dispositiuInfra_fk = DispositiuInfraChild.id_dispositiuInfra;
+
