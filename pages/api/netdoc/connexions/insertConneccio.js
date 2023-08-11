@@ -117,20 +117,8 @@ export default async function insertConneccio(req, res) {
             ); 
 
             const idXarxa = await getIdXarxa(vlan);
-                
             console.log('PortInfra: ', portInfraId[0].IdPortInfra, 'IdXarxa: ', idXarxa, 'VlanConfig; ', portStatus)
-
-            pool.query(
-                `INSERT INTO Estat (IdPortInfra_fk, Id_vlan_fk, VlanConfig ) VALUES (?, ?, ?)`,
-                [portInfraId[0].IdPortInfra, idXarxa, portStatus ],
-                (err, results) => {
-                    if (err) {
-                        console.log('Error Insert Estat Port Infra', err);
-                    } else {
-                        console.log('Estat record inserted successfully');
-                    }
-                }
-            ) 
+            await insertEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
         }
 
         res.status(200).json({ message: 'Records inserted successfully' });
