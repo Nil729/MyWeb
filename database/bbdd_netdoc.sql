@@ -534,3 +534,9 @@ UPDATE PortsFinal
                     SET numPortFinal = ?,
                     id_disposituFinal_fk =  13
                     WHERE  IdPortFinal = (select IdPortFinal_fk from Coneccio where idConneccio = 54 )
+
+
+UPDATE PortsInfra
+                    SET numPortInfra = 22,
+                    id_dispositiuInfra_fk = 8
+                    WHERE  IdPortInfra = (select IdPortInfraParent_fk from `ConexioTrunk` where  IdConexioTrunk = 7 )
