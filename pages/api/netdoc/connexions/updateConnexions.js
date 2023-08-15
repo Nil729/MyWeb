@@ -30,8 +30,6 @@ export default async function updateConnexions(req, res) {
     console.log('typeDevice: ', typeDevice);
     console.log('typeDevice: ', typeDevice[0].deviceType);
 
-    const idXarxa = await getIdXarxa(vlan);
-
 
     try {
 
@@ -147,6 +145,7 @@ export default async function updateConnexions(req, res) {
             });
 
             // Update Coneccio and Estat for both ports
+            /*
             pool.query(
                 `UPDATE Coneccio 
                 SET id_portFinal_fk = ?, id_portInfra_fk = ?
@@ -161,6 +160,7 @@ export default async function updateConnexions(req, res) {
                     }
                 }
             );
+            */
             
             
             console.log('infraDeviceId: ', infraDeviceId[0].id_dispositiuInfra, 'PortInfra: ', portInfra);
