@@ -17,6 +17,7 @@ export default function getConnexions(req, res) {
     pool.query(
         `
             SELECT 
+                idConneccio,
                 (SELECT NomDispositiu 
                 FROM Dispositius 
                 WHERE id_dispositiu = Dispositius_infraestructura.id_dispositiu_fk) AS infraDeviceName,
@@ -43,6 +44,7 @@ export default function getConnexions(req, res) {
                 Dispositus_final ON PortsFinal.id_disposituFinal_fk = Dispositus_final.id_disposituFinal
             UNION
             SELECT 
+                IdConexioTrunk,
                 -- Get parent Dispositiu_Infraestructura name
                 (SELECT NomDispositiu 
                 FROM Dispositius 

@@ -91,6 +91,7 @@ const ConnexionsForm = () => {
         // Omplir els camps del formulari amb les dades de la fila seleccionada
         const formvaluesConnexions = connexionsData[index];
         setformvaluesConnexions({
+            
             infraDeviceName: formvaluesConnexions.infraDeviceName,
             portInfra: formvaluesConnexions.portInfra,
             portStatus: formvaluesConnexions.portStatus,
@@ -110,6 +111,7 @@ const ConnexionsForm = () => {
         if (selectedRowConnexionsForm !== null) {
             const updatedConnexions = [...connexionsData];
             updatedConnexions[selectedRowConnexionsForm] = {
+                idConneccio: connexionsData[selectedRowConnexionsForm].idConneccio,
                 infraDeviceName: formvaluesConnexions.infraDeviceName,
                 portInfra: formvaluesConnexions.portInfra,
                 portStatus: formvaluesConnexions.portStatus,
@@ -123,13 +125,10 @@ const ConnexionsForm = () => {
 
             console.log('updatedConnexions: ', updatedConnexions[selectedRowConnexionsForm]);
             try {
-                
                 axios.put('http://localhost:3002/api/netdoc/connexions/updateConnexions', updatedConnexions[selectedRowConnexionsForm]);
-                
             } catch (error) {
                 console.error(error);
             }
-
 
             setselectedRowUbiacioForm(null);
 
