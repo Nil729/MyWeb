@@ -454,3 +454,6 @@ SELECT
         PortsInfra AS PortsInfraChild  ON ConexioTrunk.IdPortInfraChild_fk = PortsInfraChild.IdPortInfra
     JOIN
         Dispositius_infraestructura AS DispositiuInfraChild ON PortsInfraChild.id_dispositiuInfra_fk = DispositiuInfraChild.id_dispositiuInfra;
+
+
+SELECT IdPortInfra FROM PortsInfra WHERE id_dispositiuInfra_fk = 6 AND numPortInfra = 8;

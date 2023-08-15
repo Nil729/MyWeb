@@ -1,5 +1,4 @@
 import pool from "../../../../database/db.connection";
-import getIdXarxa from "../xarxa/getIdXarxa";
 
 export async function insertEstatPortInfra(idPortInfra, idXarxa, portStatus) {
 

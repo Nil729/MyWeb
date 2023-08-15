@@ -1,7 +1,12 @@
 
 import pool from "../../../../database/db.connection";
 
-import { getIdDispositiu, getIdDispositiuInfra, getIdDispositiuFinal } from "../dispositius/getIdDispositiu";
+import { 
+        getIdDispositiu, 
+        getIdDispositiuInfra, 
+        getIdDispositiuFinal 
+} from "../dispositius/getIdDispositiu";
+
 import {getIdPortInfra, getIdPortFinal} from "../ports/getIdPorts";
 import { insertEstatPortInfra } from "../ports/insertEstatPortInfra";
 import getIdXarxa from "../xarxa/getIdXarxa";
@@ -54,34 +59,41 @@ export default async function insertConneccio(req, res) {
             //     // no esta be, s'ha de fer 
             //     [finalDeviceId[0].id_dispositiu, endPort]
             // );
-
-            pool.query(
-                `INSERT INTO PortsInfra (id_dispositiuInfra_fk, numPortInfra)
-                 VALUES ( ?, ?)`,
-                [infraDeviceId[0].id_dispositiuInfra, portInfra]
-                , (error, results) => {
-                    if (error) {
-                        console.error('Error inserting PortsInfra record:', error);
-                        res.status(500).json({ message: 'Error inserting PortsInfra record', error });
-                    } else {
-                        console.log('PortsInfra record inserted successfully');
+            await new Promise((resolve, reject) => {
+                pool.query(
+                    `INSERT INTO PortsInfra (id_dispositiuInfra_fk, numPortInfra)
+                    VALUES ( ?, ?)`,
+                    [infraDeviceId[0].id_dispositiuInfra, portInfra]
+                    ,(error, results) => {
+                        if (error) {
+                            console.error('Error inserting PortsInfra record:', error);
+                            res.status(500).json({ message: 'Error inserting PortsInfra record', error });
+                            reject(error);
+                        } else {
+                            console.log('PortsInfra record inserted successfully');
+                            resolve();
+                        }
                     }
-                }
-            );
+                );
+            });
 
-            pool.query(
-                `INSERT INTO PortsInfra (id_dispositiuInfra_fk, numPortInfra) 
-                 VALUES ( ?, ?)`,
-                 [finalDeviceId[0].id_dispositiuInfra, endPort]
-                , (error, results) => {
-                    if (error) {
-                        console.error('Error inserting PortsInfra record:', error);
-                        res.status(500).json({ message: 'Error inserting PortsInfra record', error });
-                    } else {
-                        console.log('PortsInfra record inserted successfully');
+            await new Promise((resolve, reject) => {
+                pool.query(
+                    `INSERT INTO PortsInfra (id_dispositiuInfra_fk, numPortInfra) 
+                    VALUES ( ?, ?)`,
+                    [finalDeviceId[0].id_dispositiuInfra, endPort]
+                    ,(error, results) => {
+                        if (error) {
+                            console.error('Error inserting PortsInfra record:', error);
+                            res.status(500).json({ message: 'Error inserting PortsInfra record', error });
+                            reject(error);
+                        } else {
+                            console.log('PortsInfra record inserted successfully');
+                            resolve();
+                        }
                     }
-                }
-            );
+                );
+            });
                 
             console.log('infraDeviceId: ', infraDeviceId[0].id_dispositiuInfra, 'PortInfra: ', portInfra);
             const portInfraId = await getIdPortInfra(infraDeviceId[0].id_dispositiuInfra, portInfra);
@@ -89,15 +101,15 @@ export default async function insertConneccio(req, res) {
             const portFinalId = await getIdPortInfra(finalDeviceId[0].id_dispositiuInfra, endPort);
             
             console.log('portInfraId: ', portInfraId, 'portFinalId: ', portFinalId);
-
+            
             pool.query(
-                
                 `INSERT INTO ConexioTrunk (IdPortInfraParent_fk, IdPortInfraChild_fk) VALUES (?, ?)`,
                 [portInfraId[0].IdPortInfra, portFinalId[0].IdPortInfra]
                 , (error, results) => {
                     if (error) {
                         console.error('Error inserting Coneccio record:', error);
                         res.status(500).json({ message: 'Error inserting Coneccio record', error });
+                        reject(error);
                     } else {
                         console.log('Coneccio record inserted successfully');
                     }
@@ -105,7 +117,7 @@ export default async function insertConneccio(req, res) {
                 
             );
 
-            
+        
             const idXarxa = await getIdXarxa(vlan);
             console.log('PortInfra: ', portInfraId[0].IdPortInfra, 'IdXarxa: ', idXarxa, 'VlanConfig; ', portStatus)
             await insertEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
@@ -115,47 +127,53 @@ export default async function insertConneccio(req, res) {
             const infraDeviceId = await getIdDispositiuInfra(infraDeviceName);
             const finalDeviceId = await getIdDispositiuFinal(finalDeviceName);
 
-            console.log('InfraDeviceId port : ', infraDeviceId);
-            console.log('InfraDeviceId[0].deviceType: ', infraDeviceId[0].id_dispositiuInfra);
+            console.log('InfraDeviceId: ', infraDeviceId);
+
             console.log('InfraDeviceId port : ', portInfra);
 
-            pool.query(
-                `INSERT INTO PortsInfra (id_dispositiuInfra_fk, numPortInfra) 
-                 VALUES ( ?, ?)`,
-                [infraDeviceId[0].id_dispositiuInfra, portInfra]
-                , (error, results) => {
-                    if (error) {
-                        console.error('Error inserting PortsInfra record:', error);
-                        res.status(500).json({ message: 'Error inserting PortsInfra record', error });
-                    } else {
-                        console.log('PortsInfra record inserted successfully');
+            // Insert into PortsInfra
+            await new Promise((resolve, reject) => {
+                pool.query(
+                    `INSERT INTO PortsInfra (id_dispositiuInfra_fk, numPortInfra) VALUES (?, ?)`,
+                    [infraDeviceId[0].id_dispositiuInfra, portInfra],
+                    (error, results) => {
+                        if (error) {
+                            console.error('Error inserting PortsInfra record:', error);
+                            res.status(500).json({ message: 'Error inserting PortsInfra record', error });
+                            reject(error);
+                        } else {
+                            console.log('PortsInfra record inserted successfully');
+                            resolve();
+                        }
                     }
-                }
-            );
+                );
+            });
 
-            console.log('finalDeviceId port : ', finalDeviceId);
-            console.log('finalDeviceId[0].deviceType: ', finalDeviceId[0].id_disposituFinal);
-            console.log('finalDeviceId port : ', endPort);
-
-            pool.query(
-                `INSERT INTO PortsFinal ( numPortFinal, id_disposituFinal_fk)
-                    VALUES ( ?, ?)`,
-                [endPort, finalDeviceId[0].id_disposituFinal]                
-                , (error, results) => {
-                    if (error) {
-                        console.error('Error inserting PortsInfra record:', error);
-                        res.status(500).json({ message: 'Error inserting PortsInfra record', error });
-                    } else {
-                        console.log('PortsFinal record inserted successfully');
-
+            // Insert into PortsFinal
+            await new Promise((resolve, reject) => {
+                pool.query(
+                    `INSERT INTO PortsFinal (numPortFinal, id_disposituFinal_fk) VALUES (?, ?)`,
+                    [endPort, finalDeviceId[0].id_disposituFinal],
+                    (error, results) => {
+                        if (error) {
+                            console.error('Error inserting PortsFinal record:', error);
+                            res.status(500).json({ message: 'Error inserting PortsInfra record', error });
+                            reject(error);
+                        } else {
+                            console.log('PortsFinal record inserted successfully');
+                            resolve();
+                        }
                     }
-                }
-            );
+                );
+            });
 
             console.log('infraDeviceId: ', infraDeviceId[0].id_dispositiuInfra, 'PortInfra: ', portInfra);
             const portInfraId = await getIdPortInfra(infraDeviceId[0].id_dispositiuInfra, portInfra);
+            
             console.log('finalDeviceId: ', finalDeviceId[0].id_disposituFinal ,  'PortFinal: ', endPort )
             const portFinalId = await getIdPortFinal(finalDeviceId[0].id_disposituFinal, endPort);
+
+            console.log('portInfraId: ', portInfraId[0].IdPortInfra, 'portFinalId: ', portFinalId[0].IdPortFinal);
 
             pool.query(
                 `INSERT INTO Coneccio (IdPortInfra_fk, IdPortFinal_fk) VALUES (?, ?)`,

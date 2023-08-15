@@ -121,6 +121,7 @@ const ConnexionsForm = () => {
             };
             setconnexionsData(updatedConnexions);
 
+            console.log('updatedConnexions: ', updatedConnexions[selectedRowConnexionsForm]);
             try {
                 
                 axios.put('http://localhost:3002/api/netdoc/connexions/updateConnexions', updatedConnexions[selectedRowConnexionsForm]);

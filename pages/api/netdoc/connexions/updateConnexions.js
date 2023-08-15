@@ -2,12 +2,12 @@ import pool from "../../../../database/db.connection";
 
 import { getIdDispositiu, getIdDispositiuInfra, getIdDispositiuFinal } from "../dispositius/getIdDispositiu";
 import { getIdPortInfra, getIdPortFinal } from "../ports/getIdPorts";
-
 import getIdXarxa from "../xarxa/getIdXarxa";
+import { updateEstatPortInfra } from "../ports/updateEstatPortInfra";
 
 
 export default async function updateConnexions(req, res) {
-    
+
     console.log('req.body: ', req.body);
 
     const {
@@ -40,51 +40,54 @@ export default async function updateConnexions(req, res) {
             const infraDeviceId = await getIdDispositiuInfra(infraDeviceName);
             const finalDeviceId = await getIdDispositiuInfra(finalDeviceName);
             console.log('infraDeviceId: ', infraDeviceId[0].id_dispositiuInfra, 'PortInfra: ', portInfra);
-            console.log('finalDeviceId: ', finalDeviceId[0].id_dispositiuInfra ,  'PortFinal: ', endPort );
+            console.log('finalDeviceId: ', finalDeviceId[0].id_dispositiuInfra, 'PortFinal: ', endPort);
 
 
             const portInfraId = await getIdPortInfra(infraDeviceId[0].id_dispositiuInfra, portInfra)
             console.log('portInfraId: ', portInfraId);
-            console.log('portInfraId: ', portInfraId[0] );
-            console.log('portInfraId: ', portInfraId[0].IdPortInfra );
-            
 
             const portFinalId = await getIdPortInfra(finalDeviceId[0].id_dispositiuInfra, endPort);
             console.log('portInfraId: ', portFinalId);
-            console.log('portInfraId: ', portFinalId[0] );
-            console.log('portInfraId: ', portFinalId[0].id_dispositiuInfra );
-            
-           // Update PortsInfra for infrastructure device
-            pool.query(
-                `UPDATE PortsInfra
-                SET numPortInfra = ?
-                WHERE IdPortInfra = ?`,
-                [portInfra, portInfraId[0].IdPortInfra],
-                (error, results) => {
-                    if (error) {
-                        console.error('Error updating PortsInfra:', error);
-                        res.status(500).json({ message: 'Error updating PortsInfra', error });
-                    } else {
-                        console.log('PortsInfra updated successfully');
+
+            // Update PortsInfra for infrastructure device
+            await new Promise((resolve, reject) => {
+                pool.query(
+                    `UPDATE PortsInfra
+                    SET numPortInfra = ?
+                    WHERE IdPortInfra = ?`,
+                    [portInfra, portInfraId[0].IdPortInfra],
+                    (error, results) => {
+                        if (error) {
+                            console.error('Error inserting PortsInfra record:', error);
+                            res.status(500).json({ message: 'Error inserting PortsInfra record', error });
+                            reject(error);
+                        } else {
+                            console.log('PortsInfra record inserted successfully');
+                            resolve();
+                        }
                     }
-                }
-            );
+                );
+            });
 
             // Update PortsInfra for final device
-            pool.query(
-                `UPDATE PortsInfra
-                SET numPortInfra = ?
-                WHERE  IdPortFinal = ?`,
-                [endPort, portFinalId[0].IdPortInfra],
-                (error, results) => {
-                    if (error) {
-                        console.error('Error updating PortsInfra:', error);
-                        res.status(500).json({ message: 'Error updating PortsInfra', error });
-                    } else {
-                        console.log('PortsInfra updated successfully');
+            await new Promise((resolve, reject) => {
+                pool.query(
+                    `UPDATE PortsInfra
+                    SET numPortInfra = ?
+                    WHERE  IdPortFinal = ?`,
+                    [endPort, portFinalId[0].IdPortInfra],
+                    (error, results) => {
+                        if (error) {
+                            console.error('Error inserting PortsInfra record:', error);
+                            res.status(500).json({ message: 'Error inserting PortsInfra record', error });
+                            reject(error);
+                        } else {
+                            console.log('PortsInfra record inserted successfully');
+                            resolve();
+                        }
                     }
-                }
-            );
+                );
+            });
 
             res.status(200).json({ message: 'Connection trunk updated successfully' });
 
@@ -92,46 +95,75 @@ export default async function updateConnexions(req, res) {
 
             const infraDeviceId = await getIdDispositiuInfra(infraDeviceName);
             const finalDeviceId = await getIdDispositiuFinal(finalDeviceName);
+
             
             console.log('infraDeviceId: ', infraDeviceId[0].id_dispositiuInfra, 'PortInfra: ', portInfra);
             const portInfraId = await getIdPortInfra(infraDeviceId[0].id_dispositiuInfra, portInfra);
-            console.log('finalDeviceId: ', finalDeviceId[0].id_dispositiuInfra ,  'PortFinal: ', endPort )
-            const portFinalId = await getIdPortInfra(finalDeviceId[0].id_dispositiuInfra, endPort);
-            
+            console.log('finalDeviceId: ', finalDeviceId[0].id_dispositiuInfra, 'PortFinal: ', endPort);
+            const portFinalId = await getIdPortFinal(finalDeviceId[0].id_dispositiuInfra, endPort);
+
+
             // Update PortsInfra for infrastructure device
-            pool.query(
-                `UPDATE PortsInfra
-                SET numPortInfra = ?
-                WHERE id_dispositiuInfra_fk = ?`,
-                [portInfra, portInfraId[0].IdPortInfra],
-                (error, results) => {
-                    if (error) {
-                        console.error('Error updating PortsInfra:', error);
-                        res.status(500).json({ message: 'Error updating PortsInfra', error });
-                    } else {
-                        console.log('PortsInfra updated successfully');
+            await new Promise((resolve, reject) => {
+                pool.query(
+                    `UPDATE PortsInfra
+                    SET numPortInfra = ?
+                    WHERE id_dispositiuInfra_fk = ?`,
+                    [portInfra, portInfraId[0].IdPortInfra],
+                    (error, results) => {
+                        if (error) {
+                            console.error('Error inserting PortsInfra record:', error);
+                            res.status(500).json({ message: 'Error inserting PortsInfra record', error });
+                            reject(error);
+                        } else {
+                            console.log('PortsInfra record inserted successfully');
+                            resolve();
+                        }
                     }
-                }
-            );
+                );
+            });
 
             // Update PortsFinal for final device
+            await new Promise((resolve, reject) => {
+                pool.query(
+                    `UPDATE PortsFinal
+                    SET numPortFinal = ?
+                    WHERE id_dispositiuFinal_fk = ?`,
+                    [endPort, portFinalId[0].IdPortInfra],
+                    (error, results) => {
+                        if (error) {
+                            console.error('Error inserting PortsInfra record:', error);
+                            res.status(500).json({ message: 'Error inserting PortsInfra record', error });
+                            reject(error);
+                        } else {
+                            console.log('PortsInfra record inserted successfully');
+                            resolve();
+                        }
+                    }
+                );
+            });
+
+
+
+            // Update Coneccio and Estat for both ports
             pool.query(
-                `UPDATE PortsFinal
-                SET numPortFinal = ?
-                WHERE id_dispositiuFinal_fk = ?`,
-                [endPort, portFinalId[0].IdPortInfra],
+                `UPDATE Coneccio 
+                SET id_portFinal_fk = ?, id_portInfra_fk = ?
+                WHERE idConneccio = ?`,
+                [portFinalId[0].IdPortFinal, portInfraId[0].IdPortInfra, connectionId],
                 (error, results) => {
                     if (error) {
-                        console.error('Error updating PortsInfra:', error);
-                        res.status(500).json({ message: 'Error updating PortsInfra', error });
+                        console.error('Error updating Coneccio record:', error);
+                        res.status(500).json({ message: 'Error updating Coneccio record', error });
                     } else {
-                        console.log('PortsInfra updated successfully');
+                        console.log('Coneccio record updated successfully');
                     }
                 }
             );
 
-                // Update Xarxa and Estat for both ports
-                // You can implement similar queries for Xarxa and Estat tables as needed
+            const idXarxa = await getIdXarxa(vlan);
+            console.log('PortInfra: ', portInfraId[0].IdPortInfra, 'IdXarxa: ', idXarxa, 'VlanConfig; ', portStatus)
+            await updateEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
 
             // Send a success response
             res.status(200).json({ message: 'Connection trunk updated successfully' });

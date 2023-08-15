@@ -12,7 +12,11 @@ export async function getIdPortInfra(id_dispositiu, numPortInfra) {
           reject(error);
         } else {
           console.log('results: ', results);
-          resolve(results);
+          if (results && results.length > 0) {
+              resolve(results);
+          } else {
+              resolve(null); // No results found
+          }
         }
       }
     );
@@ -29,8 +33,12 @@ export async function getIdPortFinal(id_dispositiu, numPortFinal) {
                 if (error) {
                     reject(error);
                 } else {
-                    console.log('results: ', results);
-                    resolve(results);
+                  console.log('results: ', results);
+                  if (results && results.length > 0) {
+                      resolve(results);
+                  } else {
+                      resolve(null); // No results found
+                  }
                 }
             }
         );
