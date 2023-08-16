@@ -540,3 +540,10 @@ UPDATE PortsInfra
                     SET numPortInfra = 22,
                     id_dispositiuInfra_fk = 8
                     WHERE  IdPortInfra = (select IdPortInfraParent_fk from `ConexioTrunk` where  IdConexioTrunk = 7 )
+
+
+DELETE pi, pf
+    FROM PortsInfra pi
+    JOIN Coneccio c ON pi.IdPortInfra = c.IdPortInfra_fk
+    JOIN PortsFinal pf ON pf.IdPortFinal = c.IdPortFinal_fk
+    WHERE c.idConneccio = 96;

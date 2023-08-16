@@ -11,7 +11,7 @@ import {getIdPortInfra, getIdPortFinal} from "../ports/getIdPorts";
 import { insertEstatPortInfra } from "../ports/insertEstatPortInfra";
 import getIdXarxa from "../xarxa/getIdXarxa";
 
-export default async function insertConneccio(req, res) {
+export default async function insertConnexio(req, res) {
     console.log('req.body: ', req.body);
     const { 
         infraDeviceName,

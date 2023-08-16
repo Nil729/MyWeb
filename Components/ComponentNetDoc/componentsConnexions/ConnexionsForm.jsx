@@ -66,7 +66,7 @@ const ConnexionsForm = () => {
         console.log('novaConnexions: ', novaConnexions);
         try {
 
-            axios.post('http://localhost:3002/api/netdoc/connexions/insertConneccio', novaConnexions);
+            axios.post('http://localhost:3002/api/netdoc/connexions/insertConnexio', novaConnexions);
         } catch (error) {
             console.error(error);
         }
@@ -148,8 +148,19 @@ const ConnexionsForm = () => {
     const handleDeleteRowConnexions = (index) => {
         // Eliminar la fila seleccionada
         const updatedConnexions = [...connexionsData];
+        const delconn = updatedConnexions[index];
+
+        console.log('Delete connexio: ', delconn.idConneccio, ' - ', delconn.infraDeviceName, ' - ', delconn.portInfra, ' - ', delconn.portStatus, ' - ', delconn.finalDeviceName, ' - ', delconn.endPort, ' - ', delconn.pachpanelName, ' - ', delconn.vlan, ' - ', delconn.descriptionConnexions);
+        try {
+            axios.delete(`http://localhost:3002/api/netdoc/connexions/deleteConnexio?idConneccio=${delconn.idConneccio}&infraDeviceName=${delconn.infraDeviceName}&finalDeviceName=${delconn.finalDeviceName}`);
+        } catch (error) {
+            console.error(error);
+        }
+
         updatedConnexions.splice(index, 1);
+
         setconnexionsData(updatedConnexions);
+        
         // gurada els canvis
         setselectedRowUbiacioForm(null);
         setformvaluesConnexions({
