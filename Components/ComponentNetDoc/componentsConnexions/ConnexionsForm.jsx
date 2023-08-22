@@ -6,6 +6,8 @@ import PortsInfraComboBox from '../componentsPorts/PortsInfraComboBox';
 import DispositiusFinalComboBox from '../componentsDispositius/dispositiusComboBox/DispositiusFinalComboBox';
 import EndPortComboBox from '../componentsPorts/EndPortComboBox.jsx';
 import XarxaComboBox from '../componentsXarxa/XarxaComboBox';
+import XarxaSelectBox from '../componentsXarxa/XarxaSelectBox';
+//import Example from './Example';
 import axios from 'axios';
 
 const ConnexionsForm = () => {
@@ -25,13 +27,16 @@ const ConnexionsForm = () => {
         descriptionConnexions: '',
     });
 
+
     const handleChange = (event) => {
+        console.log(event.target)
         const { name, value } = event.target;
-        setformvaluesConnexions((prevValues) => ({
-            ...prevValues,
-            [name]: value,
-            console: console.log('name: ', name, 'value: ', value),
-        }));
+        console: console.log('name: ', name, 'value: ', value),
+            setformvaluesConnexions((prevValues) => ({
+                ...prevValues,
+                [name]: value,
+                console: console.log('name: ', name, 'value: ', value),
+            }));
         console.log('formvaluesConnexions: ', formvaluesConnexions);
     };
 
@@ -91,7 +96,7 @@ const ConnexionsForm = () => {
         // Omplir els camps del formulari amb les dades de la fila seleccionada
         const formvaluesConnexions = connexionsData[index];
         setformvaluesConnexions({
-            
+
             infraDeviceName: formvaluesConnexions.infraDeviceName,
             portInfra: formvaluesConnexions.portInfra,
             portStatus: formvaluesConnexions.portStatus,
@@ -100,6 +105,7 @@ const ConnexionsForm = () => {
             pachpanelName: formvaluesConnexions.pachpanelName,
             vlan: formvaluesConnexions.vlan,
             descriptionConnexions: formvaluesConnexions.descriptionConnexions,
+
         });
 
 
@@ -160,7 +166,7 @@ const ConnexionsForm = () => {
         updatedConnexions.splice(index, 1);
 
         setconnexionsData(updatedConnexions);
-        
+
         // gurada els canvis
         setselectedRowUbiacioForm(null);
         setformvaluesConnexions({
@@ -241,19 +247,15 @@ const ConnexionsForm = () => {
                         />
                     </div>
 
-                    {/* <div className="form-group">
-                        <label htmlFor="vlan">Xarxa:</label>
-                        <input
-                            type="text"
-                            id="vlan"
-                            name="vlan"
-                            value={formvaluesConnexions.vlan}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div> */}
+                    {/* Si el estado de vlan es tagge puede seleccionar una o multiples vlan si untagged, se debe seleccionar una vlan. Si el estado es undefined, no se debe seleccionar ninguna vlan. 
+                    <XarxaSelectBox vlan={formvaluesConnexions.vlan} onChange={handleChange} />
+                    */}
+                    {formvaluesConnexions.portStatus === 'untagged' ? (
+                        <XarxaComboBox vlan={formvaluesConnexions.vlan} onChange={handleChange} />
+                    ) : formvaluesConnexions.portStatus === 'tagged' ? (
+                        <XarxaSelectBox vlan={formvaluesConnexions.vlan} onChange={handleChange} />
+                    ) : null}
 
-                    <XarxaComboBox vlan={formvaluesConnexions.vlan} onChange={handleChange} />
 
                     <div className="form-group">
                         <label htmlFor="pachpanelName">Nom pachpanel:</label>
@@ -284,6 +286,9 @@ const ConnexionsForm = () => {
                     </div>
                 </form>
             </div>
+
+
+
             <ConnexionsTable connexions={connexionsData} onEditConnexions={handleEditRowConnexions} onDeleteConnexions={handleDeleteRowConnexions} />
         </div>
     );

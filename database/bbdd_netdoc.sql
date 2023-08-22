@@ -178,6 +178,13 @@ CREATE TABLE Estat (
     FOREIGN KEY(IdPortInfra_fk) REFERENCES PortsInfra(IdPortInfra) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY(Id_vlan_fk) REFERENCES Xarxa(Id_vlan) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+-- add key IdEstat
+ALTER TABLE Estat ADD COLUMN IdEstat INTEGER PRIMARY KEY AUTO_INCREMENT;
+
+-- IdPortInfra_fk INTEGER make not UNIQUE,
+ALTER TABLE Estat DROP INDEX IdPortInfra_fk;
+
 -- Change Connectat data type to boolean
 ALTER TABLE Estat MODIFY COLUMN Connectat BOOLEAN;
 -- change the constraint forenkey to cascade

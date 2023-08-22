@@ -90,6 +90,9 @@ export default async function updateConnexions(req, res) {
             console.log('portInfraId: ', portInfraId);
 
             const idXarxa = await getIdXarxa(vlan);
+
+            // if portStatus === "Tagged" make a udate loop for each id vlan selected if Its Untaged only do one update, and if it's undefined make one update and set idXarxa on "null"
+
             console.log('PortInfra: ', portInfraId[0].IdPortInfra, 'IdXarxa: ', idXarxa, 'VlanConfig; ', portStatus)
             await updateEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
 

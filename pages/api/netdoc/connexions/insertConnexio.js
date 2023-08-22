@@ -11,6 +11,31 @@ import {getIdPortInfra, getIdPortFinal} from "../ports/getIdPorts";
 import { insertEstatPortInfra } from "../ports/insertEstatPortInfra";
 import getIdXarxa from "../xarxa/getIdXarxa";
 
+
+const handlePortStatusChange = async (portInfraId, vlan, portStatus) => {
+    console.log('vlan: ', vlan);
+    
+    if (portStatus === 'tagged') {
+      for (const vlanValue of vlan) {
+        console.log('arrayVlan[i]: ', vlanValue);
+        await insertTaggedVlan(portInfraId, vlanValue, portStatus);
+      }
+    } else if (portStatus === 'untagged' || portStatus === 'undefined') {
+      await insertTaggedVlan(portInfraId, vlan, portStatus);
+    }
+  };
+  
+
+async function insertTaggedVlan(portInfraId, vlan, portStatus) {
+            
+    const idXarxa = await getIdXarxa(vlan);
+    console.log('PortInfra: ', portInfraId[0].IdPortInfra, 'IdXarxa: ', idXarxa, 'VlanConfig; ', portStatus)
+    await insertEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
+
+}
+
+
+
 export default async function insertConnexio(req, res) {
     console.log('req.body: ', req.body);
     const { 
@@ -116,11 +141,8 @@ export default async function insertConnexio(req, res) {
                 }
                 
             );
-
         
-            const idXarxa = await getIdXarxa(vlan);
-            console.log('PortInfra: ', portInfraId[0].IdPortInfra, 'IdXarxa: ', idXarxa, 'VlanConfig; ', portStatus)
-            await insertEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
+            handlePortStatusChange(portInfraId, vlan, portStatus);
 
         } else {
 
@@ -189,11 +211,9 @@ export default async function insertConnexio(req, res) {
                 
             ); 
 
-            const idXarxa = await getIdXarxa(vlan);
-            console.log('PortInfra: ', portInfraId[0].IdPortInfra, 'IdXarxa: ', idXarxa, 'VlanConfig; ', portStatus)
-            await insertEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
+            handlePortStatusChange(portInfraId, vlan, portStatus);
         }
-
+        
         res.status(200).json({ message: 'Records inserted successfully' });
     } catch (error) {
         console.error('Error inserting records:', error);
