@@ -174,6 +174,7 @@ CREATE TABLE `Dispositus_final` (
 DROP TABLE IF EXISTS `Estat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
+
 CREATE TABLE `Estat` (
   `IdPortInfra_fk` int DEFAULT NULL,
   `Id_vlan_fk` int DEFAULT NULL,
@@ -186,9 +187,30 @@ CREATE TABLE `Estat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-/*not unique key IdPortInfra_fk*/
+ALTER TABLE `Estat`
+DROP FOREIGN KEY `Estat_ibfk_2`;
 
-ALTER 
+ALTER TABLE `Estat`
+ADD COLUMN `New_IdPortInfra_fk` int,
+ADD CONSTRAINT `Estat_ibfk_2_new` FOREIGN KEY (`New_IdPortInfra_fk`) REFERENCES `PortsInfra` (`IdPortInfra`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+UPDATE `Estat`
+SET `New_IdPortInfra_fk` = `IdPortInfra_fk`;
+
+ALTER TABLE `Estat`
+DROP COLUMN `IdPortInfra_fk`;
+
+ALTER TABLE `Estat`
+CHANGE COLUMN `New_IdPortInfra_fk` `IdPortInfra_fk` int NOT NULL;
+
+
+ALTER TABLE `PortsInfra`
+DROP FOREIGN KEY `PortsInfra_ibfk_3`,
+DROP FOREIGN KEY `PortsInfra_ibfk_4`,
+DROP FOREIGN KEY `PortsInfra_ibfk_6`,
+DROP FOREIGN KEY `PortsInfra_ibfk_7`,
+ADD UNIQUE KEY `IdPortInfra_UNIQUE` (`IdPortInfra`);
+
 
 
 
