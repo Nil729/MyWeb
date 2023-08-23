@@ -4,6 +4,26 @@ import { getIdDispositiu, getIdDispositiuInfra, getIdDispositiuFinal } from "../
 import { getIdPortInfra, getIdPortFinal } from "../ports/getIdPorts";
 import getIdXarxa from "../xarxa/getIdXarxa";
 import { updateEstatPortInfra } from "../ports/updateEstatPortInfra";
+import { deleteEstatPortInfra } from "../ports/updateEstatPortInfra";
+import { insertEstatPortInfra } from "../ports/insertEstatPortInfra";
+
+const handlePortStatusChangeUpdate = async (portInfraId, vlan, portStatus) => {
+    console.log('vlan: ', vlan);
+    await deleteEstatPortInfra(portInfraId[0].IdPortInfra);
+
+    if (portStatus === 'tagged') {
+        for (const vlanValue of vlan) {
+            console.log('arrayVlan[i]: ', vlanValue);
+            const idXarxa = await getIdXarxa(vlanValue);
+            await insertEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
+        }
+    } else if (portStatus === 'untagged' || portStatus === 'undefined') {
+        const idXarxa = await getIdXarxa(vlan);
+        await insertEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
+
+    }
+};
+
 
 
 export default async function updateConnexions(req, res) {
@@ -74,7 +94,7 @@ export default async function updateConnexions(req, res) {
                             console.error('Error inserting PortsInfra record:', error);
                             res.status(500).json({ message: 'Error inserting PortsInfra record', error });
                             reject(error
-                                );
+                            );
                         } else {
                             console.log('PortsInfra record inserted successfully');
                             resolve();
@@ -85,17 +105,11 @@ export default async function updateConnexions(req, res) {
 
             console.log('infraDeviceId: ', infraDeviceId[0].id_dispositiuInfra, 'PortInfra: ', portInfra);
             const portInfraId = await getIdPortInfra(infraDeviceId[0].id_dispositiuInfra, portInfra);
-    
+
 
             console.log('portInfraId: ', portInfraId);
 
-            const idXarxa = await getIdXarxa(vlan);
-
-            // if portStatus === "Tagged" make a udate loop for each id vlan selected if Its Untaged only do one update, and if it's undefined make one update and set idXarxa on "null"
-
-            console.log('PortInfra: ', portInfraId[0].IdPortInfra, 'IdXarxa: ', idXarxa, 'VlanConfig; ', portStatus)
-            await updateEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
-
+            handlePortStatusChangeUpdate(portInfraId, vlan, portStatus);
 
             res.status(200).json({ message: 'Connection trunk updated successfully' });
 
@@ -104,9 +118,9 @@ export default async function updateConnexions(req, res) {
             const infraDeviceId = await getIdDispositiuInfra(infraDeviceName);
             const finalDeviceId = await getIdDispositiuFinal(finalDeviceName);
             console.log('infraDeviceId: ', infraDeviceId, 'finalDeviceId: ', finalDeviceId);
-            
-            
-            console.log('connexioId: ',idConneccio);
+
+
+            console.log('connexioId: ', idConneccio);
 
             // Update PortsInfra for infrastructure device
             await new Promise((resolve, reject) => {
@@ -149,20 +163,22 @@ export default async function updateConnexions(req, res) {
                     }
                 );
             });
-            
-            
+
+
             console.log('infraDeviceId: ', infraDeviceId[0].id_dispositiuInfra, 'PortInfra: ', portInfra);
             const portInfraId = await getIdPortInfra(infraDeviceId[0].id_dispositiuInfra, portInfra);
-            
-            console.log('finalDeviceId: ', finalDeviceId[0].id_disposituFinal ,  'PortFinal: ', endPort )
+
+            console.log('finalDeviceId: ', finalDeviceId[0].id_disposituFinal, 'PortFinal: ', endPort)
             const portFinalId = await getIdPortFinal(finalDeviceId[0].id_disposituFinal, endPort);
 
             console.log('portInfraId: ', portInfraId[0].IdPortInfra, 'portFinalId: ', portFinalId[0].IdPortFinal);
 
-            const idXarxa = await getIdXarxa(vlan);
-            console.log('PortInfra: ', portInfraId[0].IdPortInfra, 'IdXarxa: ', idXarxa, 'VlanConfig; ', portStatus)
-            await updateEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
-            
+            handlePortStatusChangeUpdate(portInfraId, vlan, portStatus);
+
+            // const idXarxa = await getIdXarxa(vlan);
+            // console.log('PortInfra: ', portInfraId[0].IdPortInfra, 'IdXarxa: ', idXarxa, 'VlanConfig; ', portStatus)
+            // await updateEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
+
 
             // Send a success response
             res.status(200).json({ message: 'Connection trunk updated successfully' });

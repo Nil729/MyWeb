@@ -18,3 +18,19 @@ export async function updateEstatPortInfra(idPortInfra, idXarxa, portStatus) {
         }
     ) 
 }
+
+export async function deleteEstatPortInfra(idPortInfra){
+
+    pool.query(
+        `DELETE FROM Estat WHERE IdPortInfra_fk = ?`,
+        [idPortInfra],
+        (err) => {
+            if (err) {
+                console.log('Error deleting Estat Port Infra', err);
+            } else {
+                console.log('Estat record deleted successfully');
+            }
+        }
+    )
+
+}

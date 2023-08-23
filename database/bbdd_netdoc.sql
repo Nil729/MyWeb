@@ -472,6 +472,32 @@ UPDATE PortsInfra
 
 
 
+ 
+
+UPDATE PortsInfra
+                    SET numPortInfra = ?,
+                    id_dispositiuInfra_fk = ?
+                    WHERE  IdPortInfra = (select IdPortInfra_fk from Coneccio where idConneccio = ? )
+
+UPDATE PortsFinal
+                    SET numPortFinal = ?,
+                    id_disposituFinal_fk =  13
+                    WHERE  IdPortFinal = (select IdPortFinal_fk from Coneccio where idConneccio = 54 )
+
+
+UPDATE PortsInfra
+                    SET numPortInfra = 22,
+                    id_dispositiuInfra_fk = 8
+                    WHERE  IdPortInfra = (select IdPortInfraParent_fk from `ConexioTrunk` where  IdConexioTrunk = 7 )
+
+
+DELETE pi, pf
+    FROM PortsInfra pi
+    JOIN Coneccio c ON pi.IdPortInfra = c.IdPortInfra_fk
+    JOIN PortsFinal pf ON pf.IdPortFinal = c.IdPortFinal_fk
+    WHERE c.idConneccio = 96;
+
+
             SELECT 
                 idConneccio,
                 (SELECT NomDispositiu 
@@ -532,25 +558,75 @@ UPDATE PortsInfra
                 Dispositius_infraestructura AS DispositiuInfraChild ON PortsInfraChild.id_dispositiuInfra_fk = DispositiuInfraChild.id_dispositiuInfra;
 
 
-UPDATE PortsInfra
-                    SET numPortInfra = ?,
-                    id_dispositiuInfra_fk = ?
-                    WHERE  IdPortInfra = (select IdPortInfra_fk from Coneccio where idConneccio = ? )
+SELECT 
+    idConneccio AS ConnectionID,
+    (SELECT NomDispositiu 
+    FROM Dispositius 
+    WHERE id_dispositiu = Dispositius_infraestructura.id_dispositiu_fk) AS InfraDeviceName,
+    PortsInfra.numPortInfra AS InfraPort,
+    GROUP_CONCAT(NomXarxa ORDER BY NomXarxa ASC SEPARATOR ', ') AS VLANs, -- Concatenación de VLANs
+    VlanConfig AS PortStatus,
+    (SELECT NomDispositiu 
+    FROM Dispositius 
+    WHERE id_dispositiu = Dispositus_final.id_dispositiu_fk) AS FinalDeviceName,
+    PortsFinal.numPortFinal AS EndPort
+FROM
+    Coneccio
+JOIN
+    PortsInfra ON Coneccio.IdPortInfra_fk = PortsInfra.IdPortInfra
+JOIN 
+    Estat ON PortsInfra.IdPortInfra = Estat.IdPortInfra_fk
+JOIN 
+    Xarxa ON Estat.Id_vlan_fk = Xarxa.Id_vlan
+JOIN
+    Dispositius_infraestructura ON PortsInfra.id_dispositiuInfra_fk = Dispositius_infraestructura.id_dispositiuInfra
+JOIN
+    PortsFinal ON Coneccio.IdPortFinal_fk = PortsFinal.IdPortFinal
+JOIN
+    Dispositus_final ON PortsFinal.id_disposituFinal_fk = Dispositus_final.id_disposituFinal
+GROUP BY
+    idConneccio,
+    InfraDeviceName,
+    InfraPort,
+    PortStatus,
+    FinalDeviceName,
+    EndPort
+UNION
+SELECT 
+    IdConexioTrunk AS ConnectionID,
+    -- Get parent Dispositiu_Infraestructura name
+    (SELECT NomDispositiu 
+    FROM Dispositius 
+    WHERE id_dispositiu = Dispositius_infraestructura.id_dispositiu_fk) AS InfraDeviceName,
+    -- Parent Port
+    PortsInfra.numPortInfra AS InfraPort,
+    GROUP_CONCAT(NomXarxa ORDER BY NomXarxa ASC SEPARATOR ', ') AS VLANs, -- Concatenación de VLANs
+    VlanConfig AS PortStatus,
+    -- Get child Dispositiu_Infraestructura name
+    (SELECT NomDispositiu 
+    FROM Dispositius 
+    WHERE id_dispositiu = DispositiuInfraChild.id_dispositiu_fk) AS FinalDeviceName,
+    -- Child ports from DispositiuInfraChild
+    PortsInfraChild.numPortInfra AS EndPort
+FROM
+    ConexioTrunk
+JOIN
+    PortsInfra ON ConexioTrunk.IdPortInfraParent_fk = PortsInfra.IdPortInfra
+JOIN 
+    Estat ON PortsInfra.IdPortInfra = Estat.IdPortInfra_fk
+JOIN 
+    Xarxa ON Estat.Id_vlan_fk = Xarxa.Id_vlan
+JOIN
+    Dispositius_infraestructura ON PortsInfra.id_dispositiuInfra_fk = Dispositius_infraestructura.id_dispositiuInfra
+JOIN
+    PortsInfra AS PortsInfraChild  ON ConexioTrunk.IdPortInfraChild_fk = PortsInfraChild.IdPortInfra
+JOIN
+    Dispositius_infraestructura AS DispositiuInfraChild ON PortsInfraChild.id_dispositiuInfra_fk = DispositiuInfraChild.id_dispositiuInfra
+GROUP BY
+    ConnectionID,
+    InfraDeviceName,
+    InfraPort,
+    PortStatus,
+    FinalDeviceName,
+    EndPort;
 
-UPDATE PortsFinal
-                    SET numPortFinal = ?,
-                    id_disposituFinal_fk =  13
-                    WHERE  IdPortFinal = (select IdPortFinal_fk from Coneccio where idConneccio = 54 )
-
-
-UPDATE PortsInfra
-                    SET numPortInfra = 22,
-                    id_dispositiuInfra_fk = 8
-                    WHERE  IdPortInfra = (select IdPortInfraParent_fk from `ConexioTrunk` where  IdConexioTrunk = 7 )
-
-
-DELETE pi, pf
-    FROM PortsInfra pi
-    JOIN Coneccio c ON pi.IdPortInfra = c.IdPortInfra_fk
-    JOIN PortsFinal pf ON pf.IdPortFinal = c.IdPortFinal_fk
-    WHERE c.idConneccio = 96;
