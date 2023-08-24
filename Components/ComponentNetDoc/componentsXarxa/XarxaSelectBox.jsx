@@ -31,6 +31,7 @@ const XarxaSelectBox = ({ vlan, onChange }) => {
   const handleOnChange = (selectedOptions) => {
     const selectedValues = selectedOptions ? selectedOptions.map((option) => option.value) : [];
     onChange({ target: { name: 'vlan', value: selectedValues } });
+    console.log('selectedValues', selectedValues); // ['V_infra']
   };
 
   return (

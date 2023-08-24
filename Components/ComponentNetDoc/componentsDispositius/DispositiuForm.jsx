@@ -15,7 +15,7 @@ const DeviceManagementForm = () => {
     { deviceType: deviceType, NomDispositiu: 'Dispositiu 1', ip: '192.168.1.1', mac: '00:11:22:33:44:55', port: 4, ubicacio: 'Aula 1', vlan: 1, portEntrada: 1 },
     { deviceType: deviceType, NomDispositiu: 'Dispositiu 2', ip: '192.168.1.2', mac: 'AA:BB:CC:DD:EE:FF', port: 8, ubicacio: 'Aula 2', vlan: 2, portEntrada: 1 },
     { deviceType: deviceType, NomDispositiu: 'Dispositiu 3', ip: '192.168.1.3', mac: '11:22:33:44:55:66', port: 2, ubicacio: 'Aula 3', vlan: 3, portEntrada: 1 },
-    
+
   ]);
 
   const [selectedRowForm, setselectedRowForm] = useState(null);
@@ -246,11 +246,27 @@ const DeviceManagementForm = () => {
         <XarxaComboBox vlan={formValues.vlan} onChange={handleChange} />
 
         <div className="form-buttons">
-          <button type="reset">Neteja</button>
 
-          <button type="button" onClick={handleSubmit}>Afegeix</button>
+          {selectedRowForm !== null ? (
+            <>
+              <button type="button" onClick={handleSaveRow}>Guardar</button>
+              <button type="reset">Neteja</button>
+            </>
 
-          <button type="button" onClick={handleSaveRow}>Gurada</button>
+          ) : (
+            <>
+              <button type="button" onClick={handleSubmit}>Afegeix</button>
+              <button type="reset">Neteja</button>
+            </>
+
+          )}
+
+
+
+
+
+
+
         </div>
       </form>
       <TaulaDispositus dispositius={dispositius} onEdit={handleEditRow} onDelete={handleDelete} deviceType={deviceType} />

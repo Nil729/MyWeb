@@ -124,7 +124,7 @@ const ConnexionsForm = () => {
                 finalDeviceName: formvaluesConnexions.finalDeviceName,
                 endPort: formvaluesConnexions.endPort,
                 pachpanelName: formvaluesConnexions.pachpanelName,
-                vlan: formvaluesConnexions.vlan,
+                vlan: formvaluesConnexions.vlan.split(', '), // convertir a array 
                 descriptionConnexions: formvaluesConnexions.descriptionConnexions,
             };
             setconnexionsData(updatedConnexions);
@@ -180,6 +180,22 @@ const ConnexionsForm = () => {
             descriptionConnexions: '',
         });
     };
+
+    // function of cancel edit row:
+    const handleCancelEditRow = () => {
+        setselectedRowUbiacioForm(null);
+        setformvaluesConnexions({
+            infraDeviceName: '',
+            portInfra: '',
+            portStatus: '',
+            finalDeviceName: '',
+            endPort: '',
+            pachpanelName: '',
+            vlan: '',
+            descriptionConnexions: '',
+        });
+    };
+
 
 
     return (
@@ -251,9 +267,14 @@ const ConnexionsForm = () => {
                     <XarxaSelectBox vlan={formvaluesConnexions.vlan} onChange={handleChange} />
                     */}
                     {formvaluesConnexions.portStatus === 'untagged' ? (
-                        <XarxaComboBox vlan={formvaluesConnexions.vlan} onChange={handleChange} />
+                        <>
+                            <XarxaComboBox vlan={formvaluesConnexions.vlan} onChange={handleChange} />
+                        </>
+
                     ) : formvaluesConnexions.portStatus === 'tagged' ? (
-                        <XarxaSelectBox vlan={formvaluesConnexions.vlan} onChange={handleChange} />
+                        <>
+                            <XarxaSelectBox vlan={formvaluesConnexions.vlan} onChange={handleChange} />
+                        </>
                     ) : null}
 
 
@@ -280,9 +301,17 @@ const ConnexionsForm = () => {
                     </div>
 
                     <div className="form-group">
-                        <button type="submit" >Connecta</button>
-
-                        <button type='button' onClick={handleSaveRow} >Guardar</button>
+                        {selectedRowConnexionsForm !== null ? (
+                            <>
+                                <button type="button" onClick={handleSaveRow}>Guardar</button>
+                                <button type="button" onClick={handleCancelEditRow}>Cancel·la</button>
+                            </>
+                        ) : (
+                            <>
+                                <button type="submit">Connecta</button>
+                                <button type="button" onClick={handleCancelEditRow}>Cancel·la</button>
+                            </>
+                        )}
                     </div>
                 </form>
             </div>
