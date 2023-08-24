@@ -393,9 +393,83 @@ SELECT
                  FROM   Dispositus_final 
                  WHERE  Dispositus_final.id_dispositiu_fk = Dispositius.id_dispositiu)
          END AS quantitatPortsEth
-FROM Dispositius WHERE `NomDispositiu` = 'SWITCH-01';
+FROM Dispositius WHERE `NomDispositiu` = 'Infra_test';
 
 
+SELECT 
+       CASE 
+           WHEN deviceType LIKE 'infra' 
+           THEN (SELECT numPortInfra from `PortsInfra`
+JOIN Dispositius_infraestructura ON id_dispositiuInfra = id_dispositiuInfra_fk
+WHERE `id_dispositiu_fk`= 36 ) 
+           ELSE (SELECT numPortFinal from `PortsFinal` 
+JOIN Dispositus_final ON  id_disposituFinal = id_disposituFinal_fk
+WHERE `id_dispositiu_fk` = 38)
+         END
+FROM Dispositius WHERE `NomDispositiu` = 'Infra_test';
+
+
+SELECT 
+       CASE 
+           WHEN deviceType LIKE 'infra' 
+           THEN (SELECT numPortInfra 
+                from PortsInfra
+                JOIN Dispositius_infraestructura ON id_dispositiuInfra = id_dispositiuInfra_fk
+                WHERE  Dispositius_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu ) 
+           ELSE (SELECT numPortFinal 
+                from PortsFinal
+                JOIN Dispositus_final ON  id_disposituFinal = id_disposituFinal_fk
+                WHERE  Dispositus_final.id_dispositiu_fk = Dispositius.id_dispositiu)
+         END AS numPortInfra
+FROM Dispositius WHERE `NomDispositiu` = 'Infra_test';
+
+
+SELECT 
+                D.NomDispositiu,
+                CASE 
+                    WHEN D.deviceType LIKE 'infra' THEN PI.numPortInfra 
+                    ELSE PF.numPortFinal 
+                END AS numPortInfra
+            FROM Dispositius D
+            LEFT JOIN (
+                SELECT 
+                    DI.id_dispositiu_fk,
+                    GROUP_CONCAT(PI.numPortInfra) AS numPortInfra
+                FROM PortsInfra PI
+                JOIN Dispositius_infraestructura DI ON PI.id_dispositiuInfra_fk = DI.id_dispositiuInfra
+                GROUP BY DI.id_dispositiu_fk
+            ) PI ON D.id_dispositiu = PI.id_dispositiu_fk
+            LEFT JOIN (
+                SELECT 
+                    DF.id_dispositiu_fk,
+                    GROUP_CONCAT(PF.numPortFinal) AS numPortFinal
+                FROM PortsFinal PF
+                JOIN Dispositus_final DF ON PF.id_disposituFinal_fk = DF.id_disposituFinal
+                GROUP BY DF.id_dispositiu_fk
+            ) PF ON D.id_dispositiu = PF.id_dispositiu_fk
+            WHERE D.NomDispositiu = 'Infra_test';
+
+SELECT numPortInfra 
+                 FROM   Dispositius_infraestructura 
+                 WHERE  Dispositius_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu
+
+SELECT numPortFinal 
+                 FROM   Dispositus_final
+                 JOIN `PortsFinal` ON `IdPortFinal` = `id_disposituFinal_fk`
+                 WHERE  Dispositus_final.id_dispositiu_fk = 38
+
+
+SELECT numPortFinal from `PortsFinal` 
+JOIN Dispositus_final ON  id_disposituFinal = id_disposituFinal_fk
+WHERE `id_dispositiu_fk` = 38
+
+SELECT numPortInfra from `PortsInfra`
+JOIN Dispositius_infraestructura ON id_dispositiuInfra = id_dispositiuInfra_fk
+WHERE `id_dispositiu_fk` = 36
+
+
+
+--WHERE `id_disposituFinal_fk` = 7 id_dispositiu_fk = 38
 
 --- create a trigger once insert into `ConexioTrunk` or `Coneccio` before insert a `PortsFinal` and `PortsInfra` row
 DELIMITER //
@@ -466,29 +540,7 @@ SELECT
 
 SELECT * FROM PortsInfra WHERE id_dispositiuInfra_fk = 12 AND numPortInfra = 19;
 
-UPDATE PortsInfra
-                    SET numPortInfra = ?
-                    WHERE IdPortInfra = (select IdPortInfra_fk from `Coneccio` where `idConneccio` = 54 );
 
-
-
- 
-
-UPDATE PortsInfra
-                    SET numPortInfra = ?,
-                    id_dispositiuInfra_fk = ?
-                    WHERE  IdPortInfra = (select IdPortInfra_fk from Coneccio where idConneccio = ? )
-
-UPDATE PortsFinal
-                    SET numPortFinal = ?,
-                    id_disposituFinal_fk =  13
-                    WHERE  IdPortFinal = (select IdPortFinal_fk from Coneccio where idConneccio = 54 )
-
-
-UPDATE PortsInfra
-                    SET numPortInfra = 22,
-                    id_dispositiuInfra_fk = 8
-                    WHERE  IdPortInfra = (select IdPortInfraParent_fk from `ConexioTrunk` where  IdConexioTrunk = 7 )
 
 
 DELETE pi, pf

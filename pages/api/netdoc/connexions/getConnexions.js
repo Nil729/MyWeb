@@ -1,19 +1,7 @@
 import pool from "../../../../database/db.connection";
 
 export default function getConnexions(req, res) {
-
-    // SELECT 
-    //     (SELECT NomDispositiu 
-    //      FROM Dispositius 
-    //      WHERE id_dispositiu = Dispositius_infraestructura.id_dispositiu_fk) AS infraDeviceName,
-    //     PortsInfra.numPortInfra AS portInfra,
-    //     NomXarxa AS vlan,
-    //     VlanConfig AS portStatus,
-    //     (SELECT NomDispositiu 
-    //      FROM Dispositius
-    //      WHERE id_dispositiu = Dispositus_final.id_dispositiu_fk) AS finalDeviceName,
-    //     PortsFinal.numPortFinal AS endPort
-
+    
     pool.query(
         `
         SELECT 

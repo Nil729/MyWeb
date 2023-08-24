@@ -1,3 +1,4 @@
+-- Active: 1687107432916@@127.0.0.1@3306@bbdd_NetDoc
 -- Crea una funcio que cuan inserim un reguistre a la taula dispositus també linsereixi a la taula diposiitus_infraestructura o dispositus_final segons el seu deviceType
 DELIMITER $$
 CREATE TRIGGER `insert_dispositiuType` AFTER INSERT ON `Dispositius` FOR EACH ROW BEGIN
