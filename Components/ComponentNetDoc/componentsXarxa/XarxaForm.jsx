@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import TaulaXarxa from './TaulaXarxa';
 import axios from 'axios';
 
-
 const NetworkForm = () => {
     const [networkData, setNetworkData] = useState([
         { Id_vlan: '1', NomXarxa: 'Xarxa 1', DescXarxa: 'Xarxa 1' },
@@ -44,6 +43,7 @@ const NetworkForm = () => {
 
 
     const handleSubmit = (event) => {
+        
         event.preventDefault();
 
         const novaXarxa = {
@@ -55,7 +55,7 @@ const NetworkForm = () => {
         try {
             axios.post('http://localhost:3002/api/netdoc/xarxa/insertXarxa', novaXarxa);
             console.log('novaXarxa', novaXarxa);
-            
+
             setNetworkData((prevNetworks) => [...prevNetworks, novaXarxa]);
 
             setformvaluesXarxa({
@@ -75,7 +75,7 @@ const NetworkForm = () => {
 
         console.log('index', index);
         if (index >= 0 && index < networkData.length) {
-            
+
             // Omplir els camps del formulari amb les dades de la fila seleccionada
             const formvaluesXarxa = networkData[index];
 
@@ -84,14 +84,14 @@ const NetworkForm = () => {
                 networkName: formvaluesXarxa.NomXarxa,
                 networkDesc: formvaluesXarxa.DescXarxa,
             });
-            
+
             setselectedRowXarxaForm(index);
         }
     };
 
     // Guardar els canvis
     const handleSaveRow = () => {
-        
+
         if (selectedRowXarxaForm !== null) {
             const updatedNetworks = [...networkData];
 
@@ -101,28 +101,24 @@ const NetworkForm = () => {
                 DescXarxa: formvaluesXarxa.networkDesc
             };
             setNetworkData(updatedNetworks);
-
             try {
 
                 axios.put('http://localhost:3002/api/netdoc/xarxa/updateXarxa', updatedNetworks[selectedRowXarxaForm]);
                 console.log('updatedNetworks[selectedRowXarxaForm]', updatedNetworks[selectedRowXarxaForm]);
 
-            }catch(error) {
+            } catch (error) {
                 console.error(error);
             }
-
             setselectedRowXarxaForm(null);
-                
+
             setformvaluesXarxa({
                 networkId: '',
                 networkName: '',
                 networkDesc: '',
             });
-
-
         }
     };
-    
+
     const handleDeleteRowXarxa = async (index) => {
         // Eliminar la fila seleccionada
         const updatedNetworks = [...networkData];
@@ -130,8 +126,8 @@ const NetworkForm = () => {
 
         const networkId = updatedNetworks[index].Id_vlan;
         console.log('networkId', networkId);
-        
-        try{
+
+        try {
 
             await axios.delete(`http://localhost:3002/api/netdoc/xarxa/delXarxa?networkId=${networkId}`);
             updatedNetworks.splice(index, 1);
@@ -148,6 +144,15 @@ const NetworkForm = () => {
             console.error(error);
         }
 
+    };
+
+    const handleCancelRow = () => {
+        setselectedRowXarxaForm(null);
+        setformvaluesXarxa({
+            networkId: '',
+            networkName: '',
+            networkDesc: '',
+        });
     };
 
 
@@ -189,13 +194,22 @@ const NetworkForm = () => {
                         ></textarea>
                     </div>
                     <div className="form-group">
-                        <button type="submit" >Afegeix</button>
+                        {selectedRowXarxaForm !== null ? (
+                            <>
+                                <button type='button' onClick={handleSaveRow} >Guardar</button>
+                                <button type='button' onClick={handleCancelRow} >Cancel·lar</button>
+                            </>
+                        ) : (
 
-                        <button type='button' onClick={handleSaveRow} >Guardar</button>
+                            <>
+                                <button type="submit" >Afegeix</button>
+                                <button type='button' onClick={handleCancelRow} >Cancel·lar</button>
+                            </>
+                        )}
                     </div>
                 </form>
             </div>
-            <TaulaXarxa networks={networkData} onEditXarxa={handleEditRow} onDeleteXarxa= {handleDeleteRowXarxa} />
+            <TaulaXarxa networks={networkData} onEditXarxa={handleEditRow} onDeleteXarxa={handleDeleteRowXarxa} />
         </div>
     );
 };

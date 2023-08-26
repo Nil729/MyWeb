@@ -202,73 +202,75 @@ const DeviceManagementForm = () => {
   };
 
   return (
-    <div className="device-management">
-      <form className="device-form" onSubmit={(e) => e.preventDefault()}>
-        <div className="form-header">
+    <div className="network-form-container">
+      <div className='network-form'>
+
+
+        <div className="title-form">
           <h2>Gestionar Dispositius</h2>
         </div>
-
-        <div className="device-type-selector">
-          <button
-            className={`option-button ${deviceType === "final" ? 'selected' : ''}`}
-            onClick={() => handleDeviceTypeChange("final")}
-          >
-            Dispositiu Final
-          </button>
-          <button
-            className={`option-button ${deviceType === "Infra" ? 'selected' : ''}`}
-            onClick={() => handleDeviceTypeChange("Infra")}
-          >
-            Dispositiu d'Infraestructura
-          </button>
-        </div>
-
-        <div className="form-group">
-          <label>Nomdel dispositiu:</label>
-          <input type="text" name="deviceName" value={formValues.deviceName} onChange={handleChange} required />
-        </div>
-        <div className="form-group">
-          <label>IP:</label>
-          <input type="text" name="ip" value={formValues.ip} onChange={handleChange} required />
-        </div>
-        <div className="form-group">
-          <label>MAC:</label>
-          <input type="text" name="mac" value={formValues.mac} onChange={handleChange} required />
-        </div>
-
-        <div className="form-group">
-          <label>Quantitat de ports ethernet:</label>
-          <input type="number" name="ethernetPorts" value={formValues.ethernetPorts} onChange={handleChange} required />
-        </div>
-
-        <UbicacioComboBox value={formValues.location} onChange={handleChange} />
-
-        <XarxaComboBox vlan={formValues.vlan} onChange={handleChange} />
-
-        <div className="form-buttons">
-
-          {selectedRowForm !== null ? (
-            <>
-              <button type="button" onClick={handleSaveRow}>Guardar</button>
-              <button type="reset">Neteja</button>
-            </>
-
-          ) : (
-            <>
-              <button type="button" onClick={handleSubmit}>Afegeix</button>
-              <button type="reset">Neteja</button>
-            </>
-
-          )}
+        <form className="device-form" onSubmit={(e) => e.preventDefault()}>
 
 
 
+          <div>
+            <button
+              className={`option-button ${deviceType === "final" ? 'selected' : ''}`}
+              onClick={() => handleDeviceTypeChange("final")}
+            >
+              Dispositiu Final
+            </button>
+          </div>
+          <div >
+            <button
+              className={`option-button ${deviceType === "Infra" ? 'selected' : ''}`}
+              onClick={() => handleDeviceTypeChange("Infra")}
+            >
+              Dispositiu d'Infraestructura
+            </button>
+          </div>
 
+          <div className="form-group">
+            <label>Nomdel dispositiu:</label>
+            <input type="text" name="deviceName" value={formValues.deviceName} onChange={handleChange} required />
+          </div>
+          <div className="form-group">
+            <label>IP:</label>
+            <input type="text" name="ip" value={formValues.ip} onChange={handleChange} required />
+          </div>
+          <div className="form-group">
+            <label>MAC:</label>
+            <input type="text" name="mac" value={formValues.mac} onChange={handleChange} required />
+          </div>
 
+          <div className="form-group">
+            <label>Quantitat de ports ethernet:</label>
+            <input type="number" name="ethernetPorts" value={formValues.ethernetPorts} onChange={handleChange} required />
+          </div>
 
+          <UbicacioComboBox value={formValues.location} onChange={handleChange} />
 
-        </div>
-      </form>
+          <XarxaComboBox vlan={formValues.vlan} onChange={handleChange} />
+
+          <div className="form-buttons">
+
+            {selectedRowForm !== null ? (
+              <>
+                <button type="button" onClick={handleSaveRow}>Guardar</button>
+                <button type="reset">Neteja</button>
+              </>
+
+            ) : (
+              <>
+                <button type="button" onClick={handleSubmit}>Afegeix</button>
+                <button type="reset">Neteja</button>
+              </>
+
+            )}
+
+          </div>
+        </form>
+      </div>
       <TaulaDispositus dispositius={dispositius} onEdit={handleEditRow} onDelete={handleDelete} deviceType={deviceType} />
     </div>
   );

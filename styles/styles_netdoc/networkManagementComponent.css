@@ -35,3 +35,28 @@
 .card:hover {
   background-color: #494949;
 }
+
+
+table th input {
+  padding: 2px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  color: #333;
+  font-size: 12px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Add hover effect */
+table th input:hover {
+  border-color: #999;
+}
+
+/* Apply focus styles */
+table th input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+  outline: none;
+}
+
+

@@ -2,14 +2,14 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 
-const XarxaComboBox = ({ vlan, onChange }) => {
+const XarxaComboBox = ({ vlan, onChange, nomDispositiuInfraestructura, portInfra }) => {
+  console.log('nomDispositiuInfraestructura: ', nomDispositiuInfraestructura, 'portInfra', portInfra);
   const [xarxa, setXarxa] = useState([]);
-
 
   useEffect(() => {
     const fetchxarxa = async () => {
       try {
-        const response = await axios.get('http://localhost:3002/api/netdoc/xarxa/getXarxa');
+        const response = await axios.get(`http://localhost:3002/api/netdoc/xarxa/getXarxaFromPortInfra?nomDispositiuInfraestructura=${nomDispositiuInfraestructura}&portInfra=${portInfra}`);
         const xarxa = response.data.map((xarxa) => xarxa.NomXarxa);
         console.log('xarxa', xarxa);
         setXarxa(xarxa);
@@ -19,7 +19,7 @@ const XarxaComboBox = ({ vlan, onChange }) => {
     };
 
     fetchxarxa();
-  }, []);
+  }, [nomDispositiuInfraestructura]);
 
   return (
     <div className="form-group">

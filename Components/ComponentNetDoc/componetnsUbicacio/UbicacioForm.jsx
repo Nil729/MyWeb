@@ -105,7 +105,7 @@ const UbicacioForm = () => {
                 console.log('updatedubicacio', updatedubicacio[selectedRowUbicacioForm]);
 
 
-            }  catch (error) {
+            } catch (error) {
                 console.log('error', error);
             }
         }
@@ -135,6 +135,13 @@ const UbicacioForm = () => {
         }
     };
 
+    const handleCancelRow = () => {
+        setselectedRowUbiacioForm(null);
+        setformvaluesUbicacio({
+            ubicacioName: '',
+            descriptionUbicacio: '',
+        });
+    };
 
     return (
         <div className="network-form-container">
@@ -163,9 +170,19 @@ const UbicacioForm = () => {
                         ></textarea>
                     </div>
                     <div className="form-group">
-                        <button type="submit" >Afegeix</button>
+                        {selectedRowUbicacioForm !== null ? (
+                            <>
+                                <button type='button' onClick={handleSaveRow} >Guardar</button>
+                                <button type='button' onClick={handleCancelRow} >Cancel·lar</button>
+                            </>
+                        ) : (
 
-                        <button type='button' onClick={handleSaveRow} >Guardar</button>
+                            <>
+                                <button type="submit" >Afegeix</button>
+                                <button type='button' onClick={handleCancelRow} >Cancel·lar</button>
+                            </>
+                        )}
+
                     </div>
                 </form>
             </div>

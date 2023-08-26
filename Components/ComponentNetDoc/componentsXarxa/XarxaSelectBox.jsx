@@ -5,13 +5,13 @@ import makeAnimated from 'react-select/animated';
 
 const animatedComponents = makeAnimated();
 
-const XarxaSelectBox = ({ vlan, onChange }) => {
+const XarxaSelectBox = ({ vlan, onChange, nomDispositiuInfraestructura, portInfra }) => {
   const [xarxaOptions, setXarxaOptions] = useState([]);
 
   useEffect(() => {
     const fetchXarxa = async () => {
       try {
-        const response = await axios.get('http://localhost:3002/api/netdoc/xarxa/getXarxa');
+        const response = await axios.get(`http://localhost:3002/api/netdoc/xarxa/getXarxaFromPortInfra?nomDispositiuInfraestructura=${nomDispositiuInfraestructura}&portInfra=${portInfra}`);
         const xarxaData = response.data.map((xarxa) => ({
           value: xarxa.NomXarxa,
           label: xarxa.NomXarxa,
@@ -25,7 +25,7 @@ const XarxaSelectBox = ({ vlan, onChange }) => {
     };
 
     fetchXarxa();
-  }, []);
+  }, [nomDispositiuInfraestructura]);
 
 
   const handleOnChange = (selectedOptions) => {

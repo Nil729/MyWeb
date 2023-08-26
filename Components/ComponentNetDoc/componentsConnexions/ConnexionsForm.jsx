@@ -268,12 +268,22 @@ const ConnexionsForm = () => {
                     */}
                     {formvaluesConnexions.portStatus === 'untagged' ? (
                         <>
-                            <XarxaComboBox vlan={formvaluesConnexions.vlan} onChange={handleChange} />
+                            <XarxaComboBox 
+                                vlan={formvaluesConnexions.vlan} 
+                                onChange={handleChange} 
+                                nomDispositiuInfraestructura={formvaluesConnexions.infraDeviceName}
+                                portInfra={formvaluesConnexions.portInfra}
+                            />
                         </>
 
                     ) : formvaluesConnexions.portStatus === 'tagged' ? (
                         <>
-                            <XarxaSelectBox vlan={formvaluesConnexions.vlan} onChange={handleChange} />
+                            <XarxaSelectBox 
+                                vlan={formvaluesConnexions.vlan} 
+                                onChange={handleChange} 
+                                nomDispositiuInfraestructura={formvaluesConnexions.infraDeviceName}
+                                portInfra={formvaluesConnexions.portInfra}
+                            />
                         </>
                     ) : null}
 

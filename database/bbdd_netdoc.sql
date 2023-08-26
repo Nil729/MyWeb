@@ -682,3 +682,65 @@ GROUP BY
     FinalDeviceName,
     EndPort;
 
+SELECT Id_vlan , NomXarxa , DescXarxa  FROM Xarxa
+        WHERE Id_vlan in (SELECT Id_vlan_fk FROM `Estat` WHERE `IdPortInfra_fk` = 188);
+
+
+SELECT Id_vlan , NomXarxa , DescXarxa  FROM Xarxa `DescXarxa`
+        WHERE Id_vlan in (SELECT Id_vlan_fk FROM `Estat` WHERE `IdPortInfra_fk` = 188);
+
+
+SELECT Id_vlan, NomXarxa, DescXarxa  
+FROM Xarxa
+WHERE Id_vlan IN (
+    SELECT Id_vlan_fk 
+    FROM Estat 
+    WHERE IdPortInfra_fk = (
+        SELECT IdPortInfraParent_fk 
+        FROM ConexioTrunk 
+        WHERE IdPortInfraChild_fk IN (
+            SELECT IdPortInfra 
+            FROM PortsInfra  
+            JOIN Dispositius_infraestructura 
+            ON id_dispositiuInfra = id_dispositiuInfra_fk 
+            WHERE id_dispositiu_fk = 36
+        )
+    )
+);
+
+
+SELECT Id_vlan, NomXarxa, DescXarxa  
+FROM Xarxa
+WHERE Id_vlan IN (
+    SELECT Id_vlan_fk 
+    FROM Estat 
+    WHERE IdPortInfra_fk = (
+        SELECT COALESCE(IdPortInfraParent_fk, 0)
+        FROM ConexioTrunk 
+        WHERE IdPortInfraChild_fk IN (
+            SELECT IdPortInfra 
+            FROM PortsInfra  
+            JOIN Dispositius_infraestructura 
+            ON id_dispositiuInfra = id_dispositiuInfra_fk 
+            WHERE id_dispositiu_fk = 41
+        )
+    )
+) OR NOT EXISTS (
+    SELECT 1
+    FROM ConexioTrunk 
+    WHERE IdPortInfraChild_fk IN (
+        SELECT IdPortInfra 
+        FROM PortsInfra  
+        JOIN Dispositius_infraestructura 
+        ON id_dispositiuInfra = id_dispositiuInfra_fk 
+        WHERE id_dispositiu_fk = 41
+    )
+);
+
+-- selectcionem tots els ports que estan a la taula connexiotrunk del dispositiu 41
+
+SELECT IdPortInfraParent_fk FROM ConexioTrunk WHERE IdPortInfraChild_fk in 
+    (SELECT IdPortInfra FROM PortsInfra 
+        JOIN Dispositius_infraestructura 
+        ON id_dispositiuInfra = id_dispositiuInfra_fk
+        WHERE id_dispositiu_fk = 41);
