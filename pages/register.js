@@ -1,47 +1,45 @@
-// pages/login.js
+// pages/register.js
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { signUp } from 'next-auth/react';
 
-import LoginGoogle from './Login_google.js';
-
-function LoginPage() {
+function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
     try {
       // Validación básica de correo electrónico y contraseña
       if (!email || !password) {
-        setError('Por favor, ingrese correo electrónico y contraseña.');
+        setError('Por favor, complete todos los campos.');
         return;
       }
 
-      // Llamar a la función signIn de next-auth con las credenciales del usuario
-      const result = await signIn('credentials', {
-        redirect: false,
+      // Llamar a la función signUp de next-auth con las credenciales del usuario
+      const result = await signUp('credentials', {
         email,
         password,
       });
 
       if (result.error) {
-        setError('Credenciales inválidas. Por favor, verifique e intente nuevamente.');
+        setError('Hubo un problema al crear la cuenta. Por favor, inténtelo nuevamente.');
       } else {
-        window.location.href = '/home'; // Cambia esto a la ruta que desees
+        window.location.href = '/login'; // Cambia esto a la ruta que desees para la página de inicio de sesión
       }
     } catch (error) {
-      console.error('Error al iniciar sesión:', error);
-      setError('Ocurrió un error al intentar iniciar sesión. Por favor, inténtelo más tarde.');
+      console.error('Error al registrar:', error);
+      setError('Ocurrió un error al intentar registrar la cuenta. Por favor, inténtelo más tarde.');
     }
   };
 
   return (
     <div>
-      <h1>Iniciar Sesión</h1>
+      <h1>Registrar Cuenta</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleRegister}>
+        
         <div>
           <label htmlFor="email">Correo Electrónico</label>
           <input
@@ -62,11 +60,10 @@ function LoginPage() {
             required
           />
         </div>
-        <button type="submit">Iniciar Sesión</button>
+        <button type="submit">Registrar Cuenta</button>
       </form>
-      <LoginGoogle/>
     </div>
   );
 }
 
-export default LoginPage;
+export default RegisterPage;

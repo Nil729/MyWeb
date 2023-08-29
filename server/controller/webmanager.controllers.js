@@ -53,7 +53,7 @@ export const getWebmanager = async (req, res) =>{
 export const postTask= async (req, res)=> {
 
     let task= req.body;
-    let userTask= [task.task, 2]
+    let userTask= [task.task, 2] // 2 es el id del usuari que esta loguejat s'hauria de fer una consulta per agafar el id del usuari que esta loguejat
 
     try {
         //const sqlUpdate = 'INSERT INTO `db_web`.`tasks` (`name_task`, `user_id`) VALUES (?, ?)' 
