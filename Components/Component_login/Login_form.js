@@ -1,13 +1,19 @@
 // pages/login.js
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-
+import { useRouter } from 'next/router';
 import LoginGoogle from './Login_google.js';
 
 function LoginPage() {
+  const router = useRouter();
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  const handleRegisterClick = () => {
+    router.push('/register');
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -63,6 +69,9 @@ function LoginPage() {
           />
         </div>
         <button type="submit">Iniciar Sesión</button>
+        <button type='button' onClick={handleRegisterClick}>
+        Registrate
+      </button>
       </form>
       <LoginGoogle/>
     </div>

@@ -32,6 +32,7 @@ export default function SingupForm(){
                 <input  ref={data_userPSW} type="text" id="userPSW" placeholder='psw'/>
                 
                 <input type="submit" onClick={SingupFormPost}></input>
+ 
             </div>
         </>
     );

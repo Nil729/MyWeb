@@ -7,7 +7,7 @@ function Login_google() {
 
   return (
     <div>
-      <h1>Iniciar Sesión</h1>
+      <h2>Iniciar Sesión</h2>
       <button onClick={handleGoogleSignIn}>Iniciar Sesión con Google</button>
     </div>
   );

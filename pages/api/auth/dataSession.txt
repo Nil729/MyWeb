@@ -1,0 +1,239 @@
+session {
+  session: {
+    user: {
+      name: 'nil 729',
+      email: 'nil.pinyana@gmail.com',
+      image: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c'
+    },
+    expires: '2023-09-29T22:19:39.230Z'
+  },
+  token: {
+    name: 'nil 729',
+    email: 'nil.pinyana@gmail.com',
+    picture: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c',
+    sub: '113183230089237446447',
+    iat: 1693433181,
+    exp: 1696025181,
+    jti: '4c03797a-5192-4133-9e65-e43caf0259ea'
+  }
+} undefined
+session {
+  session: {
+    user: {
+      name: 'nil 729',
+      email: 'nil.pinyana@gmail.com',
+      image: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c'
+    },
+    expires: '2023-09-29T22:19:41.395Z'
+  },
+  token: {
+    name: 'nil 729',
+    email: 'nil.pinyana@gmail.com',
+    picture: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c',
+    sub: '113183230089237446447',
+    iat: 1693433979,
+    exp: 1696025979,
+    jti: '4c83033d-3615-4b9e-a49f-e9e6cffa156c'
+  }
+} undefined
+session {
+  session: {
+    user: {
+      name: 'nil 729',
+      email: 'nil.pinyana@gmail.com',
+      image: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c'
+    },
+    expires: '2023-09-29T22:19:41.413Z'
+  },
+  token: {
+    name: 'nil 729',
+    email: 'nil.pinyana@gmail.com',
+    picture: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c',
+    sub: '113183230089237446447',
+    iat: 1693433979,
+    exp: 1696025979,
+    jti: '4c83033d-3615-4b9e-a49f-e9e6cffa156c'
+  }
+} undefined
+session {
+  session: {
+    user: {
+      name: 'nil 729',
+      email: 'nil.pinyana@gmail.com',
+      image: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c'
+    },
+    expires: '2023-09-29T22:19:48.769Z'
+  },
+  token: {
+    name: 'nil 729',
+    email: 'nil.pinyana@gmail.com',
+    picture: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c',
+    sub: '113183230089237446447',
+    iat: 1693433981,
+    exp: 1696025981,
+    jti: 'c2a5935f-0df3-4481-ab88-728f43a9a489'
+  }
+} undefined
+session {
+  session: {
+    user: {
+      name: 'nil 729',
+      email: 'nil.pinyana@gmail.com',
+      image: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c'
+    },
+    expires: '2023-09-29T22:19:48.792Z'
+  },
+  token: {
+    name: 'nil 729',
+    email: 'nil.pinyana@gmail.com',
+    picture: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c',
+    sub: '113183230089237446447',
+    iat: 1693433981,
+    exp: 1696025981,
+    jti: 'c2a5935f-0df3-4481-ab88-728f43a9a489'
+  }
+} undefined
+signIn {
+  user: {
+    id: '113183230089237446447',
+    name: 'nil 729',
+    email: 'nil.pinyana@gmail.com',
+    image: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c'
+  },
+  account: {
+    provider: 'google',
+    type: 'oauth',
+    providerAccountId: '113183230089237446447',
+    access_token: 'ya29.a0AfB_byBURkBvbTa_fsxBrL3VcBoxE8k3UnUwl4z2otQlvoF9kVE_CjpSUh8Cf_rt5SDvG1Q_YnV2_iRH3E2Gxujwrec28F-FSMn4zQ52yRwsSG6jnJziRfROZzOwhgO-ud-Esd-igG_ACmvs1V6qDLNTdFe1jbvRKeoHBJgaCgYKAdUSARESFQHsvYlsHo0xcpTTDJzHy1rSNfLo-A0174',
+    expires_at: 1693437593,
+    scope: 'openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
+    token_type: 'Bearer',
+    id_token: 'eyJhbGciOiJSUzI1NiIsImtpZCI6ImM3ZTExNDEwNTlhMTliMjE4MjA5YmM1YWY3YTgxYTcyMGUzOWI1MDAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI1NTU3OTE1NTgwNzYtcG8xODZncGdrdjIzczdxY3NvZzE0MnZobTV0N2FrMGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NTU3OTE1NTgwNzYtcG8xODZncGdrdjIzczdxY3NvZzE0MnZobTV0N2FrMGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTMxODMyMzAwODkyMzc0NDY0NDciLCJlbWFpbCI6Im5pbC5waW55YW5hQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiX0NBMjhCUHNlRWp6dWRTS0RMNFdpUSIsIm5hbWUiOiJuaWwgNzI5IiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FBY0hUdGV2LUduMzQxbjJ1WGpyZ0t3S0xSSWVJRW5tdm9yODlDYTRqSkRKTFgtallBPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6Im5pbCIsImZhbWlseV9uYW1lIjoiNzI5IiwibG9jYWxlIjoiY2EiLCJpYXQiOjE2OTM0MzM5OTQsImV4cCI6MTY5MzQzNzU5NH0.ipwar4zYbRlt_hwjFN7-gAn6KiqF8W2aCAkn59S8AAuE5bk_L8Nqwjs7RGDsTh6HrbelQSdIIbZVsTLcV3nCxQJrzQoOOsdn65HbuzioAv-7DauJFVTm0ZbyD_HEV1w6AyfthGK-PCuYXOnFHXxT9Znb_Reoy3fXP5prwZ4RRN2L4Y3mzJWkaDcw8j_8iwTmP4K77RNQJsgEFSNDv8LyuWp3V6AuUMbINKU_YL7ZtgP0jXyhl3ZONHnvrCZvlNk3fw9oVhFpYbU0EGNkcOa7AkGRCSM4EzJQkA8H0f1gRIraSvNacgPE1U0n14eTvAIMTLTZbf6-E_avJbbP6lapEA'
+  },
+  profile: {
+    iss: 'https://accounts.google.com',
+    azp: '555791558076-po186gpgkv23s7qcsog142vhm5t7ak0g.apps.googleusercontent.com',
+    aud: '555791558076-po186gpgkv23s7qcsog142vhm5t7ak0g.apps.googleusercontent.com',
+    sub: '113183230089237446447',
+    email: 'nil.pinyana@gmail.com',
+    email_verified: true,
+    at_hash: '_CA28BPseEjzudSKDL4WiQ',
+    name: 'nil 729',
+    picture: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c',
+    given_name: 'nil',
+    family_name: '729',
+    locale: 'ca',
+    iat: 1693433994,
+    exp: 1693437594
+  }
+} undefined undefined
+session {
+  session: {
+    user: {
+      name: 'nil 729',
+      email: 'nil.pinyana@gmail.com',
+      image: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c'
+    },
+    expires: '2023-09-29T22:19:55.291Z'
+  },
+  token: {
+    name: 'nil 729',
+    email: 'nil.pinyana@gmail.com',
+    picture: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c',
+    sub: '113183230089237446447',
+    iat: 1693433994,
+    exp: 1696025994,
+    jti: '80afc133-146e-4e50-93e8-cc2ea2c31a24'
+  }
+} undefined
+session {
+  session: {
+    user: {
+      name: 'nil 729',
+      email: 'nil.pinyana@gmail.com',
+      image: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c'
+    },
+    expires: '2023-09-29T22:19:55.306Z'
+  },
+  token: {
+    name: 'nil 729',
+    email: 'nil.pinyana@gmail.com',
+    picture: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c',
+    sub: '113183230089237446447',
+    iat: 1693433994,
+    exp: 1696025994,
+    jti: '80afc133-146e-4e50-93e8-cc2ea2c31a24'
+  }
+} undefined
+signIn {
+  user: {
+    id: '113183230089237446447',
+    name: 'nil 729',
+    email: 'nil.pinyana@gmail.com',
+    image: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c'
+  },
+  account: {
+    provider: 'google',
+    type: 'oauth',
+    providerAccountId: '113183230089237446447',
+    access_token: 'ya29.a0AfB_byBsqx7IKPG2NHT27klpWoaWjeNBR915eRO69wBYTaV5tTfOafV8q1tQFia05UWvrA5CMaPxXVahzNz2fSGHmGB97sV766TBbrTmkYTXoSPFio484gzY8ZWgupiRWpXeecWuZEyIuVFLgn29MHKtOByrCoFm0MsMb5QaCgYKAWQSARESFQHsvYlsj-EoOkc7xsCr33rzOmqBCw0174',
+    expires_at: 1693437676,
+    scope: 'https://www.googleapis.com/auth/userinfo.profile openid https://www.googleapis.com/auth/userinfo.email',
+    token_type: 'Bearer',
+    id_token: 'eyJhbGciOiJSUzI1NiIsImtpZCI6ImM3ZTExNDEwNTlhMTliMjE4MjA5YmM1YWY3YTgxYTcyMGUzOWI1MDAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI1NTU3OTE1NTgwNzYtcG8xODZncGdrdjIzczdxY3NvZzE0MnZobTV0N2FrMGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NTU3OTE1NTgwNzYtcG8xODZncGdrdjIzczdxY3NvZzE0MnZobTV0N2FrMGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTMxODMyMzAwODkyMzc0NDY0NDciLCJlbWFpbCI6Im5pbC5waW55YW5hQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiU25FaEJEN3FjMGhQcmotcXNDcWVKUSIsIm5hbWUiOiJuaWwgNzI5IiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FBY0hUdGV2LUduMzQxbjJ1WGpyZ0t3S0xSSWVJRW5tdm9yODlDYTRqSkRKTFgtallBPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6Im5pbCIsImZhbWlseV9uYW1lIjoiNzI5IiwibG9jYWxlIjoiY2EiLCJpYXQiOjE2OTM0MzQwNzcsImV4cCI6MTY5MzQzNzY3N30.FCqVzFpUcM5NAp-3Izv0YJVzlhwJ4cooD35b96RKLT5Y1L86tlQcK6kU7-na_SY8JwhQQ6XTgxYjNnv1TUjrz-MZdIx551l7triRV67XfDtyvlXN5-gMnuvoQ0_QdSF9UDP7NoIh13Vyyw2O0QS1EBLwxFhV0UkF7KjYmAFC23eK1vf_tnkeEh0RlmIfOQGSkMTJIW3DNpzgF38w4ClWxdIhqfkMHjSpz92OC8DgZa9gUkJN_MUyrIomtjCZIGGy4ZOkQ06mwOdQXA-FStzW36F7lv6evHvh_Aex8jbNXBuHOl_PFo3rvouBjshNZDsFeI5LMJOIgJX0YMIsuefx9Q'
+  },
+  profile: {
+    iss: 'https://accounts.google.com',
+    azp: '555791558076-po186gpgkv23s7qcsog142vhm5t7ak0g.apps.googleusercontent.com',
+    aud: '555791558076-po186gpgkv23s7qcsog142vhm5t7ak0g.apps.googleusercontent.com',
+    sub: '113183230089237446447',
+    email: 'nil.pinyana@gmail.com',
+    email_verified: true,
+    at_hash: 'SnEhBD7qc0hPrj-qsCqeJQ',
+    name: 'nil 729',
+    picture: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c',
+    given_name: 'nil',
+    family_name: '729',
+    locale: 'ca',
+    iat: 1693434077,
+    exp: 1693437677
+  }
+} undefined undefined
+session {
+  session: {
+    user: {
+      name: 'nil 729',
+      email: 'nil.pinyana@gmail.com',
+      image: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c'
+    },
+    expires: '2023-09-29T22:21:18.498Z'
+  },
+  token: {
+    name: 'nil 729',
+    email: 'nil.pinyana@gmail.com',
+    picture: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c',
+    sub: '113183230089237446447',
+    iat: 1693434077,
+    exp: 1696026077,
+    jti: '4f4ae582-c994-458a-80f3-de0f6f2539cc'
+  }
+} undefined
+session {
+  session: {
+    user: {
+      name: 'nil 729',
+      email: 'nil.pinyana@gmail.com',
+      image: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c'
+    },
+    expires: '2023-09-29T22:21:18.525Z'
+  },
+  token: {
+    name: 'nil 729',
+    email: 'nil.pinyana@gmail.com',
+    picture: 'https://lh3.googleusercontent.com/a/AAcHTtev-Gn341n2uXjrgKwKLRIeIEnmvor89Ca4jJDJLX-jYA=s96-c',
+    sub: '113183230089237446447',
+    iat: 1693434077,
+    exp: 1696026077,
+    jti: '4f4ae582-c994-458a-80f3-de0f6f2539cc'
+  }
+} undefined

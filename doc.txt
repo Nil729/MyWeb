@@ -1,0 +1,10 @@
+
+Engegar MyWeb:
+
+/data/MyWeb# npm run dev
+
+
+
+Engegar WebManager (server):
+
+/data/WebManager/server# node index.js
