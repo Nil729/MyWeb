@@ -2,18 +2,6 @@
 --
 -- Host: 127.0.0.1    Database: bbdd_NetDoc
 -- ------------------------------------------------------
--- Server version	8.0.33-0ubuntu0.22.04.2
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
 -- Table structure for table `Coneccio`
@@ -37,7 +25,7 @@ CREATE TABLE `Coneccio` (
   CONSTRAINT `Coneccio_ibfk_3` FOREIGN KEY (`IdPortInfra_fk`) REFERENCES `PortsInfra` (`IdPortInfra`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Coneccio_ibfk_4` FOREIGN KEY (`IdPortFinal_fk`) REFERENCES `PortsFinal` (`IdPortFinal`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Coneccio_ibfk_5` FOREIGN KEY (`IdPortInfra_fk`) REFERENCES `PortsInfra` (`IdPortInfra`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,7 +45,7 @@ CREATE TABLE `ConexioTrunk` (
   KEY `IdPortInfraChild_fk` (`IdPortInfraChild_fk`),
   CONSTRAINT `ConexioTrunk_ibfk_2` FOREIGN KEY (`IdPortInfraParent_fk`) REFERENCES `PortsInfra` (`IdPortInfra`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ConexioTrunk_ibfk_3` FOREIGN KEY (`IdPortInfraChild_fk`) REFERENCES `PortsInfra` (`IdPortInfra`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,7 +74,7 @@ CREATE TABLE `Dispositius` (
   CONSTRAINT `Dispositius_ibfk_3` FOREIGN KEY (`Id_vlan`) REFERENCES `Xarxa` (`Id_vlan`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Dispositius_ibfk_4` FOREIGN KEY (`zona_id`) REFERENCES `Zona` (`Id_zona`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Dispositius_ibfk_5` FOREIGN KEY (`Id_vlan`) REFERENCES `Xarxa` (`Id_vlan`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -164,7 +152,7 @@ CREATE TABLE `Dispositus_final` (
   PRIMARY KEY (`id_disposituFinal`),
   KEY `id_dispositiu_fk` (`id_dispositiu_fk`),
   CONSTRAINT `Dispositus_final_ibfk_1` FOREIGN KEY (`id_dispositiu_fk`) REFERENCES `Dispositius` (`id_dispositiu`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,46 +162,19 @@ CREATE TABLE `Dispositus_final` (
 DROP TABLE IF EXISTS `Estat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-
 CREATE TABLE `Estat` (
-  `IdPortInfra_fk` int DEFAULT NULL,
   `Id_vlan_fk` int DEFAULT NULL,
   `VlanConfig` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `Connectat` tinyint(1) DEFAULT NULL,
-  UNIQUE KEY `IdPortInfra_fk` (`IdPortInfra_fk`),
+  `IdEstat` int NOT NULL AUTO_INCREMENT,
+  `IdPortInfra_fk` int NOT NULL,
+  PRIMARY KEY (`IdEstat`),
   KEY `Id_vlan_fk` (`Id_vlan_fk`),
-  CONSTRAINT `Estat_ibfk_2` FOREIGN KEY (`IdPortInfra_fk`) REFERENCES `PortsInfra` (`IdPortInfra`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `Estat_ibfk_2_new` (`IdPortInfra_fk`),
+  CONSTRAINT `Estat_ibfk_2_new` FOREIGN KEY (`IdPortInfra_fk`) REFERENCES `PortsInfra` (`IdPortInfra`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Estat_ibfk_3` FOREIGN KEY (`Id_vlan_fk`) REFERENCES `Xarxa` (`Id_vlan`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-ALTER TABLE `Estat`
-DROP FOREIGN KEY `Estat_ibfk_2`;
-
-ALTER TABLE `Estat`
-ADD COLUMN `New_IdPortInfra_fk` int,
-ADD CONSTRAINT `Estat_ibfk_2_new` FOREIGN KEY (`New_IdPortInfra_fk`) REFERENCES `PortsInfra` (`IdPortInfra`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-UPDATE `Estat`
-SET `New_IdPortInfra_fk` = `IdPortInfra_fk`;
-
-ALTER TABLE `Estat`
-DROP COLUMN `IdPortInfra_fk`;
-
-ALTER TABLE `Estat`
-CHANGE COLUMN `New_IdPortInfra_fk` `IdPortInfra_fk` int NOT NULL;
-
-
-ALTER TABLE `PortsInfra`
-DROP FOREIGN KEY `PortsInfra_ibfk_3`,
-DROP FOREIGN KEY `PortsInfra_ibfk_4`,
-DROP FOREIGN KEY `PortsInfra_ibfk_6`,
-DROP FOREIGN KEY `PortsInfra_ibfk_7`,
-ADD UNIQUE KEY `IdPortInfra_UNIQUE` (`IdPortInfra`);
-
-
-
-
 
 --
 -- Table structure for table `PortsFinal`
@@ -229,7 +190,7 @@ CREATE TABLE `PortsFinal` (
   `id_disposituFinal_fk` int DEFAULT NULL,
   PRIMARY KEY (`IdPortFinal`),
   KEY `id_disposituFinal_fk` (`id_disposituFinal_fk`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -247,12 +208,9 @@ CREATE TABLE `PortsInfra` (
   `numPortInfra` int DEFAULT NULL,
   `pachpanelInfra` int DEFAULT NULL,
   PRIMARY KEY (`IdPortInfra`),
-  KEY `id_dispositiuInfra_fk` (`id_dispositiuInfra_fk`),
-  CONSTRAINT `PortsInfra_ibfk_3` FOREIGN KEY (`id_dispositiuInfra_fk`) REFERENCES `Dispositius_infraestructura` (`id_dispositiuInfra`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PortsInfra_ibfk_4` FOREIGN KEY (`id_dispositiuInfra_fk`) REFERENCES `Dispositius_infraestructura` (`id_dispositiuInfra`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PortsInfra_ibfk_6` FOREIGN KEY (`id_dispositiuInfra_fk`) REFERENCES `Dispositius_infraestructura` (`id_dispositiuInfra`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PortsInfra_ibfk_7` FOREIGN KEY (`id_dispositiuInfra_fk`) REFERENCES `Dispositius_infraestructura` (`id_dispositiuInfra`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=168 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `IdPortInfra_UNIQUE` (`IdPortInfra`),
+  KEY `id_dispositiuInfra_fk` (`id_dispositiuInfra_fk`)
+) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +226,7 @@ CREATE TABLE `Xarxa` (
   `DescXarxa` text,
   PRIMARY KEY (`Id_vlan`),
   UNIQUE KEY `NomXarxa` (`NomXarxa`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -285,19 +243,3 @@ CREATE TABLE `Zona` (
   PRIMARY KEY (`Id_zona`),
   UNIQUE KEY `NomZona` (`NomZona`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping routines for database 'bbdd_NetDoc'
---
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2023-08-16 20:26:32

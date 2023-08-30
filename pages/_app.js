@@ -10,8 +10,14 @@ import '../styles/styles_netdoc/dispositiusTaula.css';
 import '../styles/styles_netdoc/xarxa.css';
 import '../styles/styles_netdoc/xarxaTaula.css';
 import '../styles/styles_netdoc/connexionsTaula.css';
+import { SessionProvider } from 'next-auth/react';
+
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <SessionProvider session={pageProps.session}>
+      <Component {...pageProps} />
+    </SessionProvider>
+  );
 }
 
 export default MyApp

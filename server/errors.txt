@@ -1,5 +1,0 @@
-  
-Aixó passa quan es crea la tasca i s'elimina sense que hagui actualizat la páguina
-  
-  sqlMessage: "Truncated incorrect DOUBLE value: '7be3cc3d-db50-4ba6-a146-8f02e0805e99'",
-  sql: "DELETE FROM tasks WHERE (id_task = '7be3cc3d-db50-4ba6-a146-8f02e0805e99' )"
