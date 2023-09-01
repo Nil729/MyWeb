@@ -1,3 +1,4 @@
+-- Active: 1687107432916@@127.0.0.1@3306@bbdd_NetDoc
 -- MySQL dump 10.13  Distrib 8.0.33, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: bbdd_NetDoc
@@ -7,6 +8,14 @@
 -- Table structure for table `Coneccio`
 --
 
+CREATE TABLE users (
+  idUser INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nameUser VARCHAR(255) NOT NULL,
+  emailUser VARCHAR(255) NOT NULL UNIQUE,
+  imagePorfileUser VARCHAR(255) NOT NULL,
+  provider_Auth VARCHAR(255) NOT NULL,
+  provider_id VARCHAR(255) NOT NULL
+);
 DROP TABLE IF EXISTS `Coneccio`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -27,6 +36,9 @@ CREATE TABLE `Coneccio` (
   CONSTRAINT `Coneccio_ibfk_5` FOREIGN KEY (`IdPortInfra_fk`) REFERENCES `PortsInfra` (`IdPortInfra`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+
+
 
 --
 -- Table structure for table `ConexioTrunk`
@@ -56,6 +68,7 @@ DROP TABLE IF EXISTS `Dispositius`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Dispositius` (
+   `IdUsuario_fk` int DEFAULT NULL,
   `id_dispositiu` int NOT NULL AUTO_INCREMENT,
   `ip` varchar(15) DEFAULT NULL,
   `NomDispositiu` varchar(25) DEFAULT NULL,
@@ -74,16 +87,18 @@ CREATE TABLE `Dispositius` (
   CONSTRAINT `Dispositius_ibfk_3` FOREIGN KEY (`Id_vlan`) REFERENCES `Xarxa` (`Id_vlan`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Dispositius_ibfk_4` FOREIGN KEY (`zona_id`) REFERENCES `Zona` (`Id_zona`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Dispositius_ibfk_5` FOREIGN KEY (`Id_vlan`) REFERENCES `Xarxa` (`Id_vlan`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `Dispositius_ibfk_6` FOREIGN KEY (`idUser_fk`) REFERENCES `users` (`idUser`) ON DELETE SET NULL ON UPDATE CASCADE;
 ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'IGNORE_SPACE,ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+
+
+ALTER TABLE `Dispositius` CHANGE `IdUsuario_fk` `idUser_fk` int DEFAULT NULL;
+ALTER TABLE `Dispositius` ADD CONSTRAINT `Dispositius_ibfk_6` FOREIGN KEY (`idUser_fk`) REFERENCES `users` (`idUser`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+
+
+
+
+
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_dispositiuType` AFTER INSERT ON `Dispositius` FOR EACH ROW BEGIN
     IF NEW.deviceType = 'infra' THEN
@@ -93,18 +108,8 @@ DELIMITER ;;
     END IF;
 END */;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'IGNORE_SPACE,ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+
+ 
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_dispositiuType` AFTER UPDATE ON `Dispositius` FOR EACH ROW BEGIN
     IF NEW.deviceType <> OLD.deviceType THEN
@@ -118,10 +123,6 @@ DELIMITER ;;
     END IF;
 END */;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `Dispositius_infraestructura`

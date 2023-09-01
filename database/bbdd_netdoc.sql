@@ -744,3 +744,6 @@ SELECT IdPortInfraParent_fk FROM ConexioTrunk WHERE IdPortInfraChild_fk in
         JOIN Dispositius_infraestructura 
         ON id_dispositiuInfra = id_dispositiuInfra_fk
         WHERE id_dispositiu_fk = 41);
+
+
+SELECT idUser FROM users WHERE emailUser = 'nil.pinyana@gmail.com'
