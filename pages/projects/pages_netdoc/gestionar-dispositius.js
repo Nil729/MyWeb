@@ -9,8 +9,9 @@ import Image from "next/legacy/image";
 import styles from '../../../styles/Home.module.css';
 import Navbar from '../../../Components/component_navbar/Navbar';
 import DispositiusForm from '../../../Components/ComponentNetDoc/componentsDispositius/DispositiuForm';
+import IsAuth from '../../../Components/IsAuth';
 
-export default function GestionarDispositius() {
+function GestionarDispositius() {
 
     return (
       <div className={styles.container}>
@@ -39,3 +40,5 @@ export default function GestionarDispositius() {
 
     );
 };
+
+export default IsAuth(GestionarDispositius);

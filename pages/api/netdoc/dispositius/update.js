@@ -9,14 +9,14 @@ export default async function updateDispositiu(req, res) {
         const { NomDispositiu, deviceType, ip, mac, quantitatPortsEth, zona_id, Id_vlan, id_dispositiu } = req.body;
 
         const resultsZona = await getIdZona(zona_id);
-        const resultsXarxa = await getIdXarxa(Id_vlan);
+        //const resultsXarxa = await getIdXarxa(Id_vlan);
         
         console.log("id_dispositiu: " + id_dispositiu + "Nom dipositiu" + NomDispositiu + "deviceType: " + deviceType + "ip: " + ip + "mac: " + mac + "quantitatPortsEth: " + quantitatPortsEth + "zona_id: " + zona_id + "Id_vlan: " + Id_vlan);
 
         await new Promise((resolve, reject) => {
             pool.query(
                 'UPDATE Dispositius SET NomDispositiu = ?, deviceType = ?, ip = ?, mac = ?, zona_id = ?, Id_vlan = ?, quantitatPortsEth = ?, descripcio_dispositiu = ? WHERE id_dispositiu = ?',
-                [NomDispositiu, deviceType, ip, mac, resultsZona, resultsXarxa, quantitatPortsEth, "test", id_dispositiu],
+                [NomDispositiu, deviceType, ip, mac, resultsZona, 1, quantitatPortsEth, "test", id_dispositiu],
                 (error, results) => {
                     if (error) {
                         reject(error);

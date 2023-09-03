@@ -49,26 +49,6 @@ export default NextAuth({
             }
         },
 
-        /*
-        async login(user, account, profile) {
-            try {
-                const query = 'SELECT idUser FROM users WHERE emailUser = ?';
-                pool.query(query, [user.email], (err, [rows]) => {
-                    if (err) {
-                        console.log('error: ', err);
-                        return false;
-                    }
-                    console.log('rows: ', rows);
-                    if (rows.length > 0) {
-                        return true;
-                    }
-                });
-            } catch (error) {
-                console.log('error: ', error);
-                return false;
-            }
-        }
-        */
     },
     pages: {
         signIn: '/auth/signin',
@@ -77,8 +57,7 @@ export default NextAuth({
         verifyRequest: '/auth/verify-request', // (used for check email message)
         newUser: null // If set, new users will be directed here on first sign in
     },
-    // Configure custom page paths here if needed
-    // Other configuration options
+
 });
 
 

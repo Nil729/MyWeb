@@ -11,8 +11,9 @@ import Image from "next/legacy/image";
 import styles from '../../../styles/Home.module.css';
 import Navbar from '../../../Components/component_navbar/Navbar';
 import XarxaForm from '../../../Components/ComponentNetDoc/componentsXarxa/XarxaForm';
+import IsAuth from '../../../Components/IsAuth';
 
-export default function GestionarXarxa() {
+function GestionarXarxa() {
 
     return (
 
@@ -41,6 +42,8 @@ export default function GestionarXarxa() {
       </div>
     );
 };
+
+export default IsAuth(GestionarXarxa);
 
 
 

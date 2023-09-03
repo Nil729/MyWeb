@@ -12,7 +12,6 @@ const TaulaDispositus = ({ dispositius, onEdit, onDelete, deviceType }) => {
     mac: "",
     quantitatPortsEth: "",
     zona_id: "",
-    Id_vlan: "",
   });
 
   const handleFilterChange = (column, value) => {
@@ -29,8 +28,7 @@ const TaulaDispositus = ({ dispositius, onEdit, onDelete, deviceType }) => {
       dispositiu.ip && dispositiu.ip.includes(filters.ip) &&
       dispositiu.mac && dispositiu.mac.includes(filters.mac) &&
       dispositiu.quantitatPortsEth && dispositiu.quantitatPortsEth.includes(filters.quantitatPortsEth) &&
-      dispositiu.zona_id && dispositiu.zona_id.includes(filters.zona_id) &&
-      dispositiu.Id_vlan && dispositiu.Id_vlan.includes(filters.Id_vlan)
+      dispositiu.zona_id && dispositiu.zona_id.includes(filters.zona_id)
     );
   });
 
@@ -127,16 +125,7 @@ const TaulaDispositus = ({ dispositius, onEdit, onDelete, deviceType }) => {
                 />
               </div>
             </th>
-            <th>VLAN
-              <div>
-                <input
-                  type="text"
-                  value={filters.Id_vlan}
-                  onChange={e => handleFilterChange("Id_vlan", e.target.value)}
-                  placeholder="Filter by VLAN"
-                />
-              </div>
-            </th>
+
           </tr>
         </thead>
         <tbody>
@@ -154,7 +143,6 @@ const TaulaDispositus = ({ dispositius, onEdit, onDelete, deviceType }) => {
                 <td>{dispositiu.mac}</td>
                 <td>{dispositiu.quantitatPortsEth}</td>
                 <td>{dispositiu.zona_id}</td>
-                <td>{dispositiu.Id_vlan}</td>
                 <td>
                   <button onClick={() => handledeviceEdit(index)}>Editar</button>
                 </td>

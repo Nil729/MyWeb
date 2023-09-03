@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
+import { useSession, SessionProvider } from 'next-auth/react';
+
 import TaulaDispositus from './TaulaDispositus';
 import UbicacioComboBox from '../componetnsUbicacio/UbicacioComboBox';
 import XarxaComboBox from '../componentsXarxa/XarxaComboBox';
 
 const DeviceManagementForm = () => {
+  const { data: session, status } = useSession();  
 
   const [deviceType, setDeviceType] = useState("final");
   const [dispositius, setDispositius] = useState([
@@ -26,7 +29,6 @@ const DeviceManagementForm = () => {
     mac: '',
     ethernetPorts: '',
     location: '',
-    vlan: '',
   });
 
   // Fetch the ubicacio data on component mount
@@ -66,13 +68,14 @@ const DeviceManagementForm = () => {
 
     // Create a new device object with the form values
     const newDevice = {
+      idUser: session.user.id,
       deviceType: deviceType,
       NomDispositiu: formValues.deviceName,
       ip: formValues.ip,
       mac: formValues.mac,
       quantitatPortsEth: formValues.ethernetPorts || '',
       zona_id: formValues.location,
-      Id_vlan: formValues.vlan,
+      //Id_vlan: formValues.vlan,
     };
 
 
@@ -105,8 +108,6 @@ const DeviceManagementForm = () => {
       mac: '',
       ethernetPorts: '',
       location: '',
-      vlan: '',
-
     });
 
   };
@@ -137,7 +138,6 @@ const DeviceManagementForm = () => {
       mac: '',
       ethernetPorts: '',
       location: '',
-      vlan: '',
     });
   };
 
@@ -154,7 +154,6 @@ const DeviceManagementForm = () => {
         mac: selectedDevice.mac,
         ethernetPorts: selectedDevice.quantitatPortsEth,
         location: selectedDevice.zona_id,
-        vlan: selectedDevice.Id_vlan,
       });
       setselectedRowForm(index);
     }
@@ -176,7 +175,6 @@ const DeviceManagementForm = () => {
         mac: formValues.mac,
         quantitatPortsEth: formValues.ethernetPorts,
         zona_id: formValues.location,
-        Id_vlan: formValues.vlan,
       };
 
       setDispositius(updatedDispositius);
@@ -195,7 +193,6 @@ const DeviceManagementForm = () => {
         mac: '',
         ethernetPorts: '',
         location: '',
-        vlan: '',
       });
 
     }
@@ -250,7 +247,7 @@ const DeviceManagementForm = () => {
 
           <UbicacioComboBox value={formValues.location} onChange={handleChange} />
 
-          <XarxaComboBox vlan={formValues.vlan} onChange={handleChange} />
+          {/* <XarxaComboBox vlan={formValues.vlan} onChange={handleChange} /> */}
 
           <div className="form-buttons">
 

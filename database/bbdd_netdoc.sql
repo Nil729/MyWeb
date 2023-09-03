@@ -1,6 +1,15 @@
 -- Active: 1687107432916@@127.0.0.1@3306@bbdd_NetDoc
 
 CREATE DATABASE bbdd_NetDoc;
+CREATE TABLE users (
+  idUser INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nameUser VARCHAR(255) NOT NULL,
+  emailUser VARCHAR(255) NOT NULL UNIQUE,
+  imagePorfileUser VARCHAR(255) NOT NULL,
+  provider_Auth VARCHAR(255) NOT NULL,
+  provider_id VARCHAR(255) NOT NULL
+);
+
 
 CREATE TABLE Dispositius (
     id_dispositiu INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -13,7 +22,9 @@ CREATE TABLE Dispositius (
     descripcio_dispositiu TEXT,
     deviceType TEXT,
     FOREIGN KEY(zona_id) REFERENCES Zona(Id_zona) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY(Id_vlan) REFERENCES Xarxa(Id_vlan)ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY(Id_vlan) REFERENCES Xarxa(Id_vlan)ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT `Dispositius_ibfk_6` FOREIGN KEY (`idUser_fk`) REFERENCES `users` (`idUser`) ON DELETE SET NULL ON UPDATE CASCADE;
+
 );
 
 

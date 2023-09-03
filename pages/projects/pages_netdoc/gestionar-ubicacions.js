@@ -11,9 +11,9 @@ import Image from "next/legacy/image";
 import styles from '../../../styles/Home.module.css';
 import Navbar from '../../../Components/component_navbar/Navbar';
 import UbicacioForm from '../../../Components/ComponentNetDoc/componetnsUbicacio/UbicacioForm';
+import IsAuth from '../../../Components/IsAuth';
 
-
-export default function GestionarUbicacions() {
+function GestionarUbicacions() {
 
     return (
 
@@ -42,3 +42,6 @@ export default function GestionarUbicacions() {
       </div>
     );
 };
+
+export default IsAuth(GestionarUbicacions);
+
