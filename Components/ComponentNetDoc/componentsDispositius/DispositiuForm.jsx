@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 
 import { useSession, SessionProvider } from 'next-auth/react';
-
+import isAuth from '../../IsAuth'
 import TaulaDispositus from './TaulaDispositus';
 import UbicacioComboBox from '../componetnsUbicacio/UbicacioComboBox';
 import XarxaComboBox from '../componentsXarxa/XarxaComboBox';
@@ -39,7 +39,7 @@ const DeviceManagementForm = () => {
   const fetchDispositiusData = async () => {
     try {
       // Fetch ubicacio data from the API
-      const response = await axios.get('http://localhost:3002/api/netdoc/dispositius/get');
+      const response = await axios.get(`http://localhost:3002/api/netdoc/dispositius/get`);
       // Set ubicacio data state
       console.log('response', response.data);
 
@@ -68,7 +68,7 @@ const DeviceManagementForm = () => {
 
     // Create a new device object with the form values
     const newDevice = {
-      idUser: session.user.id,
+
       deviceType: deviceType,
       NomDispositiu: formValues.deviceName,
       ip: formValues.ip,
@@ -202,13 +202,11 @@ const DeviceManagementForm = () => {
     <div className="network-form-container">
       <div className='network-form'>
 
-
         <div className="title-form">
           <h2>Gestionar Dispositius</h2>
         </div>
+
         <form className="device-form" onSubmit={(e) => e.preventDefault()}>
-
-
 
           <div>
             <button
@@ -273,4 +271,4 @@ const DeviceManagementForm = () => {
   );
 };
 
-export default DeviceManagementForm;
+export default isAuth(DeviceManagementForm);

@@ -28,7 +28,7 @@ const UbicacionsTable = ({ ubicacio, onEditUbicacio, onDeleteUbicacio }) => {
       <table>
         <thead>
           <tr>
-            <th>Nom de la Xarxa</th>
+            <th>Nom de la Ubicació</th>
             <th>Descripció</th>
           </tr>
         </thead>

@@ -5,7 +5,7 @@ import pool from '../../../../database/db.connection.js'
 
 export default async function insertDispositiu(req, res) {
   try {
-    const {idUser, NomDispositiu, deviceType, ip, mac, quantitatPortsEth, zona_id} = req.body;
+    const { NomDispositiu, deviceType, ip, mac, quantitatPortsEth, zona_id} = req.body;
 
 
     const resultsZona = await getIdZona(zona_id);
@@ -15,8 +15,8 @@ export default async function insertDispositiu(req, res) {
     
     // Insert the new device into the "Dispositius" table
     pool.query(
-      'INSERT INTO Dispositius (  NomDispositiu, deviceType, ip, mac, zona_id, Id_vlan, quantitatPortsEth, descripcio_dispositiu, idUser_fk) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [NomDispositiu, deviceType, ip, mac, resultsZona, 1, quantitatPortsEth, "test", idUser],
+      'INSERT INTO Dispositius (  NomDispositiu, deviceType, ip, mac, zona_id, Id_vlan, quantitatPortsEth, descripcio_dispositiu) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)',
+      [NomDispositiu, deviceType, ip, mac, resultsZona, 1, quantitatPortsEth, "test"],
       (error, results) => {
         if (error) {
           res.status(500).json({ message: 'Error inserting new record', error });

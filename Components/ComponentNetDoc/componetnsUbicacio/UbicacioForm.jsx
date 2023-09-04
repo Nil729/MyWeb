@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
 import TaulaUbicacions from './TaulaUbicacions';
+import { useSession, SessionProvider } from 'next-auth/react';
 
 
 const UbicacioForm = () => {
+
+    const { data: session, status } = useSession();
+
     const [ubicacioData, setUbicacioData] = useState([]);
 
     const [selectedRowUbicacioForm, setselectedRowUbiacioForm] = useState(null);
@@ -44,6 +47,7 @@ const UbicacioForm = () => {
         event.preventDefault();
 
         const novaUbicacio = {
+            sessionUser: session.user.id,
             ubicacioName: formvaluesUbicacio.ubicacioName,
             descriptionUbicacio: formvaluesUbicacio.descriptionUbicacio,
         };
@@ -150,7 +154,7 @@ const UbicacioForm = () => {
                 <form onSubmit={handleSubmit}>
 
                     <div className="form-group">
-                        <label htmlFor="ubicacioName">Nom de la Xarxa:</label>
+                        <label htmlFor="ubicacioName">Nom de la Ubicació:</label>
                         <input
                             type="text"
                             id="ubicacioName"

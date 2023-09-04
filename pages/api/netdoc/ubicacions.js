@@ -2,32 +2,38 @@
 // Import the dependency
 
 import pool from "../../../database/db.connection.js";
+import { getSession } from 'next-auth/react';
+
 //http://localhost:3002/api/netdoc/ubicacions
 
 // Ejemplo de una lista de ubicaciones
 
-export default function handlerNovaUbicacio(req, res) {
+export default async function handlerNovaUbicacio(req, res) {
+
+    // Get the session
     const { method, query: { ubicacioId } } = req;
+
     if (req.method === 'POST') {
         // Process a POST request
-        const { ubicacioName, descriptionUbicacio } = req.body;
+        const { ubicacioName, descriptionUbicacio, sessionUser } = req.body;
 
         // Create a new location object
         const novaUbicacio = {
+            sessionUser,
             ubicacioName,
             descriptionUbicacio,
         };
 
         // Insert the new location into the database
-         pool.query(
-            'INSERT INTO Zona (NomZona, DescZona) VALUES (?, ?)',[novaUbicacio.ubicacioName, novaUbicacio.descriptionUbicacio],
+        pool.query(
+            'INSERT INTO Zona (NomZona, DescZona, idUser_fk) VALUES (?, ?, ?)', [novaUbicacio.ubicacioName, novaUbicacio.descriptionUbicacio, novaUbicacio.sessionUser],
             (error, results) => {
                 if (error) {
                     console.error(error);
                     res.status(500).json({ error: 'Error inserting location into database' });
                 } else {
                     novaUbicacio.id = results.insertId;
-                    res.status(201).json(novaUbicacio);
+                    res.status(200).json(novaUbicacio);
                 }
 
             }
@@ -35,17 +41,31 @@ export default function handlerNovaUbicacio(req, res) {
 
     } else if (req.method === 'GET') {
 
+        const session = await getSession({ req });
+
+        if (!session) {
+          res.status(401).json({ message: 'Unauthorized' });
+          return;
+        }
+        console.log(session.user.id);
         // Process a GET request
-        pool.query('SELECT  Id_zona as idUbicacio, NomZona AS ubicacioName, DescZona AS descriptionUbicacio FROM Zona', (error, results, feilds) => {
-            if (error) {
-                console.error(error);
-                res.status(500).json({ error: 'Error retrieving locations from database' });
-            } else {
-                res.status(200).json(results);
-            }
-            // Disconnect from the 
-            //pool.end();
-        });
+        pool.query(`
+            SELECT  
+                Id_zona as idUbicacio, 
+                NomZona AS ubicacioName, 
+                DescZona AS descriptionUbicacio 
+            FROM Zona 
+                WHERE idUser_fk = ?`,
+            [session.user.id], (error, results, feilds) => {
+                if (error) {
+                    console.error(error);
+                    res.status(500).json({ error: 'Error retrieving locations from database' });
+                } else {
+                    res.status(200).json(results);
+                }
+                // Disconnect from the 
+                //pool.end();
+            });
 
     } else if (req.method === 'PUT') {
         // Process a PUT request
@@ -53,9 +73,9 @@ export default function handlerNovaUbicacio(req, res) {
 
         // Create a new location object
         const novaUbicacio = {
-        id,
-        ubicacioName,
-        descriptionUbicacio,
+            id,
+            ubicacioName,
+            descriptionUbicacio,
         };
 
         // Update the location in the database

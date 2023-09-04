@@ -96,6 +96,12 @@ ALTER TABLE `Dispositius` ADD CONSTRAINT `Dispositius_ibfk_6` FOREIGN KEY (`idUs
 
 
 
+-- Modifica la taula Dispositius per eliminar la CONSTRAINT `Dispositius_ibfk_6` FOREIGN KEY (`idUser_fk`) REFERENCES `users` (`idUser`) ON DELETE SET NULL ON UPDATE CASCADE;
+-- elimina la columna idUser_fk
+
+ALTER TABLE `Dispositius` DROP FOREIGN KEY `Dispositius_ibfk_6`;
+ALTER TABLE `Dispositius` DROP COLUMN `idUser_fk`;
+
 
 
 
@@ -244,3 +250,7 @@ CREATE TABLE `Zona` (
   PRIMARY KEY (`Id_zona`),
   UNIQUE KEY `NomZona` (`NomZona`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- mofica la tabla Zona perque estigui relacionada amb users afaguint una nova columna idUser_fk
+ALTER TABLE `Zona` ADD `idUser_fk` INT NULL AFTER `DescZona`;

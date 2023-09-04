@@ -758,3 +758,52 @@ SELECT IdPortInfraParent_fk FROM ConexioTrunk WHERE IdPortInfraChild_fk in
 
 
 SELECT idUser FROM users WHERE emailUser = 'nil.pinyana@gmail.com'
+
+
+SELECT Id_zona FROM Zona WHERE NomZona = ?
+
+SELECT 
+    Id_vlan, 
+    NomXarxa, 
+    DescXarxa  
+FROM 
+    Xarxa
+WHERE 
+    Id_vlan IN (
+        SELECT 
+            Id_vlan_fk 
+        FROM 
+            Estat 
+        WHERE 
+            IdPortInfra_fk IN (
+                SELECT 
+                    IdPortInfra 
+                FROM 
+                    PortsInfra  
+                    JOIN Dispositius_infraestructura 
+                    ON id_dispositiuInfra = id_dispositiuInfra_fk 
+                WHERE 
+                    id_dispositiu_fk IN (
+                        SELECT 
+                            id_dispositiu 
+                        FROM 
+                            Dispositius 
+                        WHERE 
+                            idUser_fk = 1
+                    )
+            )
+    );
+
+SELECT  
+    Id_zona as idUbicacio, 
+    NomZona AS ubicacioName, 
+    DescZona AS descriptionUbicacio 
+FROM Zona 
+        WHERE idUser_fk = 1;
+
+
+SELECT id_dispositiu, ip, NomDispositiu, mac, quantitatPortsEth, deviceType, NomZona as zona_id, NomXarxa as Id_vlan
+      FROM Dispositius 
+      JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
+      JOIN Xarxa ON Dispositius.Id_vlan = Xarxa.Id_vlan
+      WHERE Zona.`idUser_fk` = 1;
