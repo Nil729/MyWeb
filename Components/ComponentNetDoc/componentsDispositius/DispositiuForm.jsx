@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
-import { useSession, SessionProvider } from 'next-auth/react';
+//import { useSession, SessionProvider } from 'next-auth/react';
 import isAuth from '../../IsAuth'
 import TaulaDispositus from './TaulaDispositus';
 import UbicacioComboBox from '../componetnsUbicacio/UbicacioComboBox';
 import XarxaComboBox from '../componentsXarxa/XarxaComboBox';
 
 const DeviceManagementForm = () => {
-  const { data: session, status } = useSession();  
+  //const { data: session, status } = useSession();  
 
   const [deviceType, setDeviceType] = useState("final");
   const [dispositius, setDispositius] = useState([

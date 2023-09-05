@@ -234,6 +234,11 @@ CREATE TABLE `Xarxa` (
   PRIMARY KEY (`Id_vlan`),
   UNIQUE KEY `NomXarxa` (`NomXarxa`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- modifica la taula xarxa perque es relacioni amb la la taula users a traves del idUser_fk
+ALTER TABLE `Xarxa` ADD `idUser_fk` INT NULL AFTER `DescXarxa`;
+-- modifica la taula xarxa perque es relacioni amb la la taula users a traves del idUser_fk
+ALTER TABLE `Xarxa` ADD CONSTRAINT `Xarxa_ibfk_1` FOREIGN KEY (`idUser_fk`) REFERENCES `users` (`idUser`) ON DELETE SET NULL ON UPDATE CASCADE;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

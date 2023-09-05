@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-
+import { useSession, SessionProvider } from 'next-auth/react';
 import TaulaXarxa from './TaulaXarxa';
 import axios from 'axios';
 
 const NetworkForm = () => {
+    const { data: session, status } = useSession();
+
     const [networkData, setNetworkData] = useState([
         { Id_vlan: '1', NomXarxa: 'Xarxa 1', DescXarxa: 'Xarxa 1' },
     ]);
@@ -15,7 +17,6 @@ const NetworkForm = () => {
         networkId: '',
         networkName: '',
         networkDesc: '',
-
     });
 
     const handleChange = (event) => {
@@ -47,12 +48,14 @@ const NetworkForm = () => {
         event.preventDefault();
 
         const novaXarxa = {
+            sessionId: session.user.id,
             Id_vlan: formvaluesXarxa.networkId,
             NomXarxa: formvaluesXarxa.networkName,
             DescXarxa: formvaluesXarxa.networkDesc,
         };
 
         try {
+            
             axios.post('http://localhost:3002/api/netdoc/xarxa/insertXarxa', novaXarxa);
             console.log('novaXarxa', novaXarxa);
 
