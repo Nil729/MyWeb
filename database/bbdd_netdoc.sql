@@ -733,7 +733,7 @@ WHERE Id_vlan IN (
             FROM PortsInfra  
             JOIN Dispositius_infraestructura 
             ON id_dispositiuInfra = id_dispositiuInfra_fk 
-            WHERE id_dispositiu_fk = 41
+            WHERE id_dispositiu_fk = 57
         )
     )
 ) OR NOT EXISTS (
@@ -744,9 +744,9 @@ WHERE Id_vlan IN (
         FROM PortsInfra  
         JOIN Dispositius_infraestructura 
         ON id_dispositiuInfra = id_dispositiuInfra_fk 
-        WHERE id_dispositiu_fk = 41
+        WHERE id_dispositiu_fk = 57
     )
-);
+) and idUser_fk = 1 ;
 
 -- selectcionem tots els ports que estan a la taula connexiotrunk del dispositiu 41
 
@@ -762,37 +762,7 @@ SELECT idUser FROM users WHERE emailUser = 'nil.pinyana@gmail.com'
 
 SELECT Id_zona FROM Zona WHERE NomZona = ?
 
-SELECT 
-    Id_vlan, 
-    NomXarxa, 
-    DescXarxa  
-FROM 
-    Xarxa
-WHERE 
-    Id_vlan IN (
-        SELECT 
-            Id_vlan_fk 
-        FROM 
-            Estat 
-        WHERE 
-            IdPortInfra_fk IN (
-                SELECT 
-                    IdPortInfra 
-                FROM 
-                    PortsInfra  
-                    JOIN Dispositius_infraestructura 
-                    ON id_dispositiuInfra = id_dispositiuInfra_fk 
-                WHERE 
-                    id_dispositiu_fk IN (
-                        SELECT 
-                            id_dispositiu 
-                        FROM 
-                            Dispositius 
-                        WHERE 
-                            idUser_fk = 1
-                    )
-            )
-    );
+
 
 SELECT  
     Id_zona as idUbicacio, 
@@ -807,3 +777,16 @@ SELECT id_dispositiu, ip, NomDispositiu, mac, quantitatPortsEth, deviceType, Nom
       JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
       JOIN Xarxa ON Dispositius.Id_vlan = Xarxa.Id_vlan
       WHERE Zona.idUser_fk = 1;
+
+SELECT NomDispositiu AS nomDispositiuFinal, 
+        deviceType 
+FROM Dispositius
+      JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
+      WHERE Zona.idUser_fk = 1
+order by NomDispositiu ;
+
+SELECT  id_dispositiu, deviceType FROM Dispositius
+JOIN `Zona` ON Dispositius.zona_id = Zona.Id_zona
+WHERE NomDispositiu ='Infra_TestNilSession' and Zona.idUser_fk = 1
+
+WHERE NomDispositiu = ? ;

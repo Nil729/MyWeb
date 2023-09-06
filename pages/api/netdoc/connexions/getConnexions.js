@@ -29,7 +29,8 @@ export default function getConnexions(req, res) {
     JOIN
         PortsFinal ON Coneccio.IdPortFinal_fk = PortsFinal.IdPortFinal
     JOIN
-        Dispositus_final ON PortsFinal.id_disposituFinal_fk = Dispositus_final.id_disposituFinal
+        Dispositus_final ON PortsFinal.id_disposituFinal_fk = Dispositus_final.id_disposituFinal    
+    WHERE Xarxa.idUser_fk = 1
     GROUP BY
         idConneccio,
         infraDeviceName, -- Match the alias name
@@ -68,6 +69,7 @@ export default function getConnexions(req, res) {
         PortsInfra AS PortsInfraChild  ON ConexioTrunk.IdPortInfraChild_fk = PortsInfraChild.IdPortInfra
     JOIN
         Dispositius_infraestructura AS DispositiuInfraChild ON PortsInfraChild.id_dispositiuInfra_fk = DispositiuInfraChild.id_dispositiuInfra
+    WHERE Xarxa.idUser_fk = 1
     GROUP BY
         IdConexioTrunk,
         infraDeviceName, -- Match the alias name

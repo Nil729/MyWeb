@@ -3,12 +3,15 @@ import getIdZona from '../../../api/netdoc/getIdZona.js';
 import getIdXarxa from '../../../api/netdoc/xarxa/getIdXarxa.js';
 import pool from '../../../../database/db.connection.js'
 
+
 export default async function insertDispositiu(req, res) {
   try {
-    const { NomDispositiu, deviceType, ip, mac, quantitatPortsEth, zona_id} = req.body;
+    // Get the session;
+
+    const { NomDispositiu, deviceType, ip, mac, quantitatPortsEth, zona_id, sessionId} = req.body;
 
 
-    const resultsZona = await getIdZona(zona_id);
+    const resultsZona = await getIdZona(sessionId, zona_id);
     //onst resultsXarxa = await getIdXarxa(Id_vlan);
 
     console.log(" idZona: " + resultsZona);

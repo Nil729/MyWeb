@@ -7,9 +7,10 @@ import isAuth from '../../IsAuth'
 import TaulaDispositus from './TaulaDispositus';
 import UbicacioComboBox from '../componetnsUbicacio/UbicacioComboBox';
 import XarxaComboBox from '../componentsXarxa/XarxaComboBox';
+import { useSession } from 'next-auth/react';
 
 const DeviceManagementForm = () => {
-  //const { data: session, status } = useSession();  
+  const { data: session, status } = useSession();  
 
   const [deviceType, setDeviceType] = useState("final");
   const [dispositius, setDispositius] = useState([
@@ -68,7 +69,7 @@ const DeviceManagementForm = () => {
 
     // Create a new device object with the form values
     const newDevice = {
-
+      sessionId: session.user.id,
       deviceType: deviceType,
       NomDispositiu: formValues.deviceName,
       ip: formValues.ip,
@@ -168,6 +169,7 @@ const DeviceManagementForm = () => {
       const id_dispositiu = device.id_dispositiu;
 
       updatedDispositius[selectedRowForm] = {
+        sessionId: session.user.id,
         id_dispositiu: id_dispositiu,
         deviceType: deviceType,
         NomDispositiu: formValues.deviceName,

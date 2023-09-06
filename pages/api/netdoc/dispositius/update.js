@@ -6,9 +6,9 @@ import getIdXarxa from "../xarxa/getIdXarxa";
 export default async function updateDispositiu(req, res) {
     try {
 
-        const { NomDispositiu, deviceType, ip, mac, quantitatPortsEth, zona_id, Id_vlan, id_dispositiu } = req.body;
+        const { NomDispositiu, deviceType, ip, mac, quantitatPortsEth, zona_id, Id_vlan, id_dispositiu, sessionId} = req.body;
 
-        const resultsZona = await getIdZona(zona_id);
+        const resultsZona = await getIdZona(sessionId, zona_id);
         //const resultsXarxa = await getIdXarxa(Id_vlan);
         
         console.log("id_dispositiu: " + id_dispositiu + "Nom dipositiu" + NomDispositiu + "deviceType: " + deviceType + "ip: " + ip + "mac: " + mac + "quantitatPortsEth: " + quantitatPortsEth + "zona_id: " + zona_id + "Id_vlan: " + Id_vlan);
