@@ -1,15 +1,21 @@
+
 import pool from "../../../../database/db.connection";
 import {getIdDispositiu} from "../dispositius/getIdDispositiu";
+import { getSession } from "next-auth/react";
 
 export default async function getXarxaFromPortInfra(req, res){
+    const session = await getSession({ req });
+    console.log('session: ', session);
 
     const { nomDispositiuInfraestructura , portInfra } = req.query;
     console.log(nomDispositiuInfraestructura, portInfra );
 
-    const idDispositiu = await getIdDispositiu(nomDispositiuInfraestructura); // 41
+
+    const idDispositiu = await getIdDispositiu(nomDispositiuInfraestructura, session.user.id);
     //[ { id_dispositiu: 41, deviceType: 'Infra' } ]
 
-    console.log('getIdDispositiu: ', idDispositiu);
+
+    console.log('getIdDispositiu: ', idDispositiu, 'session: ', session.user.id);
     
     pool.query(
         `
@@ -26,7 +32,7 @@ export default async function getXarxaFromPortInfra(req, res){
                     FROM PortsInfra  
                     JOIN Dispositius_infraestructura 
                     ON id_dispositiuInfra = id_dispositiuInfra_fk 
-                    WHERE id_dispositiu_fk = 57
+                    WHERE id_dispositiu_fk = ?
                 )
             )
         ) OR NOT EXISTS (
@@ -37,11 +43,11 @@ export default async function getXarxaFromPortInfra(req, res){
                 FROM PortsInfra  
                 JOIN Dispositius_infraestructura 
                 ON id_dispositiuInfra = id_dispositiuInfra_fk 
-                WHERE id_dispositiu_fk = 57
+                WHERE id_dispositiu_fk = ?
             )
-        ) and idUser_fk = 1 ;
+        ) and idUser_fk = ? ;
         `
-        , [idDispositiu[0].id_dispositiu, idDispositiu[0].id_dispositiu ]
+        , [idDispositiu[0].id_dispositiu, idDispositiu[0].id_dispositiu, session.user.id]
 
     , (error, results) => {
         if (error) {

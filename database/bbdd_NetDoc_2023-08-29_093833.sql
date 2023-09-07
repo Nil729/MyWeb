@@ -90,6 +90,7 @@ CREATE TABLE `Dispositius` (
   CONSTRAINT `Dispositius_ibfk_6` FOREIGN KEY (`idUser_fk`) REFERENCES `users` (`idUser`) ON DELETE SET NULL ON UPDATE CASCADE;
 ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- modica la talula perque NomDispositiu, ip i mac siguin no siguin uniques
 
 ALTER TABLE `Dispositius` CHANGE `IdUsuario_fk` `idUser_fk` int DEFAULT NULL;
 ALTER TABLE `Dispositius` ADD CONSTRAINT `Dispositius_ibfk_6` FOREIGN KEY (`idUser_fk`) REFERENCES `users` (`idUser`) ON DELETE SET NULL ON UPDATE CASCADE;
@@ -238,7 +239,7 @@ CREATE TABLE `Xarxa` (
 ALTER TABLE `Xarxa` ADD `idUser_fk` INT NULL AFTER `DescXarxa`;
 -- modifica la taula xarxa perque es relacioni amb la la taula users a traves del idUser_fk
 ALTER TABLE `Xarxa` ADD CONSTRAINT `Xarxa_ibfk_1` FOREIGN KEY (`idUser_fk`) REFERENCES `users` (`idUser`) ON DELETE SET NULL ON UPDATE CASCADE;
-
+ALTER TABLE `Xarxa` DROP INDEX NomXarxa;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -259,3 +260,95 @@ CREATE TABLE `Zona` (
 
 -- mofica la tabla Zona perque estigui relacionada amb users afaguint una nova columna idUser_fk
 ALTER TABLE `Zona` ADD `idUser_fk` INT NULL AFTER `DescZona`;
+
+ALTER TABLE Zona DROP INDEX NomZona;
+
+
+-- create a trigger when insert or update in to tables: `Dispositius`, `Zona`, `Xarxa` `Coneccio`
+-- don't allow repet NameZona, NameXarxa, NameDispositiu, ip and mac for each one idUser 
+
+DELIMITER ;;
+
+CREATE TRIGGER `insert_zona` BEFORE INSERT ON `Zona` FOR EACH ROW BEGIN
+    IF (SELECT COUNT(*) FROM Zona WHERE NomZona = NEW.NomZona AND idUser_fk = NEW.idUser_fk) > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No es pot inserir la zona perque ja existeix una zona amb el mateix nom';
+    END IF;
+END;;
+
+CREATE TRIGGER `update_zona` BEFORE UPDATE ON `Zona` FOR EACH ROW BEGIN
+    IF (SELECT COUNT(*) FROM Zona WHERE NomZona = NEW.NomZona AND idUser_fk = NEW.idUser_fk) > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No es pot modificar la zona perque ja existeix una zona amb el mateix nom';
+    END IF;
+END;;
+
+CREATE TRIGGER `insert_xarxa` BEFORE INSERT ON `Xarxa` FOR EACH ROW BEGIN
+    IF (SELECT COUNT(*) FROM Xarxa WHERE NomXarxa = NEW.NomXarxa AND idUser_fk = NEW.idUser_fk) > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No es pot inserir la xarxa perque ja existeix una xarxa amb el mateix nom';
+    END IF;
+END;;
+
+CREATE TRIGGER `update_xarxa` BEFORE UPDATE ON `Xarxa` FOR EACH ROW BEGIN
+    IF (SELECT COUNT(*) FROM Xarxa WHERE NomXarxa = NEW.NomXarxa AND idUser_fk = NEW.idUser_fk) > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No es pot modificar la xarxa perque ja existeix una xarxa amb el mateix nom';
+    END IF;
+END;;
+
+CREATE TRIGGER `insert_dispositiu` BEFORE INSERT ON `Dispositius` FOR EACH ROW BEGIN
+    IF (SELECT COUNT(*) FROM Dispositius 
+        JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
+        WHERE NomDispositiu = NEW.NomDispositiu AND Zona.idUser_fk = NEW.Zona.idUser_fk) > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No es pot inserir el dispositiu perque ja existeix un dispositiu amb el mateix nom';
+    END IF;
+    IF (SELECT COUNT(*) FROM Dispositius 
+        JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
+        WHERE ip = NEW.ip AND Zona.idUser_fk = NEW.Zona.idUser_fk) > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No es pot inserir el dispositiu perque ja existeix un dispositiu amb la mateixa ip';
+    END IF;
+    IF (SELECT COUNT(*) FROM Dispositius 
+        JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
+        WHERE mac = NEW.mac AND Zona.idUser_fk = NEW.Zona.idUser_fk) > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No es pot inserir el dispositiu perque ja existeix un dispositiu amb la mateixa mac';
+    END IF;
+END;;
+
+CREATE TRIGGER `update_dispositiu` BEFORE UPDATE ON `Dispositius` FOR EACH ROW BEGIN
+    IF (SELECT COUNT(*) FROM Dispositius 
+        JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
+        WHERE NomDispositiu = NEW.NomDispositiu AND Zona.idUser_fk = NEW.Zona.idUser_fk) > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No es pot modificar el dispositiu perque ja existeix un dispositiu amb el mateix nom';
+    END IF;
+    IF (SELECT COUNT(*) FROM Dispositius 
+        JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
+        WHERE ip = NEW.ip AND Zona.idUser_fk = NEW.Zona.idUser_fk) > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No es pot modificar el dispositiu perque ja existeix un dispositiu amb la mateixa ip';
+    END IF;
+    IF (SELECT COUNT(*) FROM Dispositius
+        JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
+        WHERE mac = NEW.mac AND Zona.idUser_fk = NEW.Zona.idUser_fk) > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No es pot modificar el dispositiu perque ja existeix un dispositiu amb la mateixa mac';
+    END IF;
+END;;
+
+DELIMITER ;
+
+
+
+SELECT NomDispositiu FROM Dispositius 
+JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
+WHERE NomDispositiu = NomDispositiu AND idUser_fk = 1;
+
+-- get the equal name of dispositiu
+SELECT COUNT(*) FROM Coneccio WHERE IdPortFinal_fk = NEW.IdPortFinal_fk AND IdPortInfra_fk = NEW.IdPortInfra_fk
+
+
+SELECT COUNT(*), NomZona FROM Zona WHERE NomZona = 'test nil' AND idUser_fk = 1
+
+
+
+INSERT INTO Dispositius (  NomDispositiu, deviceType, ip, mac, zona_id, Id_vlan, quantitatPortsEth, descripcio_dispositiu) VALUES 
+      ('Infra_NilSession', 'Infra', '192.168.1.1', '16:22:33:30:15:63', 18, 1, 10, "test")
+
+
+SELECT COUNT(*) FROM Dispositius 
+        JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
+        WHERE NomDispositiu = NEW.NomDispositiu AND Zona.idUser_fk = NEW.Zona.idUser_fk

@@ -10,7 +10,6 @@ export default async function insertDispositiu(req, res) {
 
     const { NomDispositiu, deviceType, ip, mac, quantitatPortsEth, zona_id, sessionId} = req.body;
 
-
     const resultsZona = await getIdZona(sessionId, zona_id);
     //onst resultsXarxa = await getIdXarxa(Id_vlan);
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSession, SessionProvider } from 'next-auth/react';
 
 import ConnexionsTable from './TaulaConnexions';
 import DispositiusInfraComboBox from '../componentsDispositius/dispositiusComboBox/DispositiusInfraComboBox';
@@ -11,6 +12,7 @@ import XarxaSelectBox from '../componentsXarxa/XarxaSelectBox';
 import axios from 'axios';
 
 const ConnexionsForm = () => {
+    const { data: session, status } = useSession();
 
     const [connexionsData, setconnexionsData] = useState([]);
 
@@ -64,6 +66,7 @@ const ConnexionsForm = () => {
             pachpanelName: formvaluesConnexions.pachpanelName,
             vlan: formvaluesConnexions.vlan,
             descriptionConnexions: formvaluesConnexions.descriptionConnexions,
+            sessionId: session.user.id,
         };
 
         setconnexionsData((prevConnexions) => [...prevConnexions, novaConnexions]);

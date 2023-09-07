@@ -2,11 +2,7 @@ import pool from "../../../../database/db.connection";
 
 import { getIdDispositiu } from "../dispositius/getIdDispositiu";
 
-
-
 export default async function deleteConnexio(req, res) {
-
-
 
     const idConneccio = req.query.idConneccio;
     const infraDeviceName = req.query.infraDeviceName;

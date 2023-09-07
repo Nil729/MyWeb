@@ -1,9 +1,10 @@
 
+//pagues/api/netdoc/dispositius/getIdDispositiu.js
 import pool from "../../../../database/db.connection";
 
-export async function getIdDispositiu(sessionId, id_dispositiu) {
 
-
+export async function getIdDispositiu(id_dispositiu, sessionId) {
+  console.log('id_dispositiu: ', id_dispositiu);
   return new Promise((resolve, reject) => {
     pool.query(
       `SELECT id_dispositiu, deviceType FROM Dispositius
@@ -23,7 +24,7 @@ export async function getIdDispositiu(sessionId, id_dispositiu) {
 }
 
 
-export async function getIdDispositiuInfra(id_dispositiu) {
+export async function getIdDispositiuInfra(id_dispositiu, sessionId) {
   console.log('id_dispositiu: ', id_dispositiu);
 
   return new Promise((resolve, reject) => {
@@ -31,12 +32,11 @@ export async function getIdDispositiuInfra(id_dispositiu) {
       ` SELECT  
             id_dispositiuInfra, 
             deviceType 
-
           FROM Dispositius 
             JOIN Dispositius_infraestructura ON id_dispositiu = id_dispositiu_fk 
             JOIN Zona ON Dispositius.zona_id = Zona.Id_zona 
           WHERE NomDispositiu = ? and Zona.idUser_fk = ?`,
-      [id_dispositiu, session.user.id],
+      [id_dispositiu, sessionId],
       (error, results) => {
         if (error) {
           reject(error);
@@ -50,8 +50,8 @@ export async function getIdDispositiuInfra(id_dispositiu) {
 }
 
 
-export async function getIdDispositiuFinal(id_dispositiu) {
-
+export async function getIdDispositiuFinal(id_dispositiu, sessionId) {
+  console.log('id_dispositiu: ', id_dispositiu);
   return new Promise((resolve, reject) => {
     pool.query(
       ` SELECT
@@ -61,8 +61,8 @@ export async function getIdDispositiuFinal(id_dispositiu) {
           Dispositius JOIN 
             Dispositus_final ON id_dispositiu = id_dispositiu_fk 
             JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
-            WHERE NomDispositiu = ? and Zona.idUser_fk = 1`,
-      [id_dispositiu, session.user.id],
+            WHERE NomDispositiu = ? and Zona.idUser_fk = ?`,
+      [id_dispositiu, sessionId],
 
       (error, results) => {
         if (error) {

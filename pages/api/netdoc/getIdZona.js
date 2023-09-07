@@ -1,9 +1,6 @@
 import pool from "../../../database/db.connection";
 
-
-
 export default async function getIdZona(sessionId, zona_id) {
-
 
   return new Promise((resolve, reject) => {
 
@@ -18,5 +15,6 @@ export default async function getIdZona(sessionId, zona_id) {
         }
       }
     );
+    
   });
 }

@@ -9,7 +9,7 @@ import {
 
 import { getIdPortInfra, getIdPortFinal } from "../ports/getIdPorts";
 import { insertEstatPortInfra } from "../ports/insertEstatPortInfra";
-import getIdXarxa from "../xarxa/getIdXarxa";
+import getXarxawithoutSessionId from "../xarxa/getXarxawithoutSessionId";
 
 
 const handlePortStatusChange = async (portInfraId, vlan, portStatus) => {
@@ -28,7 +28,7 @@ const handlePortStatusChange = async (portInfraId, vlan, portStatus) => {
 
 async function insertTaggedVlan(portInfraId, vlan, portStatus) {
 
-    const idXarxa = await getIdXarxa(vlan);
+    const idXarxa = await getXarxawithoutSessionId(vlan);
     console.log('PortInfra: ', portInfraId[0].IdPortInfra, 'IdXarxa: ', idXarxa, 'VlanConfig; ', portStatus)
     await insertEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
 
@@ -46,21 +46,23 @@ export default async function insertConnexio(req, res) {
         endPort,
         pachpanelName,
         vlan,
-        descriptionConnexions
+        descriptionConnexions,
+        sessionId
     } = req.body;
 
     console.log('infraDeviceName: ', infraDeviceName);
     console.log('finalDeviceName: ', finalDeviceName);
 
-    const typeDevice = await getIdDispositiu(finalDeviceName)
+    const typeDevice = await getIdDispositiu(finalDeviceName, sessionId)
     console.log('typeDevice: ', typeDevice);
     console.log('typeDevice: ', typeDevice[0].deviceType);
+
     try {
 
         if (typeDevice[0].deviceType === 'Infra') {
 
-            const infraDeviceId = await getIdDispositiuInfra(infraDeviceName);
-            const finalDeviceId = await getIdDispositiuInfra(finalDeviceName);
+            const infraDeviceId = await getIdDispositiuInfra(infraDeviceName, sessionId);
+            const finalDeviceId = await getIdDispositiuInfra(finalDeviceName, sessionId);
 
             console.log('infraDeviceId: ', infraDeviceId);
             console.log('finalDeviceId: ', finalDeviceId);
@@ -146,8 +148,8 @@ export default async function insertConnexio(req, res) {
 
         } else {
 
-            const infraDeviceId = await getIdDispositiuInfra(infraDeviceName);
-            const finalDeviceId = await getIdDispositiuFinal(finalDeviceName);
+            const infraDeviceId = await getIdDispositiuInfra(infraDeviceName, sessionId);
+            const finalDeviceId = await getIdDispositiuFinal(finalDeviceName, sessionId);
 
             console.log('InfraDeviceId: ', infraDeviceId);
 

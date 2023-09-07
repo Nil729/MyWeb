@@ -1,7 +1,10 @@
 import pool from "../../../../database/db.connection";
+import { getSession } from 'next-auth/react';
 
-export default function getConnexions(req, res) {
-    
+export default async function getConnexions(req, res) {
+    const session  = await getSession({ req });
+    console.log('session: ', session);
+
     pool.query(
         `
         SELECT 
@@ -30,7 +33,7 @@ export default function getConnexions(req, res) {
         PortsFinal ON Coneccio.IdPortFinal_fk = PortsFinal.IdPortFinal
     JOIN
         Dispositus_final ON PortsFinal.id_disposituFinal_fk = Dispositus_final.id_disposituFinal    
-    WHERE Xarxa.idUser_fk = 1
+    WHERE Xarxa.idUser_fk = ?
     GROUP BY
         idConneccio,
         infraDeviceName, -- Match the alias name
@@ -69,7 +72,7 @@ export default function getConnexions(req, res) {
         PortsInfra AS PortsInfraChild  ON ConexioTrunk.IdPortInfraChild_fk = PortsInfraChild.IdPortInfra
     JOIN
         Dispositius_infraestructura AS DispositiuInfraChild ON PortsInfraChild.id_dispositiuInfra_fk = DispositiuInfraChild.id_dispositiuInfra
-    WHERE Xarxa.idUser_fk = 1
+    WHERE Xarxa.idUser_fk = ?
     GROUP BY
         IdConexioTrunk,
         infraDeviceName, -- Match the alias name
@@ -78,7 +81,8 @@ export default function getConnexions(req, res) {
         finalDeviceName, -- Match the alias name
         endPort;
     
-        `
+        `,
+        [session.user.id, session.user.id]
         , (error, results) => {
             if (error) {
                 res.status(500).json({ message: 'Error fetching records', error });
