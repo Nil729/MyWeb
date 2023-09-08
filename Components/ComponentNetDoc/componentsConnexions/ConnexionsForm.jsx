@@ -79,8 +79,6 @@ const ConnexionsForm = () => {
             console.error(error);
         }
 
-
-
         setselectedRowUbiacioForm(null);
         setformvaluesConnexions({
             infraDeviceName: '',
@@ -99,7 +97,6 @@ const ConnexionsForm = () => {
         // Omplir els camps del formulari amb les dades de la fila seleccionada
         const formvaluesConnexions = connexionsData[index];
         setformvaluesConnexions({
-
             infraDeviceName: formvaluesConnexions.infraDeviceName,
             portInfra: formvaluesConnexions.portInfra,
             portStatus: formvaluesConnexions.portStatus,
@@ -108,7 +105,6 @@ const ConnexionsForm = () => {
             pachpanelName: formvaluesConnexions.pachpanelName,
             vlan: formvaluesConnexions.vlan,
             descriptionConnexions: formvaluesConnexions.descriptionConnexions,
-
         });
 
 

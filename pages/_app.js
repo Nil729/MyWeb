@@ -10,7 +10,9 @@ import '../styles/styles_netdoc/dispositiusTaula.css';
 import '../styles/styles_netdoc/xarxa.css';
 import '../styles/styles_netdoc/xarxaTaula.css';
 import '../styles/styles_netdoc/connexionsTaula.css';
+import '../styles/styles_netdoc/error-style.css';
 import { SessionProvider } from 'next-auth/react';
+
 
 function MyApp({ Component, pageProps }) {
   return (
