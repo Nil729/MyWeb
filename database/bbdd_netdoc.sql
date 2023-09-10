@@ -790,3 +790,8 @@ JOIN `Zona` ON Dispositius.zona_id = Zona.Id_zona
 WHERE NomDispositiu ='Infra_TestNilSession' and Zona.idUser_fk = 1
 
 WHERE NomDispositiu = ? ;
+
+
+SELECT COUNT(*) FROM Dispositius
+JOIN Zona ON Dispositius.zona_id = Zona.Id_zona 
+        WHERE ip = '1.1.1.1' AND Zona.idUser_fk= (SELECT idUser_fk FROM Zona WHERE Id_zona = NEW.Id_zona)

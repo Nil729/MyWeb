@@ -68,17 +68,16 @@ const DeviceManagementForm = () => {
     setDeviceType(type);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // Validate the IP address
     const ipValidationResult = validateIpAddress(formValues.ip);
-
+  
     if (ipValidationResult) {
       setIpError(ipValidationResult);
       return; // Don't proceed if IP is invalid
     }
-
-
+  
     // Create a new device object with the form values
     const newDevice = {
       sessionId: session.user.id,
@@ -87,42 +86,36 @@ const DeviceManagementForm = () => {
       ip: formValues.ip,
       mac: formValues.mac,
       quantitatPortsEth: formValues.ethernetPorts || '',
-      zona_id: formValues.location,
-      //Id_vlan: formValues.vlan,
+      zona_id: formValues.location
     };
-
-
-
+  
     if (selectedRowForm === null) {
-      // Add a new device
-      setDispositius((prevDispositius) => [...prevDispositius, newDevice]);
-
       try {
         // Guardar la nova ubicacio a la base de dades
-        axios.post('http://localhost:3002/api/netdoc/dispositius/insert', newDevice);
-        console.log('Device added successfully', newDevice);
-
+        const response = await axios.post('http://localhost:3002/api/netdoc/dispositius/insert', newDevice);
+        console.log('newDevice', newDevice);
+  
         // Check if the response contains an error message
         if (response.data && response.data.error) {
+          // Set the error message state to display it in your component
           setError(response.data.error);
         } else {
           // If no error in the response, reset the error state
           setError(null);
           // Add a new device
           setDispositius((prevDispositius) => [...prevDispositius, newDevice]);
-          console.log('newDevice', newDevice);
         }
-
-      }
-      catch (error) {
+      } catch (error) {
         console.error(error);
-        // if (error.response && error.response.data && error.response.data.error) {
-        //   setError(error.response.data.error);
-        // } else {
-        //   setError('An error occurred while sending the request.');
-        // }
+        // Handle network errors or unexpected errors here
+        if (error.response && error.response.data && error.response.data.error) {
+          // Extract the specific error message from the response and set it as an error
+          setError(error.response.data.error);
+        } else {
+          // Set a generic error message
+          setError('An error occurred while sending the request.');
+        }
       }
-
     } else {
       // Update the existing device
       const updatedDispositius = [...dispositius];
@@ -130,7 +123,7 @@ const DeviceManagementForm = () => {
       setDispositius(updatedDispositius);
       setselectedRowForm(null);
     }
-
+  
     // Reset the form values
     setFormValues({
       deviceName: '',
@@ -139,8 +132,8 @@ const DeviceManagementForm = () => {
       ethernetPorts: '',
       location: '',
     });
-
   };
+  
 
   const handleDelete = (index) => {
 
