@@ -112,3 +112,23 @@ Object
 [[Prototype]]
 : 
 Error
+
+
+DROP TRIGGER IF EXISTS undefined;
+CREATE DEFINER=`root`@`localhost` TRIGGER `update_dispositiu` BEFORE UPDATE ON `Dispositius` FOR EACH ROW BEGIN
+    IF (SELECT COUNT(*) FROM Dispositius 
+        JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
+        WHERE NomDispositiu = NEW.NomDispositiu AND Zona.idUser_fk = idUser_fk) > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No es pot modificar el dispositiu perque ja existeix un dispositiu amb el mateix nom';
+    END IF;
+    IF (SELECT COUNT(*) FROM Dispositius 
+        JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
+        WHERE ip = NEW.ip AND Zona.idUser_fk = idUser_fk) > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No es pot modificar el dispositiu perque ja existeix un dispositiu amb la mateixa ip';
+    END IF;
+    IF (SELECT COUNT(*) FROM Dispositius
+        JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
+        WHERE mac = NEW.mac AND Zona.idUser_fk = idUser_fk) > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No es pot modificar el dispositiu perque ja existeix un dispositiu amb la mateixa mac';
+    END IF;
+END

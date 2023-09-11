@@ -2,7 +2,7 @@
 import getIdZona from '../../../api/netdoc/getIdZona.js';
 import getIdXarxa from '../../../api/netdoc/xarxa/getIdXarxa.js';
 import pool from '../../../../database/db.connection.js'
-
+import { handleDatabaseError } from '../../../api/apiUtils/databaseUtils.js';
 
 export default async function insertDispositiu(req, res) {
   try {
@@ -21,14 +21,7 @@ export default async function insertDispositiu(req, res) {
       [NomDispositiu, deviceType, ip, mac, resultsZona, 1, quantitatPortsEth, "test"],
       (error, results) => {
         if (error) {
-          console.error(error);
-          res.status(500).json({ error: 'Database error: ' + error.message });
-
-          if (error.code === 'ER_DUP_ENTRY') {
-            return res.status(400).json({ error: 'Error: No es pot inserir el dispositiu perque ja existeix un dispositiu amb la mateixa ip' });
-          } else {
-            return res.status(500).json({ error: 'Database error: ' + error.message });
-          }
+          handleDatabaseError(res, error);
           
         } else {
           res.status(201).json({ message: 'New record inserted successfully', id: results.insertId });

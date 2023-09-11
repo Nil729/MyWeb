@@ -7,6 +7,7 @@ import { useSession, SessionProvider } from 'next-auth/react';
 const UbicacioForm = () => {
 
     const { data: session, status } = useSession();
+    const [error, setError] = useState(null);
 
     const [ubicacioData, setUbicacioData] = useState([]);
 
@@ -43,7 +44,7 @@ const UbicacioForm = () => {
         }));
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         const novaUbicacio = {
@@ -55,20 +56,34 @@ const UbicacioForm = () => {
         try {
             // Guardar la nova ubicacio a la base de dades
 
-            axios.post('http://localhost:3002/api/netdoc/ubicacions', novaUbicacio);
+            const response = await axios.post('http://localhost:3002/api/netdoc/ubicacions', novaUbicacio);
             console.log('novaUbicacio', novaUbicacio);
+            // Check if the response contains an error message
+            if (response.data && response.data.error) {
+                setError(response.data.error);
 
-            // Guardar la nova ubicacio a la 
-            setUbicacioData((prevubicacio) => [...prevubicacio, novaUbicacio]);
-
-            setformvaluesUbicacio({
-                ubicacioName: '',
-                descriptionUbicacio: '',
-            });
+            } else {
+                setError(null);
+                // Guardar la nova ubicacio a la 
+                setUbicacioData((prevubicacio) => [...prevubicacio, novaUbicacio]);
+            }
 
         } catch (error) {
             console.log('error', error);
+            // Handle network errors or unexpected errors here
+            if (error.response && error.response.data && error.response.data.error) {
+                // Extract the specific error message from the response and set it as an error
+                setError(error.response.data.error);
+            } else {
+                // Set a generic error message
+                setError('An error occurred while sending the request.');
+            }
         }
+
+        setformvaluesUbicacio({
+            ubicacioName: '',
+            descriptionUbicacio: '',
+        });
 
     };
 
@@ -150,7 +165,10 @@ const UbicacioForm = () => {
     return (
         <div className="network-form-container">
             <div className="network-form">
-                <h2 className='title-form'>Formulari de ubicacions</h2>
+                <div>
+                    <h2 className='title-form'>Formulari de ubicacions</h2>
+                </div>
+                {error && <div className="error-message">{error}</div>}
                 <form onSubmit={handleSubmit}>
 
                     <div className="form-group">

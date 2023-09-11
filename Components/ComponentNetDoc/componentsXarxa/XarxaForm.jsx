@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const NetworkForm = () => {
     const { data: session, status } = useSession();
-
+    const [error, setError] = useState(null);
     const [networkData, setNetworkData] = useState([
         { Id_vlan: '1', NomXarxa: 'Xarxa 1', DescXarxa: 'Xarxa 1' },
     ]);
@@ -43,7 +43,7 @@ const NetworkForm = () => {
     };
 
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         
         event.preventDefault();
 
@@ -56,23 +56,37 @@ const NetworkForm = () => {
 
         try {
             
-            axios.post('http://localhost:3002/api/netdoc/xarxa/insertXarxa', novaXarxa);
+            const response = await axios.post('http://localhost:3002/api/netdoc/xarxa/insertXarxa', novaXarxa);
             console.log('novaXarxa', novaXarxa);
 
-            setNetworkData((prevNetworks) => [...prevNetworks, novaXarxa]);
+            if (response.data && response.data.error) {
+                setError(response.data.error);
 
-            setformvaluesXarxa({
-                networkId: '',
-                networkName: '',
-                networkDesc: '',
-            });
+            } else {
+                setError(null);
+                // Guardar la nova ubicacio a la 
+                setNetworkData((prevNetworks) => [...prevNetworks, novaXarxa]);
+            }
 
         } catch (error) {
-            console.error(error);
+            console.log('error', error);
+            // Handle network errors or unexpected errors here
+            if (error.response && error.response.data && error.response.data.error) {
+              // Extract the specific error message from the response and set it as an error
+              setError(error.response.data.error);
+            } else {
+              // Set a generic error message
+              setError('An error occurred while sending the request.');
+            }
         }
 
-    };
+        setformvaluesXarxa({
+            networkId: '',
+            networkName: '',
+            networkDesc: '',
+        });
 
+    };
 
     const handleEditRow = (index) => {
 
@@ -94,7 +108,7 @@ const NetworkForm = () => {
 
     // Guardar els canvis
     const handleSaveRow = () => {
-
+        
         if (selectedRowXarxaForm !== null) {
             const updatedNetworks = [...networkData];
 
@@ -158,11 +172,13 @@ const NetworkForm = () => {
         });
     };
 
-
     return (
         <div className="network-form-container">
             <div className="network-form">
-                <h2 className='title-form'>Formulari de Xarxa</h2>
+                <div>
+                    <h2 className='title-form'>Formulari de Xarxa</h2>
+                </div>
+                <div className="error-message">{error}</div>
                 <form onSubmit={handleSubmit}>
 
                     <div className="form-group">

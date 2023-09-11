@@ -1,5 +1,5 @@
 import pool from "../../../../database/db.connection";
-
+import { handleDatabaseError } from '../../../api/apiUtils/databaseUtils.js';
 import getIdZona from "../getIdZona";
 import getIdXarxa from "../xarxa/getIdXarxa";
 
@@ -19,7 +19,7 @@ export default async function updateDispositiu(req, res) {
                 [NomDispositiu, deviceType, ip, mac, resultsZona, 1, quantitatPortsEth, "test", id_dispositiu],
                 (error, results) => {
                     if (error) {
-                        reject(error);
+                        handleDatabaseError(res, error);
                     } else {
                         resolve(results);
                     }
