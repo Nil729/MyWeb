@@ -3,7 +3,6 @@ import axios from 'axios';
 import TaulaUbicacions from './TaulaUbicacions';
 import { useSession, SessionProvider } from 'next-auth/react';
 
-
 const UbicacioForm = () => {
 
     const { data: session, status } = useSession();
@@ -69,7 +68,7 @@ const UbicacioForm = () => {
             }
 
         } catch (error) {
-            console.log('error', error);
+            console.error(error);
             // Handle network errors or unexpected errors here
             if (error.response && error.response.data && error.response.data.error) {
                 // Extract the specific error message from the response and set it as an error
@@ -102,31 +101,52 @@ const UbicacioForm = () => {
     };
 
     // Guardar els canvis
-    const handleSaveRow = () => {
+    const handleSaveRow = async () => {
         if (selectedRowUbicacioForm !== null) {
             const updatedubicacio = [...ubicacioData];
+
             updatedubicacio[selectedRowUbicacioForm] = {
                 ubicacioName: formvaluesUbicacio.ubicacioName,
                 descriptionUbicacio: formvaluesUbicacio.descriptionUbicacio,
             };
-            setUbicacioData(updatedubicacio);
+
+            console.log('update ubicació: ', updatedubicacio)
+
+            try {
+
+                const ubicacioId = ubicacioData[selectedRowUbicacioForm].idUbicacio; // Get the ubicacioId of the ubicacio to be updated
+                console.log('ubicacioId', ubicacioId);
+
+                // Guardar la nova ubicacio a la base de dades
+                const response = await axios.put(`http://localhost:3002/api/netdoc/ubicacioId?ubicacioId=${ubicacioId}`, updatedubicacio[selectedRowUbicacioForm]);
+                console.log('updatedubicacio', updatedubicacio[selectedRowUbicacioForm]);
+
+                // Check if the response contains an error message
+                if (response.data && response.data.error) {
+                    setError(response.data.error);
+                } else {
+                    setError(null);
+                    // Guardar la nova ubicacio a la 
+                    setUbicacioData( updatedubicacio );
+                }
+
+            } catch (error) {
+                // Handle network errors or unexpected errors here
+                if (error.response && error.response.data && error.response.data.error) {
+                    // Extract the specific error message from the response and set it as an error
+                    setError(error.response.data.error);
+                } else {
+                    // Set a generic error message
+                    setError('An error occurred while sending the request.');
+                }
+            }
+
             setselectedRowUbiacioForm(null);
             setformvaluesUbicacio({
                 ubicacioName: '',
                 descriptionUbicacio: '',
             });
 
-            try {
-                const ubicacioId = ubicacioData[selectedRowUbicacioForm].idUbicacio; // Get the ubicacioId of the ubicacio to be updated
-                console.log('ubicacioId', ubicacioId);
-                // Guardar la nova ubicacio a la base de dades
-                axios.put(`http://localhost:3002/api/netdoc/ubicacioId?ubicacioId=${ubicacioId}`, updatedubicacio[selectedRowUbicacioForm]);
-                console.log('updatedubicacio', updatedubicacio[selectedRowUbicacioForm]);
-
-
-            } catch (error) {
-                console.log('error', error);
-            }
         }
     };
 

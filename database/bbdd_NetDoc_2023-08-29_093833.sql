@@ -352,3 +352,4 @@ INSERT INTO Dispositius (  NomDispositiu, deviceType, ip, mac, zona_id, Id_vlan,
 SELECT COUNT(*) FROM Dispositius 
         JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
         WHERE NomDispositiu = NEW.NomDispositiu AND Zona.idUser_fk = NEW.Zona.idUser_fk
+

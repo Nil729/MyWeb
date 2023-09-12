@@ -1,5 +1,5 @@
 import pool from "../../../database/db.connection.js";
-
+import { handleDatabaseError } from '../../api/apiUtils/databaseUtils.js';
 
 
 export default function handler(req, res) {
@@ -23,12 +23,14 @@ export default function handler(req, res) {
     console.log("nom_ubicacio: " + ubicacioName, "descripcio_ubicacio: " + descriptionUbicacio);
 
     pool.query("UPDATE Zona SET NomZona = ?, DescZona = ? WHERE Id_zona = ?", [ubicacioName, descriptionUbicacio, ubicacioId], (error) => {
+      
       if (error) {
         console.error(error);
-        res.status(500).json({ error: "Error updating location in database" });
+        handleDatabaseError(res, error)
       } else {
         res.status(200).json({ message: "Location updated successfully" });
       }
+
     });
 
   } else {

@@ -107,7 +107,7 @@ const NetworkForm = () => {
     };
 
     // Guardar els canvis
-    const handleSaveRow = () => {
+    const handleSaveRow = async () => {
         
         if (selectedRowXarxaForm !== null) {
             const updatedNetworks = [...networkData];
@@ -120,11 +120,29 @@ const NetworkForm = () => {
             setNetworkData(updatedNetworks);
             try {
 
-                axios.put('http://localhost:3002/api/netdoc/xarxa/updateXarxa', updatedNetworks[selectedRowXarxaForm]);
+                const response = await axios.put('http://localhost:3002/api/netdoc/xarxa/updateXarxa', updatedNetworks[selectedRowXarxaForm]);
                 console.log('updatedNetworks[selectedRowXarxaForm]', updatedNetworks[selectedRowXarxaForm]);
 
+                if (response.data && response.data.error) {
+                    setError(response.data.error);
+
+                } else {
+                    setError(null);
+                    // Guardar la nova ubicacio a la 
+                    setNetworkData((prevNetworks) => [...prevNetworks, updatedNetworks[selectedRowXarxaForm]]);
+                }
+
+
             } catch (error) {
-                console.error(error);
+                console.log('error', error);
+                // Handle network errors or unexpected errors here
+                if (error.response && error.response.data && error.response.data.error) {
+                  // Extract the specific error message from the response and set it as an error
+                  setError(error.response.data.error);
+                } else {
+                  // Set a generic error message
+                  setError('An error occurred while sending the request.');
+                }
             }
             setselectedRowXarxaForm(null);
 
