@@ -3,18 +3,18 @@ import { useSession, SessionProvider } from 'next-auth/react';
 import TaulaXarxa from './TaulaXarxa';
 import axios from 'axios';
 
+
 const NetworkForm = () => {
     const { data: session, status } = useSession();
     const [error, setError] = useState(null);
-    const [networkData, setNetworkData] = useState([
-        { Id_vlan: '1', NomXarxa: 'Xarxa 1', DescXarxa: 'Xarxa 1' },
-    ]);
+    const [networkData, setNetworkData] = useState([]);
+    console.log('networkData', networkData);
 
     const [selectedRowXarxaForm, setselectedRowXarxaForm] = useState(null);
 
     const [formvaluesXarxa, setformvaluesXarxa] = useState({
 
-        networkId: '',
+        networkUserId: '',
         networkName: '',
         networkDesc: '',
     });
@@ -49,7 +49,7 @@ const NetworkForm = () => {
 
         const novaXarxa = {
             sessionId: session.user.id,
-            Id_vlan: formvaluesXarxa.networkId,
+            Vid: formvaluesXarxa.networkUserId,
             NomXarxa: formvaluesXarxa.networkName,
             DescXarxa: formvaluesXarxa.networkDesc,
         };
@@ -81,7 +81,7 @@ const NetworkForm = () => {
         }
 
         setformvaluesXarxa({
-            networkId: '',
+            networkUserId: '',
             networkName: '',
             networkDesc: '',
         });
@@ -97,7 +97,7 @@ const NetworkForm = () => {
             const formvaluesXarxa = networkData[index];
 
             setformvaluesXarxa({
-                networkId: formvaluesXarxa.Id_vlan,
+                networkUserId: formvaluesXarxa.Vid,
                 networkName: formvaluesXarxa.NomXarxa,
                 networkDesc: formvaluesXarxa.DescXarxa,
             });
@@ -113,23 +113,22 @@ const NetworkForm = () => {
             const updatedNetworks = [...networkData];
 
             updatedNetworks[selectedRowXarxaForm] = {
-                Id_vlan: formvaluesXarxa.networkId,
+                Id_vlan: networkData[selectedRowXarxaForm].Id_vlan,
+                Vid: formvaluesXarxa.networkUserId,
                 NomXarxa: formvaluesXarxa.networkName,
                 DescXarxa: formvaluesXarxa.networkDesc
             };
-            setNetworkData(updatedNetworks);
+
             try {
 
                 const response = await axios.put('http://localhost:3002/api/netdoc/xarxa/updateXarxa', updatedNetworks[selectedRowXarxaForm]);
-                console.log('updatedNetworks[selectedRowXarxaForm]', updatedNetworks[selectedRowXarxaForm]);
 
                 if (response.data && response.data.error) {
                     setError(response.data.error);
-
                 } else {
                     setError(null);
                     // Guardar la nova ubicacio a la 
-                    setNetworkData((prevNetworks) => [...prevNetworks, updatedNetworks[selectedRowXarxaForm]]);
+                    setNetworkData(updatedNetworks);
                 }
 
 
@@ -138,7 +137,7 @@ const NetworkForm = () => {
                 // Handle network errors or unexpected errors here
                 if (error.response && error.response.data && error.response.data.error) {
                   // Extract the specific error message from the response and set it as an error
-                  setError(error.response.data.error);
+                  setError(error.response.data.error.sqlMessage);
                 } else {
                   // Set a generic error message
                   setError('An error occurred while sending the request.');
@@ -147,7 +146,7 @@ const NetworkForm = () => {
             setselectedRowXarxaForm(null);
 
             setformvaluesXarxa({
-                networkId: '',
+                networkUserId: '',
                 networkName: '',
                 networkDesc: '',
             });
@@ -158,19 +157,17 @@ const NetworkForm = () => {
         // Eliminar la fila seleccionada
         const updatedNetworks = [...networkData];
         // Obtenim el id de la xarxa a eliminar
-
-        const networkId = updatedNetworks[index].Id_vlan;
-        console.log('networkId', networkId);
-
+        const xarxaId = networkData[index].Id_vlan;
+        console.log('xarxaId', xarxaId);
         try {
 
-            await axios.delete(`http://localhost:3002/api/netdoc/xarxa/delXarxa?networkId=${networkId}`);
+            await axios.delete(`http://localhost:3002/api/netdoc/xarxa/delXarxa?xarxaId=${xarxaId}`);
             updatedNetworks.splice(index, 1);
             setNetworkData(updatedNetworks);
             // gurada els canvis
             setselectedRowXarxaForm(null);
             setformvaluesXarxa({
-                networkId: '',
+                networkUserId: '',
                 networkName: '',
                 networkDesc: '',
             });
@@ -184,7 +181,7 @@ const NetworkForm = () => {
     const handleCancelRow = () => {
         setselectedRowXarxaForm(null);
         setformvaluesXarxa({
-            networkId: '',
+            networkUserId: '',
             networkName: '',
             networkDesc: '',
         });
@@ -200,12 +197,12 @@ const NetworkForm = () => {
                 <form onSubmit={handleSubmit}>
 
                     <div className="form-group">
-                        <label htmlFor="networkId">ID de la Xarxa:</label>
+                        <label htmlFor="networkUserId">ID de la Xarxa:</label>
                         <input
                             type="text"
-                            id="networkId"
-                            name="networkId"
-                            value={formvaluesXarxa.networkId}
+                            id="networkUserId"
+                            name="networkUserId"
+                            value={formvaluesXarxa.networkUserId}
                             onChange={handleChange}
                             required
                         />

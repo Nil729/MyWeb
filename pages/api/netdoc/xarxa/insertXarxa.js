@@ -3,11 +3,11 @@ import { handleDatabaseError } from '../../apiUtils/databaseUtils.js';
 
 export default async function insetXarxa(req, res) {
     try{
-        const { sessionId, Id_vlan, NomXarxa, DescXarxa } = req.body;
+        const { sessionId, Vid, NomXarxa, DescXarxa } = req.body;
         console.log("sessionId", sessionId);
     
         pool.query(
-            `INSERT INTO Xarxa (Id_vlan , NomXarxa , DescXarxa, idUser_fk) VALUES (?,?,?,?)`, [Id_vlan, NomXarxa, DescXarxa, sessionId]
+            `INSERT INTO Xarxa (Vid , NomXarxa , DescXarxa, idUser_fk) VALUES (?,?,?,?)`, [Vid, NomXarxa, DescXarxa, sessionId]
             , (error, results) => {
                 if (error) {
                     handleDatabaseError(res, error);

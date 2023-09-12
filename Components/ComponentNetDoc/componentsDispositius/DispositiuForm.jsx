@@ -47,7 +47,6 @@ const DeviceManagementForm = () => {
       const response = await axios.get(`http://localhost:3002/api/netdoc/dispositius/get`);
       // Set ubicacio data state
       console.log('response', response.data);
-
       setDispositius(response.data);
 
     } catch (error) {
@@ -219,7 +218,7 @@ const DeviceManagementForm = () => {
         // Handle network errors or unexpected errors here
         if (error.response && error.response.data && error.response.data.error) {
           // Extract the specific error message from the response and set it as an error
-          setError(error.response.data.error);
+          setError(error.response.data.error.sqlMessage);
         } else {
           // Set a generic error message
           setError('An error occurred while sending the request.');

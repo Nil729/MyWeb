@@ -85,10 +85,51 @@ CREATE TABLE `Dispositius` (
   KEY `zona_id` (`zona_id`),
   KEY `Id_vlan` (`Id_vlan`),
   CONSTRAINT `Dispositius_ibfk_3` FOREIGN KEY (`Id_vlan`) REFERENCES `Xarxa` (`Id_vlan`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Dispositius_ibfk_4` FOREIGN KEY (`zona_id`) REFERENCES `Zona` (`Id_zona`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Dispositius_ibfk_4` FOREIGN KEY (`zona_id`) REFERENCES `Zona` (`Id_zona`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Dispositius_ibfk_5` FOREIGN KEY (`Id_vlan`) REFERENCES `Xarxa` (`Id_vlan`) ON DELETE CASCADE ON UPDATE CASCADE
   CONSTRAINT `Dispositius_ibfk_6` FOREIGN KEY (`idUser_fk`) REFERENCES `users` (`idUser`) ON DELETE SET NULL ON UPDATE CASCADE;
 ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- create a trigger or fuction when the zona_id of the device has been deleted it establishes a default zone
+
+
+DELIMITER ;;
+CREATE TRIGGER `SetDefaultZonaBeforeInsert` BEFORE INSERT ON `Dispositius`
+FOR EACH ROW BEGIN
+    -- Check if zona_id is NULL
+    IF NEW.zona_id IS NULL THEN
+        -- Get the idUser_fk for the current row
+        SET @idUser = (SELECT IdUsuario_fk FROM Dispositius WHERE id_dispositiu = NEW.id_dispositiu);
+        
+        -- Get the id of the default zone for the same user
+        SET @idDefaultZone = (SELECT Id_zona FROM Zona WHERE NomZona = 'Undefined location' AND idUser_fk = @idUser);
+        
+        -- Set the zona_id to the default zone id
+        SET NEW.zona_id = @idDefaultZone;
+    END IF;
+END;
+;;
+
+
+CREATE TRIGGER `SetDefaultZonaAfterUpdate` AFTER UPDATE ON `Dispositius`
+FOR EACH ROW BEGIN
+    -- Check if zona_id is NULL
+    IF NEW.zona_id IS NULL THEN
+        -- Get the idUser_fk for the current row
+        SET @idUser = (SELECT IdUsuario_fk FROM Dispositius WHERE id_dispositiu = NEW.id_dispositiu);
+        
+        -- Get the id of the default zone for the same user
+        SET @idDefaultZone = (SELECT Id_zona FROM Zona WHERE NomZona = 'Undefined location' AND idUser_fk = @idUser);
+        
+        -- Update the zona_id to the default zone id
+        UPDATE Dispositius SET zona_id = @idDefaultZone WHERE id_dispositiu = NEW.id_dispositiu;
+    END IF;
+END;
+;;
+DELIMITER ;
+
+ALTER TABLE `Dispositius` DROP FOREIGN KEY `Dispositius_ibfk_4`;
+ALTER TABLE `Dispositius` ADD CONSTRAINT `Dispositius_ibfk_4` FOREIGN KEY (`zona_id`) REFERENCES `Zona` (`Id_zona`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- modica la talula perque NomDispositiu, ip i mac siguin no siguin uniques
 

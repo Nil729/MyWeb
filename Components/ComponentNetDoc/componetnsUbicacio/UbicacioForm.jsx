@@ -127,7 +127,7 @@ const UbicacioForm = () => {
                 } else {
                     setError(null);
                     // Guardar la nova ubicacio a la 
-                    setUbicacioData( updatedubicacio );
+                    setUbicacioData(updatedubicacio);
                 }
 
             } catch (error) {

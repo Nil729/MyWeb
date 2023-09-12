@@ -33,3 +33,7 @@ END$$
 
 CREATE TRIGGER INSERT_PORT_INFRA AFTER UPDATE `PortsInfra` FOR EACH ROW BEGUIN
     -- When update a port infra if it port does not exist 
+
+
+
+    IF (OLD.`Vid` != NEW.`Vid`)

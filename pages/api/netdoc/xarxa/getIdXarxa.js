@@ -2,7 +2,7 @@ import pool from "../../../../database/db.connection";
 import { getSession } from 'next-auth/react';
 
 
-export default async function getIdXarxa(Id_vlan) {
+export default async function getIdXarxa(nomXarxa) {
 
     const session = await getSession({ req });
 
@@ -14,7 +14,7 @@ export default async function getIdXarxa(Id_vlan) {
     return new Promise((resolve, reject) => {
         pool.query(
             'SELECT Id_vlan FROM Xarxa WHERE NomXarxa = ? and idUser_fk = ?',
-            [Id_vlan, session.user.id],
+            [nomXarxa, session.user.id],
             (error, results) => {
                 if (error) {
                     reject(error);

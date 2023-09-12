@@ -792,6 +792,13 @@ WHERE NomDispositiu ='Infra_TestNilSession' and Zona.idUser_fk = 1
 WHERE NomDispositiu = ? ;
 
 
-SELECT COUNT(*) FROM Dispositius
-JOIN Zona ON Dispositius.zona_id = Zona.Id_zona 
-        WHERE ip = '1.1.1.1' AND Zona.idUser_fk= (SELECT idUser_fk FROM Zona WHERE Id_zona = NEW.Id_zona)
+DROP TRIGGER IF EXISTS undefined;
+CREATE DEFINER=`root`@`localhost` TRIGGER `update_zona` BEFORE UPDATE ON `Zona` FOR EACH ROW BEGIN
+    
+    IF ( OLD.`NomZona` != NEW.`NomZona`) THEN
+        IF (SELECT COUNT(*) FROM Zona WHERE NomZona = NEW.NomZona AND idUser_fk = NEW.idUser_fk) > 0 THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No es pot modificar la zona perque ja existeix una zona amb el mateix nom';
+        END IF;
+    END IF;
+    
+END

@@ -14,7 +14,7 @@ export default async function getAllXarxes(req, res){
     }
 
     pool.query(
-        `SELECT Id_vlan , NomXarxa , DescXarxa  FROM Xarxa WHERE idUser_fk = ?`, [session.user.id]
+        `SELECT Id_vlan, Vid, NomXarxa, DescXarxa  FROM Xarxa WHERE idUser_fk = ?`, [session.user.id]
 
     , (error, results) => {
         if (error) {
@@ -23,6 +23,4 @@ export default async function getAllXarxes(req, res){
             res.status(200).json(results);
         }
     });
-    
-
 }
