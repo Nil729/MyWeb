@@ -4,8 +4,8 @@ import pool from "../../../../database/db.connection";
 
 
 export async function getIdDispositiu(id_dispositiu, sessionId) {
-  console.log('id_dispositiu: ', id_dispositiu);
   return new Promise((resolve, reject) => {
+    console.log('id_dispositiu: ', id_dispositiu, 'sessioId', sessionId);
     pool.query(
       `SELECT id_dispositiu, deviceType FROM Dispositius
         JOIN Zona ON Dispositius.zona_id = Zona.Id_zona 

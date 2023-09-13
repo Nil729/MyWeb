@@ -123,7 +123,7 @@ const ConnexionsForm = () => {
                 finalDeviceName: formvaluesConnexions.finalDeviceName,
                 endPort: formvaluesConnexions.endPort,
                 pachpanelName: formvaluesConnexions.pachpanelName,
-                vlan: formvaluesConnexions.vlan.split(', '), // convertir a array 
+                vlan: formvaluesConnexions.vlan,//formvaluesConnexions.vlan.split(', '), // convertir a array 
                 descriptionConnexions: formvaluesConnexions.descriptionConnexions,
             };
             setconnexionsData(updatedConnexions);

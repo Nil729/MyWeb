@@ -802,3 +802,8 @@ CREATE DEFINER=`root`@`localhost` TRIGGER `update_zona` BEFORE UPDATE ON `Zona` 
     END IF;
     
 END
+
+
+SELECT id_dispositiu, deviceType FROM Dispositius
+        JOIN Zona ON Dispositius.zona_id = Zona.Id_zona 
+        WHERE NomDispositiu = 'pc-test' and Zona.idUser_fk = 3

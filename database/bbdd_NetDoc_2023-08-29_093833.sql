@@ -130,6 +130,7 @@ END;
 ;;
 DELIMITER ;
 
+
 UPDATE Dispositius SET zona_id = @idDefaultZone WHERE zona_id is null;
 
 
