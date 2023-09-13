@@ -102,7 +102,11 @@ FOR EACH ROW BEGIN
         SET @idUser = (SELECT IdUsuario_fk FROM Dispositius WHERE id_dispositiu = NEW.id_dispositiu);
         
         -- Get the id of the default zone for the same user
-        SET @idDefaultZone = (SELECT Id_zona FROM Zona WHERE NomZona = 'Undefined location' AND idUser_fk = @idUser);
+        SET @idDefaultZone = (SELECT OLD.Id_zona FROM Zona WHERE NomZona = 'Undefined location' AND idUser_fk = @idUser);
+        
+        -- Show in console idUser and idDefaultZone
+        SELECT @idUser, @idDefaultZone;
+        raise notice 'SetDefaultZonaBeforeInsert: idUser: %, idDefaultZone: %', @idUser, @idDefaultZone;
         
         -- Set the zona_id to the default zone id
         SET NEW.zona_id = @idDefaultZone;
@@ -111,22 +115,29 @@ END;
 ;;
 
 
-CREATE TRIGGER `SetDefaultZonaAfterUpdate` AFTER UPDATE ON `Dispositius`
+DELIMITER ;;
+CREATE TRIGGER `SetDefaultZonaAfterDelete` AFTER DELETE ON `Zona`
 FOR EACH ROW BEGIN
-    -- Check if zona_id is NULL
-    IF NEW.zona_id IS NULL THEN
-        -- Get the idUser_fk for the current row
-        SET @idUser = (SELECT IdUsuario_fk FROM Dispositius WHERE id_dispositiu = NEW.id_dispositiu);
-        
-        -- Get the id of the default zone for the same user
-        SET @idDefaultZone = (SELECT Id_zona FROM Zona WHERE NomZona = 'Undefined location' AND idUser_fk = @idUser);
-        
-        -- Update the zona_id to the default zone id
-        UPDATE Dispositius SET zona_id = @idDefaultZone WHERE id_dispositiu = NEW.id_dispositiu;
-    END IF;
+    -- Get the idUser_fk for the current row
+    SET @idUser = (SELECT idUser_fk FROM `Zona` JOIN Dispositius ON Zona.Id_zona = Dispositius.zona_id WHERE id_dispositiu = id_dispositiu LIMIT 1);
+    
+    -- Get the id of the default zone for the same user
+    SET @idDefaultZone = (SELECT Id_zona FROM Zona WHERE NomZona = 'Undefined location' AND idUser_fk = 3 LIMIT 1);
+
+    -- Update the zona_id in Dispositius to the default zone id
+    UPDATE Dispositius SET zona_id = @idDefaultZone WHERE zona_id is null;
 END;
 ;;
 DELIMITER ;
+
+UPDATE Dispositius SET zona_id = @idDefaultZone WHERE zona_id is null;
+
+
+UPDATE Dispositius SET zona_id = 31 WHERE zona_id = null;
+
+select *  from Dispositius where zona_id is null;
+
+SELECT  idUser_fk FROM `Zona` JOIN Dispositius ON Zona.Id_zona = Dispositius.zona_id WHERE id_dispositiu = 77;
 
 ALTER TABLE `Dispositius` DROP FOREIGN KEY `Dispositius_ibfk_4`;
 ALTER TABLE `Dispositius` ADD CONSTRAINT `Dispositius_ibfk_4` FOREIGN KEY (`zona_id`) REFERENCES `Zona` (`Id_zona`) ON DELETE SET NULL ON UPDATE CASCADE;
