@@ -1,20 +1,14 @@
 import pool from "../../../../database/db.connection";
-import { getSession } from 'next-auth/react';
 
 
-export default async function getIdXarxa(nomXarxa) {
 
-    const session = await getSession({ req });
-    conos
-    if (!session) {
-        res.status(401).json({ message: 'Unauthorized' });
-        return;
-    }
+export default async function getIdXarxaBySession(nomXarxa, sessionId) {
+
 
     return new Promise((resolve, reject) => {
         pool.query(
             'SELECT Id_vlan FROM Xarxa WHERE NomXarxa = ? and idUser_fk = ?',
-            [nomXarxa, session.user.id],
+            [nomXarxa, sessionId],
             (error, results) => {
                 if (error) {
                     reject(error);

@@ -6,15 +6,16 @@ import getIdXarxa from "../xarxa/getIdXarxa";
 import { updateEstatPortInfra } from "../ports/updateEstatPortInfra";
 import { deleteEstatPortInfra } from "../ports/updateEstatPortInfra";
 import { insertEstatPortInfra } from "../ports/insertEstatPortInfra";
+import getIdXarxaBySession from "../xarxa/getIdXarxaBySession";
 
-const handlePortStatusChangeUpdate = async (portInfraId, vlan, portStatus) => {
+const handlePortStatusChangeUpdate = async (portInfraId, vlan, portStatus,sessionId) => {
     console.log('vlan: ', vlan);
     await deleteEstatPortInfra(portInfraId[0].IdPortInfra);
 
     if (portStatus === 'tagged') {
         for (const vlanValue of vlan) {
             console.log('arrayVlan[i]: ', vlanValue);
-            const idXarxa = await getIdXarxa(vlanValue);
+            const idXarxa = await getIdXarxaBySession(vlanValue, sessionId);
             await insertEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
         }
     } else if (portStatus === 'untagged' || portStatus === 'undefined') {
@@ -39,14 +40,15 @@ export default async function updateConnexions(req, res) {
         endPort,
         pachpanelName,
         vlan,
-        descriptionConnexions
+        descriptionConnexions,
+        sessionId
     } = req.body;
 
     // Get the IDs of the infrastructure and final devices
     console.log('infraDeviceName: ', infraDeviceName);
     console.log('finalDeviceName: ', finalDeviceName);
 
-    const typeDevice = await getIdDispositiu(finalDeviceName);
+    const typeDevice = await getIdDispositiu(finalDeviceName, sessionId);
     console.log('typeDevice: ', typeDevice);
     console.log('typeDevice: ', typeDevice[0].deviceType);
 
@@ -55,8 +57,8 @@ export default async function updateConnexions(req, res) {
 
         if (typeDevice[0].deviceType === 'Infra') {
 
-            const infraDeviceId = await getIdDispositiuInfra(infraDeviceName);
-            const finalDeviceId = await getIdDispositiuInfra(finalDeviceName);
+            const infraDeviceId = await getIdDispositiuInfra(infraDeviceName, sessionId);
+            const finalDeviceId = await getIdDispositiuInfra(finalDeviceName, sessionId);
             console.log('infraDeviceId: ', infraDeviceId, 'finalDeviceId: ', finalDeviceId);
 
             console.log(portInfra, infraDeviceId[0].id_dispositiuInfra, idConneccio)
@@ -109,14 +111,14 @@ export default async function updateConnexions(req, res) {
 
             console.log('portInfraId: ', portInfraId);
 
-            handlePortStatusChangeUpdate(portInfraId, vlan, portStatus);
+            handlePortStatusChangeUpdate(portInfraId, vlan, portStatus, sessionId);
 
             res.status(200).json({ message: 'Connection trunk updated successfully' });
 
         } else {
 
-            const infraDeviceId = await getIdDispositiuInfra(infraDeviceName);
-            const finalDeviceId = await getIdDispositiuFinal(finalDeviceName);
+            const infraDeviceId = await getIdDispositiuInfra(infraDeviceName, sessionId);
+            const finalDeviceId = await getIdDispositiuFinal(finalDeviceName, sessionId);
             console.log('infraDeviceId: ', infraDeviceId, 'finalDeviceId: ', finalDeviceId);
 
 
@@ -173,7 +175,7 @@ export default async function updateConnexions(req, res) {
 
             console.log('portInfraId: ', portInfraId[0].IdPortInfra, 'portFinalId: ', portFinalId[0].IdPortFinal);
 
-            handlePortStatusChangeUpdate(portInfraId, vlan, portStatus);
+            handlePortStatusChangeUpdate(portInfraId, vlan, portStatus, sessionId);
 
             // const idXarxa = await getIdXarxa(vlan);
             // console.log('PortInfra: ', portInfraId[0].IdPortInfra, 'IdXarxa: ', idXarxa, 'VlanConfig; ', portStatus)

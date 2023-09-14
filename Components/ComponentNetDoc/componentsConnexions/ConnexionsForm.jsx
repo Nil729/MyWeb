@@ -125,6 +125,7 @@ const ConnexionsForm = () => {
                 pachpanelName: formvaluesConnexions.pachpanelName,
                 vlan: formvaluesConnexions.vlan,//formvaluesConnexions.vlan.split(', '), // convertir a array 
                 descriptionConnexions: formvaluesConnexions.descriptionConnexions,
+                sessionId: session.user.id,
             };
             setconnexionsData(updatedConnexions);
 
