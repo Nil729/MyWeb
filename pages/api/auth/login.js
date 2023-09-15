@@ -25,7 +25,7 @@ export default function login(req, res){
     })
     try {
       res.setHeader('Set-Cookie', serialized);
-    } catch (err) {console.log('Error: ', err.message);};
+    } catch (err) {console.log('Error: ', err.message)};
 
 
     

@@ -3,6 +3,7 @@ import { getSession } from 'next-auth/react';
 
 export default async function getDispositiusFinal(req, res) {
     const session = await getSession({ req });
+    console.log('session.user.id', session.user.id)
 
     pool.query(
         `SELECT NomDispositiu AS nomDispositiuFinal, 

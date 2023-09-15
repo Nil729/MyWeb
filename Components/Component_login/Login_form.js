@@ -35,9 +35,13 @@ function LoginPage() {
       if (result.error) {
         setError('Credenciales inválidas. Por favor, verifique e intente nuevamente.');
       } else {
-        window.location.href = '/home'; // Cambia esto a la ruta que desees
+        // redirect the rout of /porjects/pageNetDoc
+        router.push('/projects/pages_netdoc');
       }
     } catch (error) {
+
+      //router.push('/projects/pages_netdoc');
+  
       console.error('Error al iniciar sesión:', error);
       setError('Ocurrió un error al intentar iniciar sesión. Por favor, inténtelo más tarde.');
     }
