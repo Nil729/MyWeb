@@ -17,9 +17,6 @@ const IsAuth = (WrappedComponent) => {
       router.push('/LoginPage'); // Ajusta la ruta según tu configuración
       return null;
 
-    } else {
-
-      router.push('/projects/pageNetDoc');
     }
 
     // Si hay sesión, renderiza el componente envuelto con las props

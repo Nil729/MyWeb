@@ -34,10 +34,8 @@ function LoginPage() {
 
       if (result.error) {
         setError('Credenciales inválidas. Por favor, verifique e intente nuevamente.');
-      } else {
-        // redirect the rout of /porjects/pageNetDoc
-        router.push('/projects/pages_netdoc');
       }
+        
     } catch (error) {
 
       //router.push('/projects/pages_netdoc');
