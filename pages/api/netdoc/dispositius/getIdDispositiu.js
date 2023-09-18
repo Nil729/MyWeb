@@ -3,14 +3,14 @@
 import pool from "../../../../database/db.connection";
 
 
-export async function getIdDispositiu(id_dispositiu, sessionId) {
+export async function getIdDispositiu(nom_dispositiu, sessionId) {
   return new Promise((resolve, reject) => {
-    console.log('id_dispositiu: ', id_dispositiu, 'sessioId', sessionId);
+    console.log('NOm dispositiu: ', nom_dispositiu, 'sessioId', sessionId);
     pool.query(
       `SELECT id_dispositiu, deviceType FROM Dispositius
         JOIN Zona ON Dispositius.zona_id = Zona.Id_zona 
         WHERE NomDispositiu = ? and Zona.idUser_fk = ?`,
-      [id_dispositiu, sessionId],
+      [nom_dispositiu, sessionId],
       (error, results) => {
         if (error) {
           reject(error);
@@ -24,8 +24,8 @@ export async function getIdDispositiu(id_dispositiu, sessionId) {
 }
 
 
-export async function getIdDispositiuInfra(id_dispositiu, sessionId) {
-  console.log('id_dispositiu: ', id_dispositiu);
+export async function getIdDispositiuInfra(nom_dispositiu, sessionId) {
+  console.log('Nom dispositiu: ', nom_dispositiu);
 
   return new Promise((resolve, reject) => {
     pool.query(
@@ -36,7 +36,7 @@ export async function getIdDispositiuInfra(id_dispositiu, sessionId) {
             JOIN Dispositius_infraestructura ON id_dispositiu = id_dispositiu_fk 
             JOIN Zona ON Dispositius.zona_id = Zona.Id_zona 
           WHERE NomDispositiu = ? and Zona.idUser_fk = ?`,
-      [id_dispositiu, sessionId],
+      [nom_dispositiu, sessionId],
       (error, results) => {
         if (error) {
           reject(error);
@@ -50,8 +50,8 @@ export async function getIdDispositiuInfra(id_dispositiu, sessionId) {
 }
 
 
-export async function getIdDispositiuFinal(id_dispositiu, sessionId) {
-  console.log('id_dispositiu: ', id_dispositiu);
+export async function getIdDispositiuFinal(nom_dispositiu, sessionId) {
+  console.log('Nom dispositiu: ', nom_dispositiu);
   return new Promise((resolve, reject) => {
     pool.query(
       ` SELECT
@@ -62,7 +62,7 @@ export async function getIdDispositiuFinal(id_dispositiu, sessionId) {
             Dispositus_final ON id_dispositiu = id_dispositiu_fk 
             JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
             WHERE NomDispositiu = ? and Zona.idUser_fk = ?`,
-      [id_dispositiu, sessionId],
+      [nom_dispositiu, sessionId],
 
       (error, results) => {
         if (error) {

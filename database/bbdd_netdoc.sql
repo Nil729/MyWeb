@@ -806,4 +806,102 @@ END
 
 SELECT id_dispositiu, deviceType FROM Dispositius
         JOIN Zona ON Dispositius.zona_id = Zona.Id_zona 
-        WHERE NomDispositiu = 'pc-test' and Zona.idUser_fk = 3
+        WHERE NomDispositiu = 'pc-test' and Zona.idUser_fk = 3;
+
+SELECT 
+            CASE 
+                WHEN deviceType LIKE 'infra' 
+                THEN (SELECT quantitatPortsEth 
+                        FROM   Dispositius_infraestructura 
+                        WHERE  Dispositius_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu) 
+                    ELSE (SELECT quantitatPortsEth 
+                        FROM   Dispositus_final 
+                        WHERE  Dispositus_final.id_dispositiu_fk = Dispositius.id_dispositiu)
+                END AS quantitatPortsEth
+        FROM Dispositius JOIN `Zona` ON Dispositius.zona_id = Zona.Id_zona WHERE NomDispositiu = 'Ruter' and Zona.`idUser_fk` = 4
+
+SELECT id_dispositiu, ip, NomDispositiu, mac, quantitatPortsEth, deviceType, NomZona as zona_id, NomXarxa as Id_vlan
+      FROM Dispositius 
+      JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
+      JOIN Xarxa ON Dispositius.Id_vlan = Xarxa.Id_vlan
+      WHERE Zona.idUser_fk = 3;
+
+-- CREATE a trigger how get a user idUser_fk BEFORE DELETE a zone 
+DROP TRIGGER IF EXISTS `getIdUserBeforeDeleteZone`;
+DELIMITER ;;
+CREATE TRIGGER `getIdUserBeforeDeleteZone` BEFORE DELETE ON `Zona` FOR EACH ROW BEGIN
+    -- Get the idUser_fk for the current row has been deleted
+    SET @idUser = (SELECT idUser_fk FROM `Zona` WHERE Id_zona = Id_zona LIMIT 1);
+END;
+
+SELECT 
+    id_dispositiu, 
+    ip, 
+    NomDispositiu, 
+    mac, 
+    quantitatPortsEth, 
+    deviceType, 
+    CASE 
+        WHEN Dispositius.zona_id IS NULL THEN 'No Zone'  -- or any other label you prefer
+        ELSE Zona.NomZona 
+    END AS zona_id, 
+    NomXarxa AS Id_vlan
+FROM Dispositius 
+LEFT JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
+JOIN Xarxa ON Dispositius.Id_vlan = Xarxa.Id_vlan
+WHERE (Zona.idUser_fk = 3) OR (Dispositius.zona_id IS NULL);
+
+
+-- Active: 1687107432916@@127.0.0.1@3306@bbdd_NetDoc
+
+DROP TRIGGER IF EXISTS `SetDefaultZonaAfterDelete`;
+DELIMITER ;;
+CREATE TRIGGER `SetDefaultZonaAfterDelete` AFTER DELETE ON `Zona` FOR EACH ROW BEGIN
+    -- Get the idUser_fk for the current row has been deleted
+    SET @idUser = (SELECT idUser_fk FROM `Zona` JOIN Dispositius ON Zona.Id_zona = Dispositius.zona_id WHERE id_dispositiu = id_dispositiu LIMIT 1);
+    -- Get the id of the default zone for the same user
+    SET @idDefaultZone = (SELECT Id_zona FROM Zona WHERE NomZona = 'Undefined location' AND idUser_fk = @idUser LIMIT 1);
+    -- Update the zona_id in Dispositius to the default zone id where it is NULL
+    UPDATE Dispositius SET zona_id = @idDefaultZone WHERE zona_id IS NULL;
+END;
+;;
+DELIMITER ;
+
+
+DROP TRIGGER IF EXISTS undefined;
+CREATE DEFINER=`root`@`localhost` TRIGGER `SetDefaultXarxaAfterDelete` AFTER DELETE ON `Xarxa` FOR EACH ROW BEGIN
+    -- Get the idUser_fk for the current row
+    SET @idUser = (SELECT idUser_fk FROM `Zona` JOIN Dispositius ON Zona.Id_zona = Dispositius.zona_id WHERE id_dispositiu = id_dispositiu LIMIT 1);
+    -- Get the id of the default zone for the same user
+    SET @idDefaultXarxa = (SELECT Id_vlan FROM Xarxa WHERE NomXarxa = 'Undefined network' AND idUser_fk = @idUser LIMIT 1);
+    -- Update the zona_id in Dispositius to the default zone id
+    UPDATE Estat SET Id_vlan_fk = @idDefaultZone WHERE Id_vlan_fk is null;
+END
+
+
+
+
+-- First, drop the existing triggers
+DROP TRIGGER IF EXISTS `SetDefaultZonaAfterDelete`;
+DROP TRIGGER IF EXISTS `getIdUserBeforeDeleteZone`;
+
+DELIMITER ;;
+
+-- Create the trigger to get idUser before deleting a zone
+CREATE TRIGGER `getIdUserBeforeDeleteZone` BEFORE DELETE ON `Zona` FOR EACH ROW BEGIN
+    -- Get the idUser_fk for the current row before deletion
+    SET @idUser := (SELECT idUser_fk FROM `Zona` WHERE Id_zona = OLD.Id_zona LIMIT 1);
+END;
+
+-- Create the trigger to set the default zone after deleting a zone
+CREATE TRIGGER `SetDefaultZonaAfterDelete` AFTER DELETE ON `Zona` FOR EACH ROW BEGIN
+    DECLARE idDefaultZone INT;
+    -- Get the id of the default zone for the same user
+    SET idDefaultZone = (SELECT Id_zona FROM Zona WHERE NomZona = 'Undefined location' AND idUser_fk = @idUser LIMIT 1);
+    -- Update the zona_id in Dispositius to the default zone id where it is NULL
+    UPDATE Dispositius SET zona_id = idDefaultZone WHERE zona_id IS NULL;
+END;
+
+;;
+
+DELIMITER ;

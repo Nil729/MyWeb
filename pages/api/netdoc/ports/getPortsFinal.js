@@ -1,23 +1,28 @@
+import { getSession } from "next-auth/react";
 import pool from "../../../../database/db.connection";
 
-export default function getPortsFinal(req, res) {
+
+export default async function getPortsFinal(req, res) {
+    const session = await getSession({ req });
+    console.log(session.user.id);
     console.log("Entrant a getPortsFinal: " + req.query);
     const { nomDispositiuFinal } = req.query;
 
     pool.query(
-        `SELECT 
-            CASE 
-                WHEN deviceType LIKE 'infra' 
-                THEN (SELECT quantitatPortsEth 
-                        FROM   Dispositius_infraestructura 
-                        WHERE  Dispositius_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu) 
-                    ELSE (SELECT quantitatPortsEth 
-                        FROM   Dispositus_final 
-                        WHERE  Dispositus_final.id_dispositiu_fk = Dispositius.id_dispositiu)
-                END AS quantitatPortsEth
-        FROM Dispositius WHERE NomDispositiu = ?                
+        `
+        SELECT 
+                    CASE 
+                        WHEN deviceType LIKE 'infra' 
+                        THEN (SELECT quantitatPortsEth 
+                                FROM   Dispositius_infraestructura 
+                                WHERE  Dispositius_infraestructura.id_dispositiu_fk = Dispositius.id_dispositiu) 
+                            ELSE (SELECT quantitatPortsEth 
+                                FROM   Dispositus_final 
+                                WHERE  Dispositus_final.id_dispositiu_fk = Dispositius.id_dispositiu)
+                        END AS quantitatPortsEth
+                FROM Dispositius JOIN Zona ON Dispositius.zona_id = Zona.Id_zona WHERE NomDispositiu = ? and Zona.idUser_fk = ?      
         `,
-        [nomDispositiuFinal]
+        [nomDispositiuFinal, session.user.id]
         , (error, results) => {
             console
             if (error) {
