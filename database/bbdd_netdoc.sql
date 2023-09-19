@@ -905,3 +905,59 @@ END;
 ;;
 
 DELIMITER ;
+
+DROP TRIGGER IF EXISTS `SetDefaultXarxaAfterDelete`;
+DROP TRIGGER IF EXISTS `getIdUserBeforeDeleteXarxa`;
+
+DELIMITER ;;
+CREATE TRIGGER `getIdUserBeforeDeleteXarxa` BEFORE DELETE ON `Xarxa` FOR EACH ROW BEGIN
+    DECLARE idDefaultXarxa INT;
+    -- Get the idUser_fk for the current row before deletion
+    SET @idUser := (SELECT idUser_fk FROM `Xarxa` WHERE Id_vlan = OLD.Id_vlan LIMIT 1);
+    SET idDefaultXarxa = (SELECT Id_vlan FROM Xarxa WHERE NomXarxa = 'Undefined network' AND idUser_fk = @idUser LIMIT 1);
+
+    -- if estat have more than one Id_vlan_fk UPDATE Estat SET Id_vlan_fk = idDefaultXarxa WHERE Id_vlan_fk IS NULL;
+    IF (SELECT COUNT(*) FROM Estat WHERE Id_vlan_fk IS NULL) > 0 THEN
+        UPDATE Estat SET Id_vlan_fk = idDefaultXarxa WHERE Id_vlan_fk IS NULL;
+    END IF;
+END;
+CREATE TRIGGER `SetDefaultXarxaAfterDelete` AFTER DELETE ON `Xarxa` FOR EACH ROW BEGIN
+    DECLARE idDefaultXarxa INT;
+    -- Get the id of the default zone for the same user
+    SET idDefaultXarxa = (SELECT Id_vlan FROM Xarxa WHERE NomXarxa = 'Undefined network' AND idUser_fk = @idUser LIMIT 1);
+
+    -- if estat have more than one Id_vlan_fk UPDATE Estat SET Id_vlan_fk = idDefaultXarxa WHERE Id_vlan_fk IS NULL;
+    IF (SELECT COUNT(*) FROM Estat WHERE Id_vlan_fk IS NULL) > 0 THEN
+        UPDATE Estat SET Id_vlan_fk = idDefaultXarxa WHERE Id_vlan_fk IS NULL;
+    END IF;
+
+END;
+;;
+DELIMITER ;
+
+
+SELECT 
+                D.NomDispositiu,
+                CASE 
+                    WHEN D.deviceType LIKE 'infra' THEN PI.numPortInfra 
+                    ELSE PF.numPortFinal 
+                END AS numPortInfra
+            FROM Dispositius D
+            JOIN Zona ON D.zona_id = Zona.Id_zona
+            LEFT JOIN (
+                SELECT 
+                    DI.id_dispositiu_fk,
+                    GROUP_CONCAT(PI.numPortInfra) AS numPortInfra
+                FROM PortsInfra PI
+                JOIN Dispositius_infraestructura DI ON PI.id_dispositiuInfra_fk = DI.id_dispositiuInfra
+                GROUP BY DI.id_dispositiu_fk
+            ) PI ON D.id_dispositiu = PI.id_dispositiu_fk
+            LEFT JOIN (
+                SELECT 
+                    DF.id_dispositiu_fk,
+                    GROUP_CONCAT(PF.numPortFinal) AS numPortFinal
+                FROM PortsFinal PF
+                JOIN Dispositus_final DF ON PF.id_disposituFinal_fk = DF.id_disposituFinal
+                GROUP BY DF.id_dispositiu_fk
+            ) PF ON D.id_dispositiu = PF.id_dispositiu_fk
+            WHERE D.NomDispositiu = 'Ruter' and Zona.`idUser_fk` = 3;

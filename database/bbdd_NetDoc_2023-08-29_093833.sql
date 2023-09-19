@@ -236,6 +236,9 @@ CREATE TABLE `Estat` (
   CONSTRAINT `Estat_ibfk_3` FOREIGN KEY (`Id_vlan_fk`) REFERENCES `Xarxa` (`Id_vlan`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+-- modifica la taula Estat perque quan s'elimini una xarxa associada es posi NULL a la columna Id_vlan_fk
+ALTER TABLE `Estat` DROP FOREIGN KEY `Estat_ibfk_3`;
+ALTER TABLE `Estat` ADD CONSTRAINT `Estat_ibfk_3` FOREIGN KEY (`Id_vlan_fk`) REFERENCES `Xarxa` (`Id_vlan`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Table structure for table `PortsFinal`
@@ -290,8 +293,8 @@ CREATE TABLE `Xarxa` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 -- modifica la taula xarxa perque es relacioni amb la la taula users a traves del idUser_fk
 ALTER TABLE `Xarxa` ADD `idUser_fk` INT NULL AFTER `DescXarxa`;
--- modifica la taula xarxa perque es relacioni amb la la taula users a traves del idUser_fk
-ALTER TABLE `Xarxa` ADD CONSTRAINT `Xarxa_ibfk_1` FOREIGN KEY (`idUser_fk`) REFERENCES `users` (`idUser`) ON DELETE SET NULL ON UPDATE CASCADE;
+-- modifica la taula xarxa perque es relacioni amb la la taula users a traves del idUser_fk ON CASCADE
+ALTER TABLE `Xarxa` ADD CONSTRAINT `Xarxa_ibfk_1` FOREIGN KEY (`idUser_fk`) REFERENCES `users` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `Xarxa` DROP INDEX NomXarxa;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
