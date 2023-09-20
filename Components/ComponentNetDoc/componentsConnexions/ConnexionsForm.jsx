@@ -8,6 +8,7 @@ import DispositiusFinalComboBox from '../componentsDispositius/dispositiusComboB
 import EndPortComboBox from '../componentsPorts/EndPortComboBox.jsx';
 import XarxaComboBox from '../componentsXarxa/XarxaComboBox';
 import XarxaSelectBox from '../componentsXarxa/XarxaSelectBox';
+import XarxaSelectDefaul from '../componentsXarxa/XarxaSelectDefaul';
 //import Example from './Example';
 import axios from 'axios';
 
@@ -238,7 +239,7 @@ const ConnexionsForm = () => {
                             />
                             <label htmlFor="untagged">Untagged</label>
                         </div>
-                        {/* Radio buttons: Undefined */}
+                        {/* Radio buttons: Undefined  set defaul value Undefined network */}
                         <div>
                             <input type="radio" id="undefined" name="portStatus" value="undefined"
                                 checked={formvaluesConnexions.portStatus === "undefined"}
@@ -268,9 +269,9 @@ const ConnexionsForm = () => {
                     */}
                     {formvaluesConnexions.portStatus === 'untagged' ? (
                         <>
-                            <XarxaComboBox 
-                                vlan={formvaluesConnexions.vlan} 
-                                onChange={handleChange} 
+                            <XarxaComboBox
+                                vlan={formvaluesConnexions.vlan}
+                                onChange={handleChange}
                                 nomDispositiuInfraestructura={formvaluesConnexions.infraDeviceName}
                                 portInfra={formvaluesConnexions.portInfra}
                             />
@@ -278,14 +279,26 @@ const ConnexionsForm = () => {
 
                     ) : formvaluesConnexions.portStatus === 'tagged' ? (
                         <>
-                            <XarxaSelectBox 
-                                vlan={formvaluesConnexions.vlan} 
-                                onChange={handleChange} 
+                            <XarxaSelectBox
+                                vlan={formvaluesConnexions.vlan}
+                                onChange={handleChange}
                                 nomDispositiuInfraestructura={formvaluesConnexions.infraDeviceName}
                                 portInfra={formvaluesConnexions.portInfra}
                             />
                         </>
-                    ) : null}
+                    ) : formvaluesConnexions.portStatus === 'undefined' ? (
+                        // set default vlan value Undefined network: vlan = 'Undefined network'
+                        <>
+                            <XarxaSelectDefaul
+                                vlan={formvaluesConnexions.vlan}
+                            />
+                        </>
+                        
+
+                    ) : null
+
+                    }
+
 
 
                     <div className="form-group">

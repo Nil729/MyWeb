@@ -2,9 +2,9 @@ import pool from "../../../../database/db.connection";
 import { getSession } from 'next-auth/react';
 
 
-export default function getSelectedPorts(req, res) {
+export default async function getSelectedPorts(req, res) {
     const { nomDipositiuInfra } = req.query;
-    //const session = getSession({ req });
+    const session = await getSession({ req });
     console.log("Entrant a getSelectedPorts: " + nomDipositiuInfra);
     pool.query(
 
@@ -32,8 +32,8 @@ export default function getSelectedPorts(req, res) {
         JOIN Dispositus_final DF ON PF.id_disposituFinal_fk = DF.id_disposituFinal
         GROUP BY DF.id_dispositiu_fk
     ) PF ON D.id_dispositiu = PF.id_dispositiu_fk
-    WHERE D.NomDispositiu = 'Ruter' and Zona.idUser_fk = 3;`, 
-        [nomDipositiuInfra],
+    WHERE D.NomDispositiu = ? and Zona.idUser_fk = ?;`, 
+        [nomDipositiuInfra, session.user.id],
         (error, results) => {
             if (error) {
                 res.status(500).json({ message: 'Error fetching records', error });
