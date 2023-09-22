@@ -19,7 +19,7 @@ const handlePortStatusChangeUpdate = async (portInfraId, vlan, portStatus,sessio
             await insertEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
         }
     } else if (portStatus === 'untagged' || portStatus === 'undefined') {
-        const idXarxa = await getIdXarxa(vlan);
+        const idXarxa = await getIdXarxaBySession(vlan, sessionId);
         await insertEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
 
     }

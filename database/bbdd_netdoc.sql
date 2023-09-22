@@ -961,3 +961,6 @@ SELECT
                 GROUP BY DF.id_dispositiu_fk
             ) PF ON D.id_dispositiu = PF.id_dispositiu_fk
             WHERE D.NomDispositiu = 'Ruter' and Zona.`idUser_fk` = 3;
+
+
+SELECT Id_vlan FROM Xarxa WHERE NomXarxa = 'Undefined network' AND idUser_fk = 3 LIMIT 1;
