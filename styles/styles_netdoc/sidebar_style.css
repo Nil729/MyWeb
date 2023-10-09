@@ -1,0 +1,49 @@
+/* Sidebar Styles */
+.navbarNetdoc {
+  width: 100%; /* Cambié el valor para ocupar todo el ancho disponible */
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 20px;
+  padding: 10px;
+  display: flex;
+  flex-direction: row; /* Cambié la dirección de flex a fila */
+  justify-content: flex-end; /* Alinea los elementos a la derecha */
+  align-items: center; /* Centra verticalmente los elementos */
+  position: relative;
+}
+
+.navbarNetdoc ul {
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex; /* Cambié a flex para que los elementos se muestren en línea */
+}
+
+.navbarNetdoc li {
+  margin-right: 10px; /* Cambié margin-bottom a margin-right para separar los elementos horizontalmente */
+}
+
+.navbarNetdoc a {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+.navbarNetdoc a:hover {
+  background-color: #555;
+}
+
+/* Main Content Styles */
+.main-content {
+  padding: 10px;
+}
+
+/* Style for active link */
+.navbarNetdoc a.active {
+  background-color: #555;
+}

@@ -10,8 +10,10 @@ import axios from 'axios';
 import Image from "next/legacy/image";
 import styles from '../../../styles/Home.module.css';
 import Navbar from '../../../Components/component_navbar/Navbar';
+import NavbarNetdoc from  '../../../Components/component_navbar/NavbarNetdoc'
 import XarxaForm from '../../../Components/ComponentNetDoc/componentsXarxa/XarxaForm';
 import IsAuth from '../../../Components/IsAuth';
+import { Nav } from 'office-ui-fabric-react';
 
 function GestionarXarxa() {
 
@@ -21,6 +23,7 @@ function GestionarXarxa() {
       
         <div>
           <Navbar/>
+          <NavbarNetdoc/>
         </div>
         
         <main className={styles.main}>

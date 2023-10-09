@@ -12,15 +12,15 @@ function Login_google() {
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Iniciar Sesión</h2>
       <p>Por favor, inicie sesión con su cuenta de Google.</p>
-        <div>
-          <button onClick={handleGoogleSignIn}>Iniciar Sesión con Google</button>
-        </div>
-        <div>
+      <button onClick={handleGoogleSignIn} className="login-button">
+          Iniciar Sesión con Google
+        </button>
+        {/* <div>
           <button onClick={handleGoogleSignOut}>Cerrar Sesión</button>
-        </div>
+        </div> */}
     </div>
   );
 }

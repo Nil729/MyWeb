@@ -48,6 +48,9 @@ export default NextAuth({
                 return false;
             }
         },
+        async signOut() {
+            return '/api/logout'; // Path to your custom logout endpoint
+        },
 
     },
     pages: {

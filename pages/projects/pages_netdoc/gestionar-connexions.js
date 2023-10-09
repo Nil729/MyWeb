@@ -4,15 +4,16 @@ import React from 'react';
 import Image from "next/legacy/image";
 import styles from '../../../styles/Home.module.css';
 import Navbar from '../../../Components/component_navbar/Navbar';
+import NavbarNetdoc from  '../../../Components/component_navbar/NavbarNetdoc'
 import ConnexionsForm from '../../../Components/ComponentNetDoc/componentsConnexions/ConnexionsForm';
 //import {protectPageNetDocRoute} from '../../api/auth/middleware';
 import IsAuth from '../../../Components/IsAuth';
-
 function GestionarConnexions() {
   return (
     <div className={styles.container}>
       <div>
         <Navbar/>
+        <NavbarNetdoc/>
       </div>
       <main className={styles.main}>
         <ConnexionsForm/>

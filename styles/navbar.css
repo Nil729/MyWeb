@@ -17,9 +17,12 @@ header{
 }
 nav{
   display: flex;
-  padding: 16px;
+  padding: 10px;
+  padding-inline: 24px;
   justify-content: space-between;
   align-items: center;
+}
+.nav_bg{
   background-color: #222222;
 }
 .nav__menu-bar{
@@ -91,5 +94,51 @@ nav{
   
   .nav__link:hover:before{
    width: 100%;
+  }
+  .imageUser{
+    display: inline-block;
+    outline: none;
+    vertical-align: middle;
+    box-sizing: border-box;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    border: 3px solid hsl(118, 100%, 62%);;
+  }
+
+  .userProfile {
+    position: relative;
+  }
+  
+  .options {
+    position: absolute;
+    top: 100%; /* Position below the profile image */
+    right: 0%; /* Align with the right edge of the profile image */
+    background-color: rgb(32, 32, 32);
+    border: 1px solid #797979;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: none; /* Initially hidden */
+    margin: 2px;
+    
+  }
+  
+  .options.show {
+
+    display: block; /* Display when showOptions is true */
+  }
+  .signOutButton:hover {
+    background-color: rgb(102, 102, 102);
+  }
+  
+  /* Style for the buttons */
+  .subscribeButton,
+  .signOutButton {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
   }
 }

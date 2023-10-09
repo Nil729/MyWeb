@@ -11,6 +11,8 @@ import '../styles/styles_netdoc/xarxa.css';
 import '../styles/styles_netdoc/xarxaTaula.css';
 import '../styles/styles_netdoc/connexionsTaula.css';
 import '../styles/styles_netdoc/error-style.css';
+import '../styles/styles_netdoc/sidebar_style.css';
+import '../styles/styles_netdoc/LoginPage.css';
 import { SessionProvider } from 'next-auth/react';
 
 

@@ -12,6 +12,7 @@ import XarxaSelectDefaul from '../componentsXarxa/XarxaSelectDefaul';
 //import Example from './Example';
 import axios from 'axios';
 
+
 const ConnexionsForm = () => {
     const { data: session, status } = useSession();
 
@@ -201,6 +202,7 @@ const ConnexionsForm = () => {
 
     return (
         <div className="network-form-container">
+
             <div className="network-form">
                 <h2 className='title-form'>Formulari de Connexionsns</h2>
                 <form onSubmit={handleSubmit}>
@@ -293,7 +295,7 @@ const ConnexionsForm = () => {
                                 vlan={formvaluesConnexions.vlan}
                             />
                         </>
-                        
+
 
                     ) : null
 

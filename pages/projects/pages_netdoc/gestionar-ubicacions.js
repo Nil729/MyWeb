@@ -10,6 +10,7 @@ import axios from 'axios';
 import Image from "next/legacy/image";
 import styles from '../../../styles/Home.module.css';
 import Navbar from '../../../Components/component_navbar/Navbar';
+import NavbarNetdoc from  '../../../Components/component_navbar/NavbarNetdoc'
 import UbicacioForm from '../../../Components/ComponentNetDoc/componetnsUbicacio/UbicacioForm';
 import IsAuth from '../../../Components/IsAuth';
 
@@ -21,6 +22,7 @@ function GestionarUbicacions() {
       
         <div>
           <Navbar/>
+          <NavbarNetdoc/>
         </div>
         
         <main className={styles.main}>

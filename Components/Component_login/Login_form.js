@@ -6,7 +6,7 @@ import LoginGoogle from './Login_google.js';
 
 function LoginPage() {
   const router = useRouter();
-  
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -35,11 +35,11 @@ function LoginPage() {
       if (result.error) {
         setError('Credenciales inválidas. Por favor, verifique e intente nuevamente.');
       }
-        
+
     } catch (error) {
 
       //router.push('/projects/pages_netdoc');
-  
+
       console.error('Error al iniciar sesión:', error);
       setError('Ocurrió un error al intentar iniciar sesión. Por favor, inténtelo más tarde.');
     }
@@ -47,7 +47,7 @@ function LoginPage() {
 
   return (
     <div>
-      <h1>Iniciar Sesión</h1>
+      {/* <h1>Iniciar Sesión</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleLogin}>
         <div>
@@ -74,7 +74,7 @@ function LoginPage() {
         <button type='button' onClick={handleRegisterClick}>
         Registrate
       </button>
-      </form>
+      </form> */}
       <LoginGoogle/>
     </div>
   );

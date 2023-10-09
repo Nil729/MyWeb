@@ -183,7 +183,9 @@ const UbicacioForm = () => {
     };
 
     return (
+        <>
         <div className="network-form-container">
+
             <div className="network-form">
                 <div>
                     <h2 className='title-form'>Formulari de ubicacions</h2>
@@ -230,6 +232,7 @@ const UbicacioForm = () => {
             </div>
             <TaulaUbicacions ubicacio={ubicacioData} onEditUbicacio={handleEditRowUbicacio} onDeleteUbicacio={handleDeleteRowUbicacio} />
         </div>
+        </>
     );
 };
 

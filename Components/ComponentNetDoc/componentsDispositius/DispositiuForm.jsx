@@ -9,7 +9,6 @@ import UbicacioComboBox from '../componetnsUbicacio/UbicacioComboBox';
 import XarxaComboBox from '../componentsXarxa/XarxaComboBox';
 import { useSession } from 'next-auth/react';
 import { validateIpAddress, validateMacAddress } from '../../../utils/errorUtils';
-
 const DeviceManagementForm = () => {
   const { data: session, status } = useSession();
 
@@ -71,12 +70,12 @@ const DeviceManagementForm = () => {
     event.preventDefault();
     // Validate the IP address
     const ipValidationResult = validateIpAddress(formValues.ip);
-  
+
     if (ipValidationResult) {
       setIpError(ipValidationResult);
       return; // Don't proceed if IP is invalid
     }
-  
+
     // Create a new device object with the form values
     const newDevice = {
       sessionId: session.user.id,
@@ -87,13 +86,13 @@ const DeviceManagementForm = () => {
       quantitatPortsEth: formValues.ethernetPorts || '',
       zona_id: formValues.location
     };
-  
+
     if (selectedRowForm === null) {
       try {
         // Guardar la nova ubicacio a la base de dades
         const response = await axios.post('http://localhost:3002/api/netdoc/dispositius/insert', newDevice);
         console.log('newDevice', newDevice);
-  
+
         // Check if the response contains an error message
         if (response.data && response.data.error) {
           // Set the error message state to display it in your component
@@ -122,7 +121,7 @@ const DeviceManagementForm = () => {
       setDispositius(updatedDispositius);
       setselectedRowForm(null);
     }
-  
+
     // Reset the form values
     setFormValues({
       deviceName: '',
@@ -132,7 +131,7 @@ const DeviceManagementForm = () => {
       location: '',
     });
   };
-  
+
 
   const handleDelete = (index) => {
 
@@ -143,7 +142,7 @@ const DeviceManagementForm = () => {
         // Guardar la nova ubicacio a la base de dades
         console.log('dispositius[index]', delDispositu.id_dispositiu);
         axios.post(`http://localhost:3002/api/netdoc/dispositius/delete?id_dispositiu=${delDispositu.id_dispositiu}`);;
-      
+
       }
       catch (error) {
         console.error(error);
@@ -240,7 +239,6 @@ const DeviceManagementForm = () => {
   return (
     <div className="network-form-container">
       <div className='network-form'>
-
         <div className="title-form">
           <h2>Gestionar Dispositius</h2>
         </div>

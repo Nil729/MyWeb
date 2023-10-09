@@ -2,30 +2,41 @@ import Link from "next/link";
 //import Image from "next/image";
 import React, { useState } from "react";
 import NavItem from "./NavItem";
+import UserProfile from "./UserProfile";
+import { useSession } from 'next-auth/react';
+//import { Avatar } from "@nextui-org/react";
+
 
 const MENU_LIST = [
   { text: "Home", href: "/home" }, // Si en el href posses una ruta ex: /api/hello --> si que fnciona 
   { text: "WebManager", href: "/projects/Page_webmanager" },
   { text: "NetDoc", href: "/projects/pageNetDoc" },
   { text: "About Us", href: "/about" },
-  { text: "Contact", href: "/contact" }
+  { text: "Contact", href: "/contact" },
+
+
 ];
+
+
+
 const Navbar = () => {
+  const { data: session } = useSession();
   const [navActive, setNavActive] = useState(null);
   const [activeIdx, setActiveIdx] = useState(-1);
 
   return (
     <header>
-      <nav className={`nav`}>
+      <nav className={`nav, nav_bg`}>
         <Link href={"/home"}>
 
-          <h1 className="logo">Nil Projects</h1>
+          <h1 className="text-4xl font-bold text-blue-500">Nil Projects</h1>
 
         </Link>
+
         <div
           onClick={() => setNavActive(!navActive)}
           className={`nav__menu-bar`}
-          >
+        >
           <div></div>
           <div></div>
           <div></div>
@@ -38,10 +49,20 @@ const Navbar = () => {
                 setNavActive(false);
               }}
               key={menu.text}
-              >
+            >
               <NavItem active={activeIdx === idx} {...menu} />
             </div>
           ))}
+
+          {session ? (
+            // Render UserProfile component when the user is logged in
+            <UserProfile/>
+          ) : (
+            // Render a different component or message when the user is not logged in
+            <Link href="/LoginPage">
+              <b>Sign in</b>
+            </Link>
+          )}
         </div>
       </nav>
     </header>

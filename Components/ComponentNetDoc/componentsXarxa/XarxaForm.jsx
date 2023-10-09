@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSession, SessionProvider } from 'next-auth/react';
 import TaulaXarxa from './TaulaXarxa';
 import axios from 'axios';
+//import LayautSidebar from '../SideBarNetDoc/LayautSidebar';
 
 
 const NetworkForm = () => {
@@ -44,7 +45,7 @@ const NetworkForm = () => {
 
 
     const handleSubmit = async (event) => {
-        
+
         event.preventDefault();
 
         const novaXarxa = {
@@ -55,7 +56,7 @@ const NetworkForm = () => {
         };
 
         try {
-            
+
             const response = await axios.post('http://localhost:3002/api/netdoc/xarxa/insertXarxa', novaXarxa);
             console.log('novaXarxa', novaXarxa);
 
@@ -72,11 +73,11 @@ const NetworkForm = () => {
             console.log('error', error);
             // Handle network errors or unexpected errors here
             if (error.response && error.response.data && error.response.data.error) {
-              // Extract the specific error message from the response and set it as an error
-              setError(error.response.data.error);
+                // Extract the specific error message from the response and set it as an error
+                setError(error.response.data.error);
             } else {
-              // Set a generic error message
-              setError('An error occurred while sending the request.');
+                // Set a generic error message
+                setError('An error occurred while sending the request.');
             }
         }
 
@@ -108,7 +109,7 @@ const NetworkForm = () => {
 
     // Guardar els canvis
     const handleSaveRow = async () => {
-        
+
         if (selectedRowXarxaForm !== null) {
             const updatedNetworks = [...networkData];
 
@@ -136,11 +137,11 @@ const NetworkForm = () => {
                 console.log('error', error);
                 // Handle network errors or unexpected errors here
                 if (error.response && error.response.data && error.response.data.error) {
-                  // Extract the specific error message from the response and set it as an error
-                  setError(error.response.data.error.sqlMessage);
+                    // Extract the specific error message from the response and set it as an error
+                    setError(error.response.data.error.sqlMessage);
                 } else {
-                  // Set a generic error message
-                  setError('An error occurred while sending the request.');
+                    // Set a generic error message
+                    setError('An error occurred while sending the request.');
                 }
             }
             setselectedRowXarxaForm(null);
@@ -188,14 +189,15 @@ const NetworkForm = () => {
     };
 
     return (
+
         <div className="network-form-container">
+
             <div className="network-form">
                 <div>
                     <h2 className='title-form'>Formulari de Xarxa</h2>
                 </div>
                 <div className="error-message">{error}</div>
                 <form onSubmit={handleSubmit}>
-
                     <div className="form-group">
                         <label htmlFor="networkUserId">ID de la Xarxa:</label>
                         <input
@@ -244,7 +246,7 @@ const NetworkForm = () => {
                 </form>
             </div>
             <TaulaXarxa networks={networkData} onEditXarxa={handleEditRow} onDeleteXarxa={handleDeleteRowXarxa} />
-        </div>
+        </div >
     );
 };
 

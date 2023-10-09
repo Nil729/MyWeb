@@ -8,6 +8,7 @@ import axios from 'axios';
 import Image from "next/legacy/image";
 import styles from '../../../styles/Home.module.css';
 import Navbar from '../../../Components/component_navbar/Navbar';
+import NavbarNetdoc from  '../../../Components/component_navbar/NavbarNetdoc'
 import DispositiusForm from '../../../Components/ComponentNetDoc/componentsDispositius/DispositiuForm';
 import IsAuth from '../../../Components/IsAuth';
 
@@ -18,6 +19,7 @@ function GestionarDispositius() {
       
         <div>
           <Navbar/>
+          <NavbarNetdoc/>
         </div>
         
         <main className={styles.main}>
