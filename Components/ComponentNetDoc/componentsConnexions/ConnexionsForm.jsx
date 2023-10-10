@@ -26,9 +26,9 @@ const ConnexionsForm = () => {
         portStatus: '',
         finalDeviceName: '',
         endPort: '',
-        pachpanelName: '',
+        pachpanelName: 'test',
         vlan: '',
-        descriptionConnexions: '',
+        descriptionConnexions: 'test',
     });
 
 
@@ -300,16 +300,15 @@ const ConnexionsForm = () => {
                     ) : null
 
                     }
-
-
-
+                    {/*
                     <div className="form-group">
                         <label htmlFor="pachpanelName">Nom pachpanel:</label>
                         <input
                             type="text"
                             id="pachpanelName"
                             name="pachpanelName"
-                            value={formvaluesConnexions.pachpanelName}
+                            value={"test"}
+                            //value={formvaluesConnexions.pachpanelName}
                             onChange={handleChange}
                             required
                         />
@@ -324,6 +323,7 @@ const ConnexionsForm = () => {
                             onChange={handleChange}
                         ></textarea>
                     </div>
+                    */}
 
                     <div className="form-group">
                         {selectedRowConnexionsForm !== null ? (
