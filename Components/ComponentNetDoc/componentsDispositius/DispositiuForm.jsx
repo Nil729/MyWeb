@@ -247,7 +247,7 @@ const DeviceManagementForm = () => {
 
           <div>
             <button
-              className={`option-button ${deviceType === "final" ? 'selected' : ''}`}
+              className={`option-button ${deviceType === "final" ? '' : 'selected' }`}
               onClick={() => handleDeviceTypeChange("final")}
             >
               Dispositiu Final
@@ -255,7 +255,7 @@ const DeviceManagementForm = () => {
           </div>
           <div >
             <button
-              className={`option-button ${deviceType === "Infra" ? 'selected' : ''}`}
+              className={`option-button ${deviceType === "Infra" ? '' : 'selected' }`}
               onClick={() => handleDeviceTypeChange("Infra")}
             >
               Dispositiu d'Infraestructura

@@ -9,13 +9,11 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
     infraDeviceName: "",
     // filter by integer endPort
     portInfra: "",
+    vlan: "",
     portStatus: "",
     finalDeviceName: "",
     // filter by integer endPort
     endPort: "",
-    pachpanelName: "",
-    vlan: "",
-    descriptionConnexions: "",
   });
 
 
@@ -49,19 +47,21 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
   
   console.log("Filters:", filters); // Log filter values to check if they are as expected
   const filteredConnexions = connexions.filter(connexion => {
-    const match =
+    return (
       connexion.infraDeviceName && connexion.infraDeviceName.includes(filters.infraDeviceName) &&
+      (filters.portInfra === '' || (connexion.portInfra && connexion.portInfra.toString().includes(filters.portInfra))) &&
+      connexion.vlan && connexion.vlan.includes(filters.vlan) &&
       connexion.portStatus && connexion.portStatus.includes(filters.portStatus) &&
       connexion.finalDeviceName && connexion.finalDeviceName.includes(filters.finalDeviceName) &&
-      connexion.pachpanelName && connexion.pachpanelName.includes(filters.pachpanelName) &&
-      connexion.vlan && connexion.vlan.includes(filters.vlan) &&
-      connexion.descriptionConnexions && connexion.descriptionConnexions.includes(filters.descriptionConnexions) &&
-      connexion.portInfra && connexion.portInfra.includes(filters.portInfra) &&
-      (
-        (filters.portInfra === '' || (connexion.portInfra && connexion.portInfra.toString().includes(filters.portInfra))) &&
-        (filters.endPort === '' || (connexion.endPort && connexion.endPort.toString().includes(filters.endPort)))
-      );
-    return match;
+      (filters.endPort === '' || (connexion.endPort && connexion.endPort.toString().includes(filters.endPort)))
+
+
+
+      // (
+      //   (filters.portInfra === '' || (connexion.portInfra && connexion.portInfra.toString().includes(filters.portInfra))) &&
+      //   (filters.endPort === '' || (connexion.endPort && connexion.endPort.toString().includes(filters.endPort)))
+      // );
+    );
   });
   
   
@@ -80,6 +80,7 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
                   type="text"
                   value={filters.infraDeviceName}
                   onChange={e => handleFilterChange("infraDeviceName", e.target.value)}
+                  placeholder='Filter by device name'
                 />
               </div>
 
@@ -90,6 +91,7 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
                   type="text"
                   value={filters.portInfra}
                   onChange={e => handleFilterChange("portInfra", e.target.value)}
+                  placeholder='Filter by port'
                 />
               </div>
 
@@ -100,6 +102,7 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
                   type="text"
                   value={filters.portStatus}
                   onChange={e => handleFilterChange("portStatus", e.target.value)}
+                  placeholder='Filter by port status'
                 />
               </div>
             </th>
@@ -109,6 +112,7 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
                   type="text"
                   value={filters.finalDeviceName}
                   onChange={e => handleFilterChange("finalDeviceName", e.target.value)}
+                  placeholder='Filter by device name'
                 />
               </div>
             </th>
@@ -118,6 +122,7 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
                   type="text"
                   value={filters.endPort}
                   onChange={e => handleFilterChange("endPort", e.target.value)}
+                  placeholder='Filter by port'
                 />
               </div>
             </th>
@@ -136,6 +141,7 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
                   type="text"
                   value={filters.vlan}
                   onChange={e => handleFilterChange("vlan", e.target.value)}
+                  placeholder='Filter by network name'
                 />
               </div>
             </th>
@@ -151,7 +157,7 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
           </tr>
         </thead>
         <tbody>
-          {connexions.map((connexions, index) => (
+          {filteredConnexions.map((connexions, index) => (
             <tr 
               key={index}
               className={selectedRow === index ? 'selected' : ''}
