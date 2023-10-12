@@ -8,3 +8,10 @@ Engegar MyWeb:
 Engegar WebManager (server):
 
 /data/WebManager/server# node index.js
+
+Engegar MySql:
+
+sudo service mysql start
+
+NEXTAUTH_URL=http://localhost:3002
+NEXT_PUBLIC_NEXTAUTH_URL=http://localhost:3002

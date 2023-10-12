@@ -7,7 +7,7 @@ const UbicacioComboBox = ({ value, onChange }) => {
   useEffect(() => {
     const fetchUbicacions = async () => {
       try {
-        const response = await axios.get('http://localhost:3002/api/netdoc/ubicacions');
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/ubicacions`);
         const ubicacions = response.data.map((ubicacio) => ubicacio.ubicacioName);
         setUbicacions(ubicacions);
       } catch (error) {

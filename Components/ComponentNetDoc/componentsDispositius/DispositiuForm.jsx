@@ -43,7 +43,7 @@ const DeviceManagementForm = () => {
   const fetchDispositiusData = async () => {
     try {
       // Fetch ubicacio data from the API
-      const response = await axios.get(`http://localhost:3002/api/netdoc/dispositius/get`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/dispositius/get`);
       // Set ubicacio data state
       console.log('response', response.data);
       setDispositius(response.data);
@@ -90,7 +90,7 @@ const DeviceManagementForm = () => {
     if (selectedRowForm === null) {
       try {
         // Guardar la nova ubicacio a la base de dades
-        const response = await axios.post('http://localhost:3002/api/netdoc/dispositius/insert', newDevice);
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/dispositius/insert`, newDevice);
         console.log('newDevice', newDevice);
 
         // Check if the response contains an error message
@@ -141,7 +141,7 @@ const DeviceManagementForm = () => {
       try {
         // Guardar la nova ubicacio a la base de dades
         console.log('dispositius[index]', delDispositu.id_dispositiu);
-        axios.post(`http://localhost:3002/api/netdoc/dispositius/delete?id_dispositiu=${delDispositu.id_dispositiu}`);;
+        axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/dispositius/delete?id_dispositiu=${delDispositu.id_dispositiu}`);;
 
       }
       catch (error) {
@@ -203,7 +203,7 @@ const DeviceManagementForm = () => {
       setDispositius(updatedDispositius);
       console.log('updatedDispositius[selectedRowForm]', updatedDispositius[selectedRowForm]);
       try {
-        const response = await axios.put('http://localhost:3002/api/netdoc/dispositius/update', updatedDispositius[selectedRowForm]);
+        const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/dispositius/update`, updatedDispositius[selectedRowForm]);
         console.log('Device updated successfully');
         if (response.data && response.data.error) {
           // Set the error message state to display it in your component

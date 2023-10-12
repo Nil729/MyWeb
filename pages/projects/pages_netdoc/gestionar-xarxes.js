@@ -13,7 +13,6 @@ import Navbar from '../../../Components/component_navbar/Navbar';
 import NavbarNetdoc from  '../../../Components/component_navbar/NavbarNetdoc'
 import XarxaForm from '../../../Components/ComponentNetDoc/componentsXarxa/XarxaForm';
 import IsAuth from '../../../Components/IsAuth';
-import { Nav } from 'office-ui-fabric-react';
 
 function GestionarXarxa() {
 

@@ -17,8 +17,8 @@ export default async function insertDispositiu(req, res) {
 
     // Insert the new device into the "Dispositius" table
     pool.query(
-      'INSERT INTO Dispositius (  NomDispositiu, deviceType, ip, mac, zona_id, Id_vlan, quantitatPortsEth, descripcio_dispositiu) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)',
-      [NomDispositiu, deviceType, ip, mac, resultsZona, 1, quantitatPortsEth, "test"],
+      'INSERT INTO Dispositius (  NomDispositiu, deviceType, ip, mac, zona_id, quantitatPortsEth, descripcio_dispositiu) VALUES ( ?, ?, ?, ?, ?, ?, ?)',
+      [NomDispositiu, deviceType, ip, mac, resultsZona,  quantitatPortsEth, "test"],
       (error, results) => {
         if (error) {
           handleDatabaseError(res, error);

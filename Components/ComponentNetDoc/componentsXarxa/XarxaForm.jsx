@@ -34,7 +34,7 @@ const NetworkForm = () => {
 
     const fetchNetworkData = async () => {
         try {
-            const response = await fetch('http://localhost:3002/api/netdoc/xarxa/getXarxa');
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/xarxa/getXarxa`);
             const networkData = await response.json();
             console.log('networkData', networkData);
             setNetworkData(networkData);
@@ -57,7 +57,7 @@ const NetworkForm = () => {
 
         try {
 
-            const response = await axios.post('http://localhost:3002/api/netdoc/xarxa/insertXarxa', novaXarxa);
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/xarxa/insertXarxa`, novaXarxa);
             console.log('novaXarxa', novaXarxa);
 
             if (response.data && response.data.error) {
@@ -122,7 +122,7 @@ const NetworkForm = () => {
 
             try {
 
-                const response = await axios.put('http://localhost:3002/api/netdoc/xarxa/updateXarxa', updatedNetworks[selectedRowXarxaForm]);
+                const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/xarxa/updateXarxa`, updatedNetworks[selectedRowXarxaForm]);
 
                 if (response.data && response.data.error) {
                     setError(response.data.error);
@@ -162,7 +162,7 @@ const NetworkForm = () => {
         console.log('xarxaId', xarxaId);
         try {
 
-            await axios.delete(`http://localhost:3002/api/netdoc/xarxa/delXarxa?xarxaId=${xarxaId}`);
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/xarxa/delXarxa?xarxaId=${xarxaId}`);
             updatedNetworks.splice(index, 1);
             setNetworkData(updatedNetworks);
             // gurada els canvis

@@ -12,11 +12,16 @@ export default async function getDispositius(req, res) {
 
 
     // Proceed to fetch the data if the user is authorized
-    pool.query(
-      `SELECT id_dispositiu, ip, NomDispositiu, mac, quantitatPortsEth, deviceType, NomZona as zona_id, NomXarxa as Id_vlan
+    /*     `SELECT id_dispositiu, ip, NomDispositiu, mac, quantitatPortsEth, deviceType, NomZona as zona_id, NomXarxa as Id_vlan
       FROM Dispositius 
       JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
       JOIN Xarxa ON Dispositius.Id_vlan = Xarxa.Id_vlan
+      WHERE Zona.idUser_fk = ?;`,
+    */
+    pool.query(
+      `SELECT id_dispositiu, ip, NomDispositiu, mac, quantitatPortsEth, deviceType, NomZona as zona_id
+      FROM Dispositius 
+      JOIN Zona ON Dispositius.zona_id = Zona.Id_zona
       WHERE Zona.idUser_fk = ?;`,
       [session.user.id],
       (error, results) => {

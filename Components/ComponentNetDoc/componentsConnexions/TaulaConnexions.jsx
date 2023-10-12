@@ -47,16 +47,14 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
   
   console.log("Filters:", filters); // Log filter values to check if they are as expected
   const filteredConnexions = connexions.filter(connexion => {
+    console.log("Connexions:", connexion); // Log connexion values to check if they are as expected
     return (
       connexion.infraDeviceName && connexion.infraDeviceName.includes(filters.infraDeviceName) &&
       (filters.portInfra === '' || (connexion.portInfra && connexion.portInfra.toString().includes(filters.portInfra))) &&
-      connexion.vlan && connexion.vlan.includes(filters.vlan) &&
+      //connexion.vlan && connexion.vlan.includes(filters.vlan) &&
       connexion.portStatus && connexion.portStatus.includes(filters.portStatus) &&
       connexion.finalDeviceName && connexion.finalDeviceName.includes(filters.finalDeviceName) &&
       (filters.endPort === '' || (connexion.endPort && connexion.endPort.toString().includes(filters.endPort)))
-
-
-
       // (
       //   (filters.portInfra === '' || (connexion.portInfra && connexion.portInfra.toString().includes(filters.portInfra))) &&
       //   (filters.endPort === '' || (connexion.endPort && connexion.endPort.toString().includes(filters.endPort)))

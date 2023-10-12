@@ -5,7 +5,7 @@ const DispositiusFinalComboBox = ({ onChange, nomDispositiuFinal }) => {
     const [dispositiusFinal, setDispositiusFinal] = useState([]);
 
     const fetchData = async () => {
-        const result = await axios.get('http://localhost:3002/api/netdoc/dispositius/dispositiusFinal/getDispositiusFinal');
+        const result = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/dispositius/dispositiusFinal/getDispositiusFinal`);
         setDispositiusFinal(result.data);
         console.log(result.data);  //{ nomDispositiuFinal: 'Dispositiu 2', deviceType: 'Infra' }, { nomDispositiuFinal: 'final_test', deviceType: 'final' }
     };

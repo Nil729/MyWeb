@@ -11,7 +11,7 @@ const XarxaSelectBox = ({ vlan, onChange, nomDispositiuInfraestructura, portInfr
   useEffect(() => {
     const fetchXarxa = async () => {
       try {
-        const response = await axios.get(`http://localhost:3002/api/netdoc/xarxa/getXarxaFromPortInfra?nomDispositiuInfraestructura=${nomDispositiuInfraestructura}&portInfra=${portInfra}`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/xarxa/getXarxaFromPortInfra?nomDispositiuInfraestructura=${nomDispositiuInfraestructura}&portInfra=${portInfra}`);
         const xarxaData = response.data.map((xarxa) => ({
           value: xarxa.NomXarxa,
           label: xarxa.NomXarxa,

@@ -3,7 +3,7 @@ import { signIn, signOut } from 'next-auth/react';
 function Login_google() {
 
   const handleGoogleSignIn = () => {
-    signIn('google', { callbackUrl: 'http://localhost:3002/projects/pageNetDoc' });
+    signIn('google', { callbackUrl: `${process.env.NEXT_PUBLIC_API_URL}/projects/pageNetDoc` });
 
   };
 

@@ -25,7 +25,7 @@ const UbicacioForm = () => {
     const fetchUbicacioData = async () => {
         try {
             // Fetch ubicacio data from the API
-            const response = await axios.get('http://localhost:3002/api/netdoc/ubicacions');
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/ubicacions`);
             // Set ubicacio data state
             console.log('response', response.data);
             setUbicacioData(response.data);
@@ -55,7 +55,7 @@ const UbicacioForm = () => {
         try {
             // Guardar la nova ubicacio a la base de dades
 
-            const response = await axios.post('http://localhost:3002/api/netdoc/ubicacions', novaUbicacio);
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/ubicacions`, novaUbicacio);
             console.log('novaUbicacio', novaUbicacio);
             // Check if the response contains an error message
             if (response.data && response.data.error) {
@@ -118,7 +118,7 @@ const UbicacioForm = () => {
                 console.log('ubicacioId', ubicacioId);
 
                 // Guardar la nova ubicacio a la base de dades
-                const response = await axios.put(`http://localhost:3002/api/netdoc/ubicacioId?ubicacioId=${ubicacioId}`, updatedubicacio[selectedRowUbicacioForm]);
+                const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/ubicacioId?ubicacioId=${ubicacioId}`, updatedubicacio[selectedRowUbicacioForm]);
                 console.log('updatedubicacio', updatedubicacio[selectedRowUbicacioForm]);
 
                 // Check if the response contains an error message
@@ -156,7 +156,7 @@ const UbicacioForm = () => {
             console.log('ubicacioId', ubicacioId);
 
             // Send a request to delete the ubicació
-            await axios.delete(`/api/netdoc/ubicacioId?ubicacioId=${ubicacioId}`, ubicacioData[index]);
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/ubicacioId?ubicacioId=${ubicacioId}`, ubicacioData[index]);
 
             // Update the ubicacioData state to reflect the deletion
             const updatedUbicacioData = [...ubicacioData];

@@ -8,8 +8,8 @@ const EndPortComboBox = ({ onChange, endPort, nomDispositiuFinal}) => {
     const [selectedEndPorts, setSelectedEndPorts] = useState([]);
 
     const fetchData = async () => {
-        const result = await axios.get(`http://localhost:3002/api/netdoc/ports/getPortsFinal?nomDispositiuFinal=${nomDispositiuFinal}`);
-        const resultSelectedEndPorts = await axios.get(`http://localhost:3002/api/netdoc/ports/getPortsSelected?nomDipositiuInfra=${nomDispositiuFinal}`);
+        const result = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/ports/getPortsFinal?nomDispositiuFinal=${nomDispositiuFinal}`);
+        const resultSelectedEndPorts = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/ports/getPortsSelected?nomDipositiuInfra=${nomDispositiuFinal}`);
         setEndPort(result.data);
         setSelectedEndPorts(resultSelectedEndPorts.data);
     };

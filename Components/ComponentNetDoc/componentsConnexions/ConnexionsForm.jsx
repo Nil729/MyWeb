@@ -47,7 +47,7 @@ const ConnexionsForm = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios(
-                'http://localhost:3002/api/netdoc/connexions/getConnexions',
+                `${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/connexions/getConnexions`,
             );
             console.log('response.data: ', response.data);
             setconnexionsData(response.data);
@@ -65,9 +65,9 @@ const ConnexionsForm = () => {
             portStatus: formvaluesConnexions.portStatus,
             finalDeviceName: formvaluesConnexions.finalDeviceName,
             endPort: formvaluesConnexions.endPort,
-            pachpanelName: formvaluesConnexions.pachpanelName,
+            //pachpanelName: formvaluesConnexions.pachpanelName,
             vlan: formvaluesConnexions.vlan,
-            descriptionConnexions: formvaluesConnexions.descriptionConnexions,
+            //descriptionConnexions: formvaluesConnexions.descriptionConnexions,
             sessionId: session.user.id,
         };
 
@@ -76,7 +76,7 @@ const ConnexionsForm = () => {
         console.log('novaConnexions: ', novaConnexions);
         try {
 
-            axios.post('http://localhost:3002/api/netdoc/connexions/insertConnexio', novaConnexions);
+            axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/connexions/insertConnexio`, novaConnexions);
         } catch (error) {
             console.error(error);
         }
@@ -104,12 +104,10 @@ const ConnexionsForm = () => {
             portStatus: formvaluesConnexions.portStatus,
             finalDeviceName: formvaluesConnexions.finalDeviceName,
             endPort: formvaluesConnexions.endPort,
-            pachpanelName: formvaluesConnexions.pachpanelName,
+            //pachpanelName: formvaluesConnexions.pachpanelName,
             vlan: formvaluesConnexions.vlan,
-            descriptionConnexions: formvaluesConnexions.descriptionConnexions,
+            //descriptionConnexions: formvaluesConnexions.descriptionConnexions,
         });
-
-
         setselectedRowUbiacioForm(index);
     };
 
@@ -124,16 +122,16 @@ const ConnexionsForm = () => {
                 portStatus: formvaluesConnexions.portStatus,
                 finalDeviceName: formvaluesConnexions.finalDeviceName,
                 endPort: formvaluesConnexions.endPort,
-                pachpanelName: formvaluesConnexions.pachpanelName,
+                //pachpanelName: formvaluesConnexions.pachpanelName,
                 vlan: formvaluesConnexions.vlan,//formvaluesConnexions.vlan.split(', '), // convertir a array 
-                descriptionConnexions: formvaluesConnexions.descriptionConnexions,
+                //descriptionConnexions: formvaluesConnexions.descriptionConnexions,
                 sessionId: session.user.id,
             };
             setconnexionsData(updatedConnexions);
 
             console.log('updatedConnexions: ', updatedConnexions[selectedRowConnexionsForm]);
             try {
-                axios.put('http://localhost:3002/api/netdoc/connexions/updateConnexions', updatedConnexions[selectedRowConnexionsForm]);
+                axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/connexions/updateConnexions`, updatedConnexions[selectedRowConnexionsForm]);
             } catch (error) {
                 console.error(error);
             }
@@ -146,9 +144,9 @@ const ConnexionsForm = () => {
                 portStatus: '',
                 finalDeviceName: '',
                 endPort: '',
-                pachpanelName: '',
+                //pachpanelName: '',
                 vlan: '',
-                descriptionConnexions: '',
+                //descriptionConnexions: '',
             });
         }
     };
@@ -160,7 +158,7 @@ const ConnexionsForm = () => {
 
         console.log('Delete connexio: ', delconn.idConneccio, ' - ', delconn.infraDeviceName, ' - ', delconn.portInfra, ' - ', delconn.portStatus, ' - ', delconn.finalDeviceName, ' - ', delconn.endPort, ' - ', delconn.pachpanelName, ' - ', delconn.vlan, ' - ', delconn.descriptionConnexions);
         try {
-            axios.delete(`http://localhost:3002/api/netdoc/connexions/deleteConnexio?idConneccio=${delconn.idConneccio}&infraDeviceName=${delconn.infraDeviceName}&finalDeviceName=${delconn.finalDeviceName}`);
+            axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/connexions/deleteConnexio?idConneccio=${delconn.idConneccio}&infraDeviceName=${delconn.infraDeviceName}&finalDeviceName=${delconn.finalDeviceName}`);
         } catch (error) {
             console.error(error);
         }
