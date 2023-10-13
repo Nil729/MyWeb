@@ -2,18 +2,23 @@ import pool from "../../../../database/db.connection";
 
 import { getIdDispositiu } from "../dispositius/getIdDispositiu";
 
+
+
+
 export default async function deleteConnexio(req, res) {
 
     const idConneccio = req.query.idConneccio;
     const infraDeviceName = req.query.infraDeviceName;
     const finalDeviceName = req.query.finalDeviceName;
+    const sessionId = req.query.sessionId;
 
     // Get the IDs of the infrastructure and final devices
     console.log('idConneccio: ', idConneccio);
     console.log('infraDeviceName: ', infraDeviceName);
     console.log('finalDeviceName: ', finalDeviceName);
+    console.log('sessionId: ', sessionId);
 
-    const typeDevice = await getIdDispositiu(finalDeviceName);
+    const typeDevice = await getIdDispositiu(finalDeviceName, sessionId);
     console.log('typeDevice: ', typeDevice);
     console.log('typeDevice: ', typeDevice[0].deviceType);
 

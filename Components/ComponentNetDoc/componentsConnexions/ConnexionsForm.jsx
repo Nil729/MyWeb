@@ -23,12 +23,13 @@ const ConnexionsForm = () => {
     const [formvaluesConnexions, setformvaluesConnexions] = useState({
         infraDeviceName: '',
         portInfra: '',
-        portStatus: '',
+        portStatus: 'undefined',
         finalDeviceName: '',
         endPort: '',
         pachpanelName: 'test',
-        vlan: '',
+        vlan: 'Undefined network',
         descriptionConnexions: 'test',
+        sessionId: session.user.id,
     });
 
 
@@ -53,6 +54,7 @@ const ConnexionsForm = () => {
             setconnexionsData(response.data);
         };
         fetchData();
+
     }, []);
 
 
@@ -66,9 +68,10 @@ const ConnexionsForm = () => {
             finalDeviceName: formvaluesConnexions.finalDeviceName,
             endPort: formvaluesConnexions.endPort,
             //pachpanelName: formvaluesConnexions.pachpanelName,
-            vlan: formvaluesConnexions.vlan,
+            vlan: formvaluesConnexions.vlan ? formvaluesConnexions.vlan : 'Undefined network',
             //descriptionConnexions: formvaluesConnexions.descriptionConnexions,
             sessionId: session.user.id,
+            
         };
 
         setconnexionsData((prevConnexions) => [...prevConnexions, novaConnexions]);
@@ -155,10 +158,12 @@ const ConnexionsForm = () => {
         // Eliminar la fila seleccionada
         const updatedConnexions = [...connexionsData];
         const delconn = updatedConnexions[index];
+        console.log('updatedConnexions: ', session.user.id);
+        const sessionId = session.user.id;
 
-        console.log('Delete connexio: ', delconn.idConneccio, ' - ', delconn.infraDeviceName, ' - ', delconn.portInfra, ' - ', delconn.portStatus, ' - ', delconn.finalDeviceName, ' - ', delconn.endPort, ' - ', delconn.pachpanelName, ' - ', delconn.vlan, ' - ', delconn.descriptionConnexions);
+        //console.log('Delete connexio: ', delconn.idConneccio, ' - ', delconn.infraDeviceName, ' - ', delconn.portInfra, ' - ', delconn.portStatus, ' - ', delconn.finalDeviceName, ' - ', delconn.endPort,  ' - ', delconn.vlan, ' - ', sessionId);
         try {
-            axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/connexions/deleteConnexio?idConneccio=${delconn.idConneccio}&infraDeviceName=${delconn.infraDeviceName}&finalDeviceName=${delconn.finalDeviceName}`);
+            axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/connexions/deleteConnexio?idConneccio=${delconn.idConneccio}&infraDeviceName=${delconn.infraDeviceName}&finalDeviceName=${delconn.finalDeviceName}&sessionId=${sessionId}`);
         } catch (error) {
             console.error(error);
         }

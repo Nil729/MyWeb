@@ -8,11 +8,11 @@ import { useSession } from 'next-auth/react';
 
 
 const MENU_LIST = [
-  { text: "Home", href: "/home" }, // Si en el href posses una ruta ex: /api/hello --> si que fnciona 
+  { text: "Home", href: "/" }, // Si en el href posses una ruta ex: /api/hello --> si que fnciona 
   { text: "WebManager", href: "/projects/Page_webmanager" },
   { text: "NetDoc", href: "/projects/pageNetDoc" },
-  { text: "About Us", href: "/about" },
-  { text: "Contact", href: "/contact" },
+  { text: "About me", href: "/" },
+  { text: "Contact", href: "/" },
 
 
 ];

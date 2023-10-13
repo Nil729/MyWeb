@@ -9,27 +9,27 @@ import {
 
 import { getIdPortInfra, getIdPortFinal } from "../ports/getIdPorts";
 import { insertEstatPortInfra } from "../ports/insertEstatPortInfra";
-import getXarxawithoutSessionId from "../xarxa/getXarxawithoutSessionId";
+import getXarxawithSessionId from "../xarxa/getXarxawithSessionId";
 
 
-const handlePortStatusChange = async (portInfraId, vlan, portStatus) => {
+const handlePortStatusChange = async (portInfraId, vlan, portStatus, sessionId) => {
     console.log('vlan: ', vlan);
 
     if (portStatus === 'tagged') {
         for (const vlanValue of vlan) {
             console.log('arrayVlan[i]: ', vlanValue);
-            await insertTaggedVlan(portInfraId, vlanValue, portStatus);
+            await insertTaggedVlan(portInfraId, vlanValue, portStatus, sessionId);
         }
     } else if (portStatus === 'untagged' || portStatus === 'undefined') {
-        await insertTaggedVlan(portInfraId, vlan, portStatus);
+        await insertTaggedVlan(portInfraId, vlan, portStatus, sessionId);
     }
 };
 
 
-async function insertTaggedVlan(portInfraId, vlan, portStatus) {
+async function insertTaggedVlan(portInfraId, vlan, portStatus, sessionId) {
 
-    const idXarxa = await getXarxawithoutSessionId(vlan);
-    console.log('PortInfra: ', portInfraId[0].IdPortInfra, 'IdXarxa: ', idXarxa, 'VlanConfig; ', portStatus)
+    const idXarxa = await getXarxawithSessionId(vlan, sessionId);
+    console.log('PortInfra: ', portInfraId[0].IdPortInfra, 'IdXarxa: ', idXarxa, 'VlanConfig: ', portStatus)
     await insertEstatPortInfra(portInfraId[0].IdPortInfra, idXarxa, portStatus);
 
 }
@@ -144,7 +144,7 @@ export default async function insertConnexio(req, res) {
 
             );
 
-            handlePortStatusChange(portInfraId, vlan, portStatus);
+            handlePortStatusChange(portInfraId, vlan, portStatus, sessionId);
 
         } else {
 
@@ -213,7 +213,7 @@ export default async function insertConnexio(req, res) {
 
             );
 
-            handlePortStatusChange(portInfraId, vlan, portStatus);
+            handlePortStatusChange(portInfraId, vlan, portStatus, sessionId);
         }
 
         res.status(200).json({ message: 'Records inserted successfully' });
