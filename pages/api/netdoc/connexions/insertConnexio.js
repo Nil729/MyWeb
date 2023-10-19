@@ -1,4 +1,5 @@
 
+import { validateConfig } from "next/dist/server/config-shared";
 import pool from "../../../../database/db.connection";
 
 import {
@@ -13,11 +14,16 @@ import getXarxawithSessionId from "../xarxa/getXarxawithSessionId";
 
 
 const handlePortStatusChange = async (portInfraId, vlan, portStatus, sessionId) => {
+
+    vlan = typeof vlan === 'string' ? [vlan] : vlan;
     console.log('vlan: ', vlan);
 
     if (portStatus === 'tagged') {
+        
         for (const vlanValue of vlan) {
             console.log('arrayVlan[i]: ', vlanValue);
+
+
             await insertTaggedVlan(portInfraId, vlanValue, portStatus, sessionId);
         }
     } else if (portStatus === 'untagged' || portStatus === 'undefined') {

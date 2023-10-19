@@ -18,12 +18,12 @@ const XarxaSelectBox = ({ vlan, onChange, nomDispositiuInfraestructura, portInfr
         }));
         console.log('xarxaData', xarxaData); // [{ value: 'V_infra', label: 'V_infra' }]
         setXarxaOptions(xarxaData);
+        handleOnChange(xarxaData);
         
       } catch (error) {
         console.error(error);
       }
     };
-
     fetchXarxa();
   }, [nomDispositiuInfraestructura]);
 
@@ -46,6 +46,7 @@ const XarxaSelectBox = ({ vlan, onChange, nomDispositiuInfraestructura, portInfr
         value={xarxaOptions.filter((option) => vlan.includes(option.value))}
         options={xarxaOptions}
         onChange={handleOnChange} // Use the new event handler
+
       />
     </div>
   );

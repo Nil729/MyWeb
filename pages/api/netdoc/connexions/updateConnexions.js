@@ -9,9 +9,11 @@ import { insertEstatPortInfra } from "../ports/insertEstatPortInfra";
 import getIdXarxaBySession from "../xarxa/getIdXarxaBySession";
 
 const handlePortStatusChangeUpdate = async (portInfraId, vlan, portStatus,sessionId) => {
-    console.log('vlan: ', vlan);
-    await deleteEstatPortInfra(portInfraId[0].IdPortInfra);
 
+
+    await deleteEstatPortInfra(portInfraId[0].IdPortInfra);
+    vlan = typeof vlan === 'string' ? [vlan] : vlan;
+    console.log('vlan: ', vlan);
     if (portStatus === 'tagged') {
         for (const vlanValue of vlan) {
             console.log('arrayVlan[i]: ', vlanValue);

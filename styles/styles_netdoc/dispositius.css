@@ -1,3 +1,6 @@
+
+
+
 .device-form {
   flex: 0 0 40%; 
   padding: 20px;
@@ -15,7 +18,6 @@
 }
 
 .device-type-selector {
-  display: fle;
   justify-content: center;
   margin-bottom: 20px;
 }
@@ -24,9 +26,7 @@
   margin-right: 10px;
 }
 
-.form-group {
-  margin-bottom: 20px;
-}
+
   
 .form-group label {
   display: block;
@@ -42,13 +42,6 @@
   background-color: #333;
   border-radius: 4px;
   color: #fff;
-}
-
-
-
-.form-buttons {
-  display: flex;
-  justify-content: flex-end;
 }
 
 .form-buttons button {
@@ -74,7 +67,7 @@
 
 .option-button {
   appearance: none;
-  border: 2px solid #c5c2c2;
+  border: 2px solid #c2c5c3;
   border-radius: 4px;
   background-color: #333;
   padding: 10px 20px;
@@ -83,9 +76,9 @@
 }
 
 .option-button.selected {
-  background-color: #3f51b5;
+  background-color: #60647c;
   color: #fff;
-  border-color: #3f51b5;
+  border-color: #78ff6c;
 }
 
 .option-button:hover:not(.selected) {

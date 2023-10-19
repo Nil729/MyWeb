@@ -11,18 +11,29 @@
   border-radius: 4px;
   /* Canvia #fff pel color de fons desitjat */
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Fes que els elements es mostrin en línia */
   align-items: center; /* Centra verticalment els elements */
   gap: 10px; /* Espai entre els elements */
   justify-content: space-between; /* Col·loca els elements a les extremitats horitzontals */
+  
 }
 
 
 .network-form .form-group {
+  flex: 1; /* Fes que cada camp ocupi tot l'ample disponible */
   margin-bottom: 15px;
   flex-basis: calc(30% - 5px); /* Fes que cada camp tingui un 30% de l'ample disponible, descomptant l'espai entre ells */
 }
-
+.form-buttons {
+  display: flex;
+  justify-content: flex-start;
+}
+.form-buttons-type {
+  flex: 10;
+  margin-inline-start: auto;
+  display: flex;
+  justify-content: flex-start;
+}
 .network-form label {
   display: block;
   margin-bottom: 5px;
@@ -46,7 +57,7 @@
 
 .network-form button {
   justify-content: flex-end; /* Alinea el contingut a la dreta */
-  margin: 10px; /* Espai superior per separar dels camps */
+  margin-right: 10px; /* Espai superior per separar dels camps */
   flex-basis: 100%; /* Fes que el grup de botons ocupi tot l'ample disponible */
 }
 

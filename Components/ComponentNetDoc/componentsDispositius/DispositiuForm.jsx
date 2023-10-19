@@ -245,25 +245,30 @@ const DeviceManagementForm = () => {
         {error && <div className="error-message">{error}</div>}
         <form className="device-form" onSubmit={(e) => e.preventDefault()}>
 
-          <div>
-            <button
-              className={`option-button ${deviceType === "final" ? '' : 'selected' }`}
-              onClick={() => handleDeviceTypeChange("final")}
-            >
-              Dispositiu Final
-            </button>
-          </div>
-          <div >
-            <button
-              className={`option-button ${deviceType === "Infra" ? '' : 'selected' }`}
-              onClick={() => handleDeviceTypeChange("Infra")}
-            >
-              Dispositiu d'Infraestructura
-            </button>
+          <div className="form-buttons-type">
+          
+            <div>
+              <button
+                className={`option-button ${deviceType === "Infra" ? '' : 'selected' }`}
+                onClick={() => handleDeviceTypeChange("Infra")}
+              >
+                Dispositiu d'Infraestructura
+              </button>
+            </div>
+            
+            <div>
+              <button
+                className={`option-button ${deviceType === "final" ? '' : 'selected' }`}
+                onClick={() => handleDeviceTypeChange("final")}
+              >
+                Dispositiu Final
+              </button>
+            </div>
+
           </div>
 
           <div className="form-group">
-            <label>Nomdel dispositiu:</label>
+            <label>Nom del dispositiu:</label>
             <input type="text" name="deviceName" value={formValues.deviceName} onChange={handleChange} required />
           </div>
           <div className="form-group">
