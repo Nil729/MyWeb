@@ -34,15 +34,13 @@ const ConnexionsForm = () => {
 
 
     const handleChange = (event) => {
-        console.log(event.target)
+
         const { name, value } = event.target;
-        console: console.log('name: ', name, 'value: ', value),
-            setformvaluesConnexions((prevValues) => ({
-                ...prevValues,
-                [name]: value,
-                console: console.log('name: ', name, 'value: ', value),
-            }));
-        console.log('formvaluesConnexions: ', formvaluesConnexions);
+
+        setformvaluesConnexions((prevValues) => ({
+            ...prevValues,
+            [name]: value,
+        }));
     };
 
     useEffect(() => {
@@ -50,7 +48,6 @@ const ConnexionsForm = () => {
             const response = await axios(
                 `${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/connexions/getConnexions`,
             );
-            console.log('response.data: ', response.data);
             setconnexionsData(response.data);
         };
         fetchData();
@@ -71,12 +68,11 @@ const ConnexionsForm = () => {
             vlan: formvaluesConnexions.vlan ? formvaluesConnexions.vlan : 'Undefined network',
             //descriptionConnexions: formvaluesConnexions.descriptionConnexions,
             sessionId: session.user.id,
-            
+
         };
 
         setconnexionsData((prevConnexions) => [...prevConnexions, novaConnexions]);
 
-        console.log('novaConnexions: ', novaConnexions);
         try {
 
             axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/connexions/insertConnexio`, novaConnexions);
@@ -132,7 +128,6 @@ const ConnexionsForm = () => {
             };
             setconnexionsData(updatedConnexions);
 
-            console.log('updatedConnexions: ', updatedConnexions[selectedRowConnexionsForm]);
             try {
                 axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/connexions/updateConnexions`, updatedConnexions[selectedRowConnexionsForm]);
             } catch (error) {
@@ -158,7 +153,6 @@ const ConnexionsForm = () => {
         // Eliminar la fila seleccionada
         const updatedConnexions = [...connexionsData];
         const delconn = updatedConnexions[index];
-        console.log('updatedConnexions: ', session.user.id);
         const sessionId = session.user.id;
 
         //console.log('Delete connexio: ', delconn.idConneccio, ' - ', delconn.infraDeviceName, ' - ', delconn.portInfra, ' - ', delconn.portStatus, ' - ', delconn.finalDeviceName, ' - ', delconn.endPort,  ' - ', delconn.vlan, ' - ', sessionId);

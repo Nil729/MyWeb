@@ -16,7 +16,6 @@ export default function SingupForm(){
         const userPSW  = data_userPSW.current.value;
 
         const singupFom_data = {userName, userFullName, userEmail, userPSW};
-        console.log(singupFom_data)
 
         try {
             await apiClient.post('/user/signup', singupFom_data);

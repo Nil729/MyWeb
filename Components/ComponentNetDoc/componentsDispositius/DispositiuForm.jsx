@@ -45,7 +45,7 @@ const DeviceManagementForm = () => {
       // Fetch ubicacio data from the API
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/dispositius/get`);
       // Set ubicacio data state
-      console.log('response', response.data);
+
       setDispositius(response.data);
 
     } catch (error) {
@@ -58,7 +58,7 @@ const DeviceManagementForm = () => {
     setFormValues((prevValues) => ({
       ...prevValues,
       [name]: value,
-      console: console.log('name', name, 'value', value),
+
     }));
   };
 
@@ -91,7 +91,7 @@ const DeviceManagementForm = () => {
       try {
         // Guardar la nova ubicacio a la base de dades
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/dispositius/insert`, newDevice);
-        console.log('newDevice', newDevice);
+
 
         // Check if the response contains an error message
         if (response.data && response.data.error) {
@@ -140,7 +140,7 @@ const DeviceManagementForm = () => {
       // get id dispositiu 
       try {
         // Guardar la nova ubicacio a la base de dades
-        console.log('dispositius[index]', delDispositu.id_dispositiu);
+
         axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/dispositius/delete?id_dispositiu=${delDispositu.id_dispositiu}`);;
 
       }
@@ -166,7 +166,6 @@ const DeviceManagementForm = () => {
   const handleEditRow = (index) => {
     if (index >= 0 && index < dispositius.length) {
       const selectedDevice = dispositius[index];
-      console.log('selectedDevice', selectedDevice);
       setDeviceType(selectedDevice.deviceType); // Set the device type
 
       // Update the form values with the selected device data
@@ -201,10 +200,10 @@ const DeviceManagementForm = () => {
       };
 
       setDispositius(updatedDispositius);
-      console.log('updatedDispositius[selectedRowForm]', updatedDispositius[selectedRowForm]);
+
       try {
         const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/dispositius/update`, updatedDispositius[selectedRowForm]);
-        console.log('Device updated successfully');
+
         if (response.data && response.data.error) {
           // Set the error message state to display it in your component
           setError(response.data.error);

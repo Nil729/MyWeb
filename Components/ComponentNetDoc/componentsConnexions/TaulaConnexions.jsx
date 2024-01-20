@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) => {
 
   const [selectedRow, setSelectedRow] = useState(null);
-  console.log('connexions: ', connexions);
+
 
   const [filters, setFilters] = useState({
     infraDeviceName: "",
@@ -25,7 +25,6 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
     setSelectedRow(index);
     // Si existeix la propietat onEditconnexions, crida a la funció
     if (onEditConnexions) {
-      console.log('Edita la fila: ', index);
       onEditConnexions(index);
     }
 
@@ -45,9 +44,9 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
     }));
   };
   
-  console.log("Filters:", filters); // Log filter values to check if they are as expected
+ // Log filter values to check if they are as expected
   const filteredConnexions = connexions.filter(connexion => {
-    console.log("Connexions:", connexion); // Log connexion values to check if they are as expected
+     // Log connexion values to check if they are as expected
     return (
       connexion.infraDeviceName && connexion.infraDeviceName.includes(filters.infraDeviceName) &&
       (filters.portInfra === '' || (connexion.portInfra && connexion.portInfra.toString().includes(filters.portInfra))) &&

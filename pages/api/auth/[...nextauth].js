@@ -17,7 +17,6 @@ export default NextAuth({
     callbacks: {
 
         async session({ session }) {
-            console.log('session: ', session);
 
 
             const query = 'SELECT idUser FROM users WHERE emailUser = ?';
@@ -30,11 +29,9 @@ export default NextAuth({
         },
         async signIn({ user, account }) {
             try {
-                console.log('user: ', user);
-                console.log('account: ', account);
+ 
             
                 const [rows]  = await pool.promise().execute('SELECT idUser FROM users WHERE emailUser = ?', [user.email]);
-                console.log('rows: ', rows);
 
                 if (rows.length > 0) {
                     return true;

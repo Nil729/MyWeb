@@ -10,12 +10,10 @@ const PortsInfraComboBox = ({ onChange, portInfra, nomDispositiuInfraestructura 
     const fetchData = async () => {
         const result = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/ports/getPortsInfra?nomDipositiuInfra=${nomDispositiuInfraestructura}`);
         const resultSelectedPorts = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/ports/getPortsSelected?nomDipositiuInfra=${nomDispositiuInfraestructura}`);
-        console.log(result.data);
+
         setPortsInfra(result.data);
         setSelectedPorts(resultSelectedPorts.data);
     }
-
-    console.log(selectedPorts);
 
     useEffect(() => {
         if (nomDispositiuInfraestructura !== "") {

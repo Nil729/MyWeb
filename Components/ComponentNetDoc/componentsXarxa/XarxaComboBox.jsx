@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 
 const XarxaComboBox = ({ vlan, onChange, nomDispositiuInfraestructura, portInfra }) => {
-  console.log('nomDispositiuInfraestructura: ', nomDispositiuInfraestructura, 'portInfra', portInfra);
+
   const [xarxa, setXarxa] = useState([]);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ const XarxaComboBox = ({ vlan, onChange, nomDispositiuInfraestructura, portInfra
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/xarxa/getXarxaFromPortInfra?nomDispositiuInfraestructura=${nomDispositiuInfraestructura}&portInfra=${portInfra}`);
         const xarxa = response.data.map((xarxa) => xarxa.NomXarxa);
-        console.log('xarxa', xarxa);
+
         setXarxa(xarxa);
       } catch (error) {
         console.error(error);

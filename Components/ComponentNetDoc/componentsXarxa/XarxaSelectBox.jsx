@@ -16,7 +16,7 @@ const XarxaSelectBox = ({ vlan, onChange, nomDispositiuInfraestructura, portInfr
           value: xarxa.NomXarxa,
           label: xarxa.NomXarxa,
         }));
-        console.log('xarxaData', xarxaData); // [{ value: 'V_infra', label: 'V_infra' }]
+        // [{ value: 'V_infra', label: 'V_infra' }]
         setXarxaOptions(xarxaData);
         handleOnChange(xarxaData);
         
@@ -30,8 +30,7 @@ const XarxaSelectBox = ({ vlan, onChange, nomDispositiuInfraestructura, portInfr
 
   const handleOnChange = (selectedOptions) => {
     const selectedValues = selectedOptions ? selectedOptions.map((option) => option.value) : [];
-    onChange({ target: { name: 'vlan', value: selectedValues } });
-    console.log('selectedValues', selectedValues); // ['V_infra']
+    onChange({ target: { name: 'vlan', value: selectedValues } }); // ['V_infra']
   };
 
   return (

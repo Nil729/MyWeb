@@ -9,7 +9,6 @@ const NetworkForm = () => {
     const { data: session, status } = useSession();
     const [error, setError] = useState(null);
     const [networkData, setNetworkData] = useState([]);
-    console.log('networkData', networkData);
 
     const [selectedRowXarxaForm, setselectedRowXarxaForm] = useState(null);
 
@@ -36,7 +35,6 @@ const NetworkForm = () => {
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/xarxa/getXarxa`);
             const networkData = await response.json();
-            console.log('networkData', networkData);
             setNetworkData(networkData);
         } catch (error) {
             console.error(error);
@@ -58,7 +56,6 @@ const NetworkForm = () => {
         try {
 
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/xarxa/insertXarxa`, novaXarxa);
-            console.log('novaXarxa', novaXarxa);
 
             if (response.data && response.data.error) {
                 setError(response.data.error);
@@ -91,7 +88,6 @@ const NetworkForm = () => {
 
     const handleEditRow = (index) => {
 
-        console.log('index', index);
         if (index >= 0 && index < networkData.length) {
 
             // Omplir els camps del formulari amb les dades de la fila seleccionada
@@ -159,7 +155,6 @@ const NetworkForm = () => {
         const updatedNetworks = [...networkData];
         // Obtenim el id de la xarxa a eliminar
         const xarxaId = networkData[index].Id_vlan;
-        console.log('xarxaId', xarxaId);
         try {
 
             await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/xarxa/delXarxa?xarxaId=${xarxaId}`);

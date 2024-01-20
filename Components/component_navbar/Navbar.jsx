@@ -8,9 +8,9 @@ import { useSession } from 'next-auth/react';
 
 
 const MENU_LIST = [
-  { text: "Home", href: "/" }, // Si en el href posses una ruta ex: /api/hello --> si que fnciona 
-  { text: "WebManager", href: "/projects/Page_webmanager" },
-  { text: "NetDoc", href: "/projects/pageNetDoc" },
+  { text: "NetDoc", href: "/" }, // Si en el href posses una ruta ex: /api/hello --> si que fnciona 
+  //{ text: "WebManager", href: "/projects/Page_webmanager" },
+  { text: "My Network", href: "/projects/pageNetDoc" },
   { text: "About me", href: "/" },
   { text: "Contact", href: "/" },
 

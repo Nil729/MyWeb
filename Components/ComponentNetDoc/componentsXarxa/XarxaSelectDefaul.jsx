@@ -1,9 +1,9 @@
 
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const XarxaSelectDefaul = ({ vlan, onChange }) => {
-  console.log('vlan', vlan); // ['V_infra']
+  // ['V_infra']
   return (
     // set undefined to vlan
     <div className="form-group">

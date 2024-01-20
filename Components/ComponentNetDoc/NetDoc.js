@@ -14,8 +14,6 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 const NetworkManagementComponent = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  console.log('session: ', session);
-
   const handleCardClick = (route) => {
     router.push(route);
   };

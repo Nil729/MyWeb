@@ -27,7 +27,6 @@ const UbicacioForm = () => {
             // Fetch ubicacio data from the API
             const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/ubicacions`);
             // Set ubicacio data state
-            console.log('response', response.data);
             setUbicacioData(response.data);
 
         } catch (error) {
@@ -56,7 +55,6 @@ const UbicacioForm = () => {
             // Guardar la nova ubicacio a la base de dades
 
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/ubicacions`, novaUbicacio);
-            console.log('novaUbicacio', novaUbicacio);
             // Check if the response contains an error message
             if (response.data && response.data.error) {
                 setError(response.data.error);
@@ -88,7 +86,6 @@ const UbicacioForm = () => {
 
 
     const handleEditRowUbicacio = (index) => {
-        console.log('index', index);
         // Omplir els camps del formulari amb les dades de la fila seleccionada
         const formvaluesUbicacio = ubicacioData[index];
         setformvaluesUbicacio({
@@ -110,16 +107,12 @@ const UbicacioForm = () => {
                 descriptionUbicacio: formvaluesUbicacio.descriptionUbicacio,
             };
 
-            console.log('update ubicació: ', updatedubicacio)
-
             try {
 
                 const ubicacioId = ubicacioData[selectedRowUbicacioForm].idUbicacio; // Get the ubicacioId of the ubicacio to be updated
-                console.log('ubicacioId', ubicacioId);
 
                 // Guardar la nova ubicacio a la base de dades
                 const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/ubicacioId?ubicacioId=${ubicacioId}`, updatedubicacio[selectedRowUbicacioForm]);
-                console.log('updatedubicacio', updatedubicacio[selectedRowUbicacioForm]);
 
                 // Check if the response contains an error message
                 if (response.data && response.data.error) {
@@ -153,7 +146,6 @@ const UbicacioForm = () => {
     const handleDeleteRowUbicacio = async (index) => {
         try {
             const ubicacioId = ubicacioData[index].idUbicacio; // Get the ubicacioId of the ubicacio to be deleted
-            console.log('ubicacioId', ubicacioId);
 
             // Send a request to delete the ubicació
             await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/netdoc/ubicacioId?ubicacioId=${ubicacioId}`, ubicacioData[index]);
