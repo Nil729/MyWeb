@@ -7,7 +7,7 @@ const XarxaSelectDefaul = ({ vlan, onChange }) => {
   return (
     // set undefined to vlan
     <div className="form-group">
-      <label>Xarxa:</label>
+      <label>Network:</label>
       <select
         className="form-control"
         name="vlan"

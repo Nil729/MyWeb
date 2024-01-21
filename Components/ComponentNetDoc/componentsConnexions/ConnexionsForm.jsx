@@ -201,18 +201,18 @@ const ConnexionsForm = () => {
         <div className="network-form-container">
 
             <div className="network-form">
-                <h2 className='title-form'>Formulari de Connexionsns</h2>
+                <h2 className='title-form'>Connections</h2>
                 <form onSubmit={handleSubmit}>
 
                     <div className="form-group">
-                        <label htmlFor="infraDeviceName">Dispositiu infraestructura:</label>
+                        <label htmlFor="infraDeviceName">Infrastructure device:</label>
                         <DispositiusInfraComboBox
                             onChange={handleChange}
                             nomDispositiuInfraestructura={formvaluesConnexions.infraDeviceName} />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="portInfra">Port infraestructura:</label>
+                        <label htmlFor="portInfra">Port infrastructure:</label>
                         <PortsInfraComboBox
                             onChange={handleChange}
                             portInfra={formvaluesConnexions.portInfra}
@@ -221,7 +221,7 @@ const ConnexionsForm = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="config-Port">Configuracio del port:</label>
+                        <label htmlFor="config-Port">Port configuration:</label>
                         {/* Radio buttons: Tagged */}
                         <div>
                             <input type="radio" id="tagged" name="portStatus" value="tagged"
@@ -248,14 +248,14 @@ const ConnexionsForm = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="finalDeviceName">Dispositu final:</label>
+                        <label htmlFor="finalDeviceName">Endpoint:</label>
                         <DispositiusFinalComboBox
                             onChange={handleChange}
                             nomDispositiuFinal={formvaluesConnexions.finalDeviceName}
                         />
                     </div>
                     <div className='form-group'>
-                        <label htmlFor="endPort">Port final:</label>
+                        <label htmlFor="endPort">End port:</label>
                         <EndPortComboBox
                             onChange={handleChange}
                             endPort={formvaluesConnexions.endPort}
@@ -325,13 +325,13 @@ const ConnexionsForm = () => {
                     <div className="form-group">
                         {selectedRowConnexionsForm !== null ? (
                             <>
-                                <button type="button" onClick={handleSaveRow}>Guardar</button>
-                                <button type="button" onClick={handleCancelEditRow}>Cancel·la</button>
+                                <button type="button" onClick={handleSaveRow}>Save</button>
+                                <button type="button" onClick={handleCancelEditRow}>Cancel</button>
                             </>
                         ) : (
                             <>
-                                <button type="submit">Connecta</button>
-                                <button type="button" onClick={handleCancelEditRow}>Cancel·la</button>
+                                <button type="submit">Connect</button>
+                                <button type="button" onClick={handleCancelEditRow}>Cancel</button>
                             </>
                         )}
                     </div>

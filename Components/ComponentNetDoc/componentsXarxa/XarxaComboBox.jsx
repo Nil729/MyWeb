@@ -23,9 +23,9 @@ const XarxaComboBox = ({ vlan, onChange, nomDispositiuInfraestructura, portInfra
 
   return (
     <div className="form-group">
-      <label>Xarxa:</label>
+      <label>Network:</label>
       <select name="vlan" value={vlan} onChange={onChange} required>
-        <option value="">Selecciona una xarxa</option>
+        <option value="">Select a network</option>
         {xarxa.map((xarxa, index) => (
           <option key={index} value={xarxa}>
             {xarxa}

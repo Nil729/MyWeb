@@ -239,7 +239,7 @@ const DeviceManagementForm = () => {
     <div className="network-form-container">
       <div className='network-form'>
         <div className="title-form">
-          <h2>Gestionar Dispositius</h2>
+          <h2>Manage Devices</h2>
         </div>
         {error && <div className="error-message">{error}</div>}
         <form className="device-form" onSubmit={(e) => e.preventDefault()}>
@@ -251,7 +251,7 @@ const DeviceManagementForm = () => {
                 className={`option-button ${deviceType === "Infra" ? '' : 'selected' }`}
                 onClick={() => handleDeviceTypeChange("Infra")}
               >
-                Dispositiu d'Infraestructura
+                Infrastructure Device
               </button>
             </div>
             
@@ -260,14 +260,14 @@ const DeviceManagementForm = () => {
                 className={`option-button ${deviceType === "final" ? '' : 'selected' }`}
                 onClick={() => handleDeviceTypeChange("final")}
               >
-                Dispositiu Final
+                Endpoint
               </button>
             </div>
 
           </div>
 
           <div className="form-group">
-            <label>Nom del dispositiu:</label>
+            <label>Device Name:</label>
             <input type="text" name="deviceName" value={formValues.deviceName} onChange={handleChange} required />
           </div>
           <div className="form-group">
@@ -291,7 +291,7 @@ const DeviceManagementForm = () => {
           </div>
 
           <div className="form-group">
-            <label>Quantitat de ports ethernet:</label>
+            <label>Number of ethernet ports:</label>
             <input type="number" name="ethernetPorts" value={formValues.ethernetPorts} onChange={handleChange} required />
           </div>
 
@@ -303,14 +303,14 @@ const DeviceManagementForm = () => {
 
             {selectedRowForm !== null ? (
               <>
-                <button type="button" onClick={handleSaveRow}>Guardar</button>
-                <button type="reset">Neteja</button>
+                <button type="button" onClick={handleSaveRow}>Save</button>
+                <button type="reset">Cancel</button>
               </>
 
             ) : (
               <>
-                <button type="button" onClick={handleSubmit}>Afegeix</button>
-                <button type="reset">Neteja</button>
+                <button type="button" onClick={handleSubmit}>Add</button>
+                <button type="reset">Cancel</button>
               </>
             )}
 

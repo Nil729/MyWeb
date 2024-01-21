@@ -15,7 +15,7 @@ const DispositiusInfraComboBox = ({ onChange, nomDispositiuInfraestructura }) =>
 
     return (
         <select name="infraDeviceName" value={nomDispositiuInfraestructura} onChange={onChange} required>
-            <option value="">Selecciona un dispositiu</option>
+            <option value="">Select a device</option>
             {dispositiusInfra.map((dispositiuInfra, index) => (
                 <option key={index} value={dispositiuInfra.nomDispositiuInfraestructura}>
                     {dispositiuInfra.nomDispositiuInfraestructura}

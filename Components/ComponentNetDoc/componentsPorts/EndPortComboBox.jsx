@@ -23,7 +23,7 @@ const EndPortComboBox = ({ onChange, endPort, nomDispositiuFinal}) => {
 
     return (
         <select name="endPort" value={endPort} onChange={onChange} required>
-            <option value="">Selecciona un port final</option>
+            <option value="">Select an end port</option>
             {endPorts.map((ports, index) => (
                 <option key={index} value={ports} disabled={selectedEndPorts.includes(ports)}>
                     {ports}

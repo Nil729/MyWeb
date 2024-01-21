@@ -60,7 +60,7 @@ const TaulaDispositus = ({ dispositius, onEdit, onDelete, deviceType }) => {
       <table>
         <thead>
           <tr>
-            <th>Tipus
+            <th>Type
               <div>
                 <input
                   type="text"
@@ -71,7 +71,7 @@ const TaulaDispositus = ({ dispositius, onEdit, onDelete, deviceType }) => {
               </div>
             </th>
 
-            <th>Nom
+            <th>Name
               <div>
                 <input
                   type="text"
@@ -105,7 +105,7 @@ const TaulaDispositus = ({ dispositius, onEdit, onDelete, deviceType }) => {
 
               </div>
             </th>
-            <th>Quantitat Ports Ethernet
+            <th>Ethernet ports
               <div>
                 <input
                   type="number"
@@ -115,7 +115,7 @@ const TaulaDispositus = ({ dispositius, onEdit, onDelete, deviceType }) => {
                 />
               </div>
             </th>
-            <th>Ubicació
+            <th>Location
               <div>
                 <input
                   type="text"
@@ -144,11 +144,11 @@ const TaulaDispositus = ({ dispositius, onEdit, onDelete, deviceType }) => {
                 <td>{dispositiu.quantitatPortsEth}</td>
                 <td>{dispositiu.zona_id}</td>
                 <td>
-                  <button onClick={() => handledeviceEdit(index)}>Editar</button>
+                  <button onClick={() => handledeviceEdit(index)}>Edit</button>
                 </td>
 
                 <td>
-                  <button onClick={() => handledeviceDelete(index)}>Eliminar</button>
+                  <button onClick={() => handledeviceDelete(index)}>Delete</button>
 
                 </td>
               </>

@@ -11,8 +11,8 @@ const MENU_LIST = [
   { text: "NetDoc", href: "/" }, // Si en el href posses una ruta ex: /api/hello --> si que fnciona 
   //{ text: "WebManager", href: "/projects/Page_webmanager" },
   { text: "My Network", href: "/projects/pageNetDoc" },
-  { text: "About me", href: "/" },
-  { text: "Contact", href: "/" },
+  //{ text: "About me", href: "/" },
+  //{ text: "Contact", href: "/" },
 
 
 ];
@@ -27,7 +27,7 @@ const Navbar = () => {
   return (
     <header>
       <nav className={`nav, nav_bg`}>
-        <Link href={"/home"}>
+        <Link href={"/projects/pageNetDoc"}>
 
           <h1 className="text-4xl font-bold text-blue-500">Nil Projects</h1>
 

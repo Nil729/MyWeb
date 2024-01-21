@@ -189,12 +189,12 @@ const NetworkForm = () => {
 
             <div className="network-form">
                 <div>
-                    <h2 className='title-form'>Formulari de Xarxa</h2>
+                    <h2 className='title-form'>Networks</h2>
                 </div>
                 <div className="error-message">{error}</div>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="networkUserId">ID de la Xarxa:</label>
+                        <label htmlFor="networkUserId">Network ID:</label>
                         <input
                             type="text"
                             id="networkUserId"
@@ -205,7 +205,7 @@ const NetworkForm = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="networkName">Nom de la Xarxa:</label>
+                        <label htmlFor="networkName">Network name:</label>
                         <input
                             type="text"
                             id="networkName"
@@ -216,7 +216,7 @@ const NetworkForm = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="networkDesc">Descripció:</label>
+                        <label htmlFor="networkDesc">Description:</label>
                         <textarea
                             id="networkDesc"
                             name="networkDesc"
@@ -227,14 +227,14 @@ const NetworkForm = () => {
                     <div className="form-group">
                         {selectedRowXarxaForm !== null ? (
                             <>
-                                <button type='button' onClick={handleSaveRow} >Guardar</button>
-                                <button type='button' onClick={handleCancelRow} >Cancel·lar</button>
+                                <button type='button' onClick={handleSaveRow} >Save</button>
+                                <button type='button' onClick={handleCancelRow} >Cancel</button>
                             </>
                         ) : (
 
                             <>
-                                <button type="submit" >Afegeix</button>
-                                <button type='button' onClick={handleCancelRow} >Cancel·lar</button>
+                                <button type="submit" >Add</button>
+                                <button type='button' onClick={handleCancelRow} >Cancel</button>
                             </>
                         )}
                     </div>

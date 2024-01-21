@@ -20,9 +20,9 @@ const UbicacioComboBox = ({ value, onChange }) => {
 
   return (
     <div className="form-group">
-      <label>Ubicació:</label>
+      <label>Location:</label>
       <select name="location" value={value} onChange={onChange} required>
-        <option value="">Selecciona una ubicació</option>
+        <option value="">Select a location</option>
         {ubicacions.map((ubicacio, index) => (
           <option key={index} value={ubicacio}>
             {ubicacio}

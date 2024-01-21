@@ -71,7 +71,7 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
       <table>
         <thead>
           <tr>
-            <th>Dispositiu Infrarestuctura
+            <th>Infrastructure Device
               <div>
                 <input
                   type="text"
@@ -82,7 +82,7 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
               </div>
 
             </th>
-            <th>Port Dispositiu
+            <th>Port device
               <div>
                 <input
                   type="text"
@@ -103,7 +103,7 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
                 />
               </div>
             </th>
-            <th>Dispositiu Final
+            <th>Endpoint
               <div>
                 <input
                   type="text"
@@ -113,7 +113,7 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
                 />
               </div>
             </th>
-            <th>Port Final
+            <th>End port
               <div>
                 <input
                   type="text"
@@ -132,7 +132,7 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
                 />
               </div>
             </th> */}
-            <th>Nom de la Xarxa
+            <th>Network name
               <div>
                 <input
                   type="text"
@@ -168,8 +168,8 @@ const ConnexionsTable = ({ connexions, onEditConnexions, onDeleteConnexions }) =
               {/*<td>{connexions.pachpanelName}</td>*/}
               <td>{connexions.vlan}</td>
               {/*<td>{connexions.descriptionConnexions}</td>*/}
-              <td><button type='button' className='editButonXarxa' onClick={() => handleEditRowconnexions(index)}>Edita</button></td>
-              <td><button type='button' className='delButonXarxa' onClick={() => handleDeleteRowconnexions(index)}>Eliminar</button></td>
+              <td><button type='button' className='editButonXarxa' onClick={() => handleEditRowconnexions(index)}>Edit</button></td>
+              <td><button type='button' className='delButonXarxa' onClick={() => handleDeleteRowconnexions(index)}>Delete</button></td>
             </tr>
             
           ))}

@@ -16,7 +16,7 @@ const DispositiusFinalComboBox = ({ onChange, nomDispositiuFinal }) => {
 
     return (
         <select name="finalDeviceName" value={nomDispositiuFinal} onChange={onChange} required>
-          <option value="">Selecciona un dispositiu</option>
+          <option value="">Select a device</option>
           {dispositiusFinal.map((dispositiuFinal, index) => (
             <option key={index} value={dispositiuFinal.nomDispositiuFinal}>
               {dispositiuFinal.nomDispositiuFinal}

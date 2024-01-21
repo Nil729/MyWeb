@@ -28,8 +28,8 @@ const UbicacionsTable = ({ ubicacio, onEditUbicacio, onDeleteUbicacio }) => {
       <table>
         <thead>
           <tr>
-            <th>Nom de la Ubicació</th>
-            <th>Descripció</th>
+            <th>Name of the Location</th>
+            <th>Description</th>
           </tr>
         </thead>
         <tbody>
@@ -38,8 +38,8 @@ const UbicacionsTable = ({ ubicacio, onEditUbicacio, onDeleteUbicacio }) => {
             <tr key={index}>
               <td>{ubicacio.ubicacioName}</td>
               <td>{ubicacio.descriptionUbicacio}</td>
-              <td><button type='button' className='editButonXarxa' onClick={() => handleEditRowUbicacio(index)}>Edita</button></td>
-              <td><button type='button' className='delButonXarxa' onClick={() => handleDeleteRowUbicacio(index)}>Eliminar</button></td>
+              <td><button type='button' className='editButonXarxa' onClick={() => handleEditRowUbicacio(index)}>Edit</button></td>
+              <td><button type='button' className='delButonXarxa' onClick={() => handleDeleteRowUbicacio(index)}>Delete</button></td>
             </tr>
             
           ))}

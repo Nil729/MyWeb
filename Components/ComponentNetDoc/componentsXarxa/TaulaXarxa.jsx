@@ -30,8 +30,8 @@ const NetworkTable = ({ networks, onEditXarxa, onDeleteXarxa }) => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Nom de la Xarxa</th>
-            <th>Descripció</th>
+            <th>Name of the Network</th>
+            <th>Description</th>
           </tr>
         </thead>
         <tbody>
@@ -42,8 +42,8 @@ const NetworkTable = ({ networks, onEditXarxa, onDeleteXarxa }) => {
               <td>{network.Vid}</td>
               <td>{network.NomXarxa}</td>
               <td>{network.DescXarxa}</td>
-              <td><button type='button' className='editButonXarxa' onClick={() => handleEditRowXarxa(index)}>Edita</button></td>
-              <td><button type='button' className='delButonXarxa' onClick={() => handleDeleteRowXarxa(index)}>Eliminar</button></td>
+              <td><button type='button' className='editButonXarxa' onClick={() => handleEditRowXarxa(index)}>Edit</button></td>
+              <td><button type='button' className='delButonXarxa' onClick={() => handleDeleteRowXarxa(index)}>Delete</button></td>
             </tr>
 
           ))}

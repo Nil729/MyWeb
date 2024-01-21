@@ -35,7 +35,7 @@ const XarxaSelectBox = ({ vlan, onChange, nomDispositiuInfraestructura, portInfr
 
   return (
     <div className="form-group">
-      <label>Xarxa:</label>
+      <label>Network:</label>
       <Select 
         className='multi-select'
         name='vlan'

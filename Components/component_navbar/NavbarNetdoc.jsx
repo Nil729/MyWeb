@@ -7,22 +7,22 @@ function navbarNetdoc() {
         <ul>
           <li className="mb-2">
             <Link href="/projects/pages_netdoc/gestionar-dispositius">
-              Dispositius
+              Devices
             </Link>
           </li>
           <li className="mb-2">
             <Link href="/projects/pages_netdoc/gestionar-ubicacions">
-              Ubicacions
+              Locations
             </Link>
           </li>
           <li className="mb-2">
             <Link href="/projects/pages_netdoc/gestionar-xarxes">
-              Xarxes
+              Nets
             </Link>
           </li>
           <li className="mb-2">
             <Link href="/projects/pages_netdoc/gestionar-connexions">
-              Connexions
+              Connections
             </Link>
           </li>
         </ul>

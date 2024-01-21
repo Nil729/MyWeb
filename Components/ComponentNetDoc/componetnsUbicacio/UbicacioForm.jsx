@@ -180,13 +180,13 @@ const UbicacioForm = () => {
 
             <div className="network-form">
                 <div>
-                    <h2 className='title-form'>Formulari de ubicacions</h2>
+                    <h2 className='title-form'>Locations</h2>
                 </div>
                 {error && <div className="error-message">{error}</div>}
                 <form onSubmit={handleSubmit}>
 
                     <div className="form-group">
-                        <label htmlFor="ubicacioName">Nom de la Ubicació:</label>
+                        <label htmlFor="ubicacioName">Name of the Location:</label>
                         <input
                             type="text"
                             id="ubicacioName"
@@ -197,7 +197,7 @@ const UbicacioForm = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="descriptionUbicacio">Descripció:</label>
+                        <label htmlFor="descriptionUbicacio">Location:</label>
                         <textarea
                             id="descriptionUbicacio"
                             name="descriptionUbicacio"
@@ -208,14 +208,14 @@ const UbicacioForm = () => {
                     <div className="form-group">
                         {selectedRowUbicacioForm !== null ? (
                             <>
-                                <button type='button' onClick={handleSaveRow} >Guardar</button>
-                                <button type='button' onClick={handleCancelRow} >Cancel·lar</button>
+                                <button type='button' onClick={handleSaveRow} >Save</button>
+                                <button type='button' onClick={handleCancelRow} >Cancel</button>
                             </>
                         ) : (
 
                             <>
-                                <button type="submit" >Afegeix</button>
-                                <button type='button' onClick={handleCancelRow} >Cancel·lar</button>
+                                <button type="submit" >Add</button>
+                                <button type='button' onClick={handleCancelRow} >Cancel</button>
                             </>
                         )}
 

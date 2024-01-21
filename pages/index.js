@@ -15,15 +15,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <Navbar/>
+        <Navbar />
       </div>
       <main className={styles.main}>
         <div className="mb-4">
           <Image src="/LogoNetDoc.png" alt="NetDoc Logo" width={120} height={120} />
         </div>
 
-        
-        <h1 className={styles.title }>
+
+        <h1 className={styles.title}>
           <b>Welcome to <a>NetDoc</a></b>
         </h1>
         <p className={styles.description}>
@@ -31,53 +31,78 @@ export default function Home() {
         </p>
 
         <div className="flex flex-col items-center space-y-4">
-          <div className=" flex flex-col items-center space-y-4">
+
+          <div className="border p-14 pt-4 pb-1 border-white-500 flex flex-col items-center space-y-0 rounded-xl">
+
+            <p className="text-white">Server</p>
+
             <div className="flex justify-center space-x-4">
-              <div className="bg-blue-500 text-white p-2 rounded">Ruter (Puerto 1)</div>
+              <div className="bg-blue-500 text-white p-2 rounded">Ruter</div>
             </div>
-            <div className="w-0.5 bg-gray-400 h-16 align-middle"> 
-              <span className="mx-2">port:1</span><br></br>
-              <span className="mx-2">vlan1,vlan2</span><br></br>
-              <span className="mx-2">port:8</span><br></br>
+
+            <span className="">port:1</span>
+
+            <div className="w-0.5 bg-gray-400 h-16 align-middle">
+              <div>
+                <span className="mx-2">vlan1</span>
+              </div>
+              <div>
+                <span className="mx-2">vlan2</span>
+              </div>
             </div>
+
+            <span className="mx-2">port:8</span>
             <div className="flex justify-center space-x-4">
-              <div className="bg-green-500 text-white p-2 rounded">Switch (Puerto 8)</div>
+              <div className="bg-green-500 text-white p-2 rounded">Switch</div>
             </div>
+            <span className="mx-2">port:2 port:3 </span>
+
           </div>
 
           <div className="flex justify-center space-x-12">
-            <div className="w-0.5 bg-gray-400 m h-16 align-middle"></div>
 
-            <div className="w-0.5 bg-gray-400 h-16 align-middle"></div>
-          </div>
-          <div className="flex justify-center space-x-4">
-          
-          <div className="flex flex-wrap justify-center space-x-4">
-            <div className="flex flex-col space-y-4">
-              <div className="bg-red-500 text-white p-2 rounded">PC (VLAN 1, Office)</div>
-              <div className="bg-yellow-500 text-white p-2 rounded">Impresora (VLAN 1, Office)</div>
+            <div className="w-0.5 bg-gray-400 m h-16 align-middle">
+              <span className="mx-2">vlan1</span>
             </div>
-            <div className="flex flex-col space-y-4">
-              <div className="bg-purple-500 text-white p-2 rounded">PC (VLAN 2, Meetings)</div>
-              <div></div>
+
+            <div className="w-0.5 bg-gray-400 h-16 align-middle">
+              <span className="mx-2">vlan2</span>
             </div>
-          </div>
 
           </div>
+
+          <div className="flex flex-wrap  justify-center space-x-4">
+
+            <div className="flex flex-col   space-y-4 ">
+              <div className='border p-1 pt-1 pb-1 rounded-xl'>
+                <p className="text-white">Office</p>
+                <div className=" bg-yellow-500 text-white p-2 rounded">Printer</div>
+              </div>
+            </div>
+
+            <div className="flex flex-col   space-y-4 ">
+              <div className='border p-1 pt-1 pb-1 rounded-xl'>
+                <p className="text-white">Meeetings</p>
+                <div className=" bg-purple-500 text-white p-2 rounded">PC</div>
+              </div>
+            </div>
+          </div>
+
+
         </div>
 
         <div className="p-6 w-2/3 mt-10 mx-auto mt- bg-white rounded-xl shadow-md flex items-center space-x-4">
           <div>
             <div className="text-xl font-medium text-black">NetDoc</div>
-            <p className="text-gray-500">És una aplicació de documentació de xarxes que facilita la gestió i el seguiment de la vostra infraestructura de xarxa. Amb una interfície d'usuari intuïtiva i funcions potents, NetDoc us permet crear, actualitzar i visualitzar la vostra documentació de xarxa de manera eficient.</p>
-            <p className="text-gray-500">La lògica de l'aplicació es basa en quatre parts principals: Ubicacions, Xarxes, Dispositius i Connexions.</p>
+            <p className="text-gray-500">It is a network documentation application that facilitates the management and tracking of your network infrastructure. With an intuitive user interface and powerful features, NetDoc allows you to create, update, and visualize your network documentation efficiently.</p>
+            <p className="text-gray-500">The logic of the application is based on four main parts: Locations, Networks, Devices, and Connections.</p>
             <ul className="list-disc list-inside text-gray-500">
-              <li><strong>Ubicacions</strong>: Aquí podeu definir i gestionar les diferents ubicacions físiques de la vostra infraestructura de xarxa. Cada ubicació pot tenir múltiples xarxes i dispositius associats.</li>
-              <li><strong>Xarxes</strong>: Aquesta secció us permet definir les diferents xarxes dins de cada ubicació. Podeu especificar detalls com l'adreça IP, la màscara de subxarxa, el gateway, etc.</li>
-              <li><strong>Dispositius</strong>: Aquí podeu afegir i gestionar tots els dispositius de la vostra xarxa. Cada dispositiu pot tenir informació detallada com el fabricant, el model, l'adreça IP, etc.</li>
-              <li><strong>Connexions</strong>: Aquesta part us permet definir les connexions entre els diferents dispositius de la vostra xarxa. Podeu especificar detalls com el tipus de connexió, la velocitat, el port, etc.</li>
+              <li><strong>Locations</strong>: Here you can define and manage the different physical locations of devices connected to the network. Each location can have multiple associated devices.</li>
+              <li><strong>Networks</strong>: This section allows you to define different networks.</li>
+              <li><strong>Devices</strong>: Here you can add and manage all devices in your network. To follow the logic of a network, we first need to define if it is an infrastructure device, those that allow other equipment to have a connection and manage the network (Switch, Router, Hub, etc.). Then we have endpoints (Printers, Computers, Servers, Internet-of-Things (IoT) devices, etc.)</li>
+              <li><strong>Connections</strong>: This part allows you to define connections between different devices in your network. You can specify details such as the type of connection, VLANs, from which to which port it is connected, and the configuration of this: tagged, untagged, undefined.</li>
             </ul>
-            <p className="text-gray-500">Per començar a utilitzar NetDoc, simplement heu de navegar a la My Network de l'aplicació i seguir les indicacions per afegir la vostra primera ubicació, xarxa, dispositiu i connexió. A mesura que afegiu més detalls a la vostra documentació de xarxa, NetDoc us proporcionarà una visió clara i actualitzada de la vostra infraestructura de xarxa.</p>
+            <p className="text-gray-500">To start using NetDoc, simply navigate to the My Network section of the application and follow the instructions to add your first location, network, device, and connection. As you add more details to your network documentation, NetDoc will provide you with a clear and updated view of your network infrastructure.</p>
           </div>
         </div>
 
@@ -87,13 +112,13 @@ export default function Home() {
 
       <footer className={styles.footer}>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://netdoc.dev"
           target="_blank"
           rel="noopener noreferrer"
-        >          
-        <span className={styles.logo}>
-          <Image src="/logoFooter.png" alt="Vercel Logo" width={100} height={100} />
-        </span>
+        >
+          <span className={styles.logo}>
+            <Image src="/logoFooter.png" alt="Nil Projects logo" width={100} height={100} />
+          </span>
           Powered by Nil Piñana{' '}
 
         </a>

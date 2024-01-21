@@ -9,7 +9,7 @@ const IsAuth = (WrappedComponent) => {
 
     if (status === 'loading') {
       // Puedes mostrar un loader mientras se verifica la sesión
-      return <p>Cargando...</p>;
+      return <p>Loading...</p>;
     }
 
     if (!session) {
