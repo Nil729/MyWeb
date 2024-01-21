@@ -235,6 +235,18 @@ const DeviceManagementForm = () => {
     }
   };
 
+  const handleCancel = () => {
+    setselectedRowForm(null);
+    setFormValues({
+      deviceName: '',
+      ip: '',
+      mac: '',
+      ethernetPorts: '',
+      location: '',
+    });
+
+  }
+
   return (
     <div className="network-form-container">
       <div className='network-form'>
@@ -304,13 +316,13 @@ const DeviceManagementForm = () => {
             {selectedRowForm !== null ? (
               <>
                 <button type="button" onClick={handleSaveRow}>Save</button>
-                <button type="reset">Cancel</button>
+                <button type="reset" onClick={handleCancel}>Cancel</button>
               </>
 
             ) : (
               <>
                 <button type="button" onClick={handleSubmit}>Add</button>
-                <button type="reset">Cancel</button>
+                <button type="reset" onClick={handleCancel}>Cancel</button>
               </>
             )}
 
