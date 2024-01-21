@@ -21,7 +21,7 @@ function LoginPage() {
     try {
       // Validación básica de correo electrónico y contraseña
       if (!email || !password) {
-        setError('Por favor, ingrese correo electrónico y contraseña.');
+        setError('Please enter email and password.');
         return;
       }
 
@@ -33,15 +33,15 @@ function LoginPage() {
       });
 
       if (result.error) {
-        setError('Credenciales inválidas. Por favor, verifique e intente nuevamente.');
+        setError('Invalid credentials. Please check and try again.');
       }
 
     } catch (error) {
 
       //router.push('/projects/pages_netdoc');
 
-      console.error('Error al iniciar sesión:', error);
-      setError('Ocurrió un error al intentar iniciar sesión. Por favor, inténtelo más tarde.');
+      console.error('Failed to login:', error);
+      setError('An error occurred while trying to log in. Please try again later');
     }
   };
 

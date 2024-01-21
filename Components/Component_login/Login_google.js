@@ -13,10 +13,10 @@ function Login_google() {
 
   return (
     <div className="login-container">
-      <h2>Iniciar Sesión</h2>
-      <p>Por favor, inicie sesión con su cuenta de Google.</p>
+      <h2>Log in</h2>
+      <p>Please sign in with your Google account.</p>
       <button onClick={handleGoogleSignIn} className="login-button">
-          Iniciar Sesión con Google
+        Sign in with Google
         </button>
         {/* <div>
           <button onClick={handleGoogleSignOut}>Cerrar Sesión</button>
