@@ -91,7 +91,7 @@ export default function Home() {
 
         </div>
 
-        <div className="p-6 w-2/3 mt-10 mx-auto mt- bg-white rounded-xl shadow-md flex items-center space-x-4">
+        <div className="p-6 w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3 mt-10 mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
           <div>
             <div className="text-xl font-medium text-black">NetDoc</div>
             <p className="text-gray-500">It is a network documentation application that facilitates the management and tracking of your network infrastructure. With an intuitive user interface and powerful features, NetDoc allows you to create, update, and visualize your network documentation efficiently.</p>
